@@ -13,26 +13,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-/**
- * Giao diện trang chủ của chương trình
- * @author Trần Văn Hòa
- */
+import view.phong.PhongGUI;
+
 @SuppressWarnings("serial")
 public class AppGUI extends JFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JMenu mnuQuanLy, mnuChucNang, mnuTienIch;
 	private JMenuItem mnuLop, mnuGiangVien, mnuPhong, mnuTaiKhoan, mnuDangKy, mnuHuyDangKy, mnuDangXuat, mnuDoiMatKhau, mnuXemLich;
-	/**
-	 * Hàm khởi tạo giao diện chính của ứng dụng
-	 * @author Trần Văn Hòa
-	 */
 	public AppGUI() {
 		khoiTaoFrame();
 	}
-	/**
-	 * Hàm khởi tạo Frame
-	 * @author Trần Văn Hòa
-	 */
+
 	private void khoiTaoFrame() {
 		khoiTaoMenuBar();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,13 +35,10 @@ public class AppGUI extends JFrame implements ActionListener {
 		setBounds(300, 100, 1200, 800);
 		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
 		setIconImage(icon.getImage());
-		setTitle("Chương trình quản lý phòng máy thực hành");
+		setTitle("Chương trình quản lí phòng máy thực hành");
 		setVisible(true);
 	}
-	/**
-	 * Hàm khởi tạo thanh menu bar
-	 * @author Trần Văn Hòa
-	 */
+
 	private void khoiTaoMenuBar() {
 		ImageIcon icon;
 		mnuLop = new JMenuItem("Lớp");
@@ -101,7 +89,7 @@ public class AppGUI extends JFrame implements ActionListener {
 		
 		mnuQuanLy = new JMenu("Quản lý");
 		mnuChucNang = new JMenu("Chức năng");
-		mnuTienIch = new JMenu("Tiện ích");
+		mnuTienIch = new JMenu("Tài khoản");
 		
 		mnuQuanLy.add(mnuPhong);
 		mnuQuanLy.add(mnuLop);
@@ -131,7 +119,7 @@ public class AppGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == mnuPhong) {
-			System.out.println("Phong");
+			new PhongGUI();
 		}
 		else if(e.getSource() == mnuLop) {
 			System.out.println("Lop");
