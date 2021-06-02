@@ -2,6 +2,8 @@ package bean;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 /**
  * Lớp dùng để kết nối tới CSDL
@@ -55,5 +57,30 @@ public class DBConnection {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public ResultSet excuted(String query) {
+		PreparedStatement ps;
+		ResultSet rs;
+		try {
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			return rs;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public int update(String query) {
+		PreparedStatement ps;
+		int r;
+		try {
+			ps = conn.prepareStatement(query);
+			r = ps.executeUpdate();
+			return r;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }

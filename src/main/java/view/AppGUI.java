@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -13,26 +14,18 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-/**
- * Giao diện trang chủ của chương trình
- * @author Trần Văn Hòa
- */
+import view.lop.LopGUI;
+import view.phong.PhongGUI;
+
 @SuppressWarnings("serial")
 public class AppGUI extends JFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JMenu mnuQuanLy, mnuChucNang, mnuTienIch;
 	private JMenuItem mnuLop, mnuGiangVien, mnuPhong, mnuTaiKhoan, mnuDangKy, mnuHuyDangKy, mnuDangXuat, mnuDoiMatKhau, mnuXemLich;
-	/**
-	 * Hàm khởi tạo giao diện chính của ứng dụng
-	 * @author Trần Văn Hòa
-	 */
 	public AppGUI() {
 		khoiTaoFrame();
 	}
-	/**
-	 * Hàm khởi tạo Frame
-	 * @author Trần Văn Hòa
-	 */
+
 	private void khoiTaoFrame() {
 		khoiTaoMenuBar();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,13 +37,10 @@ public class AppGUI extends JFrame implements ActionListener {
 		setBounds(300, 100, 1200, 800);
 		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
 		setIconImage(icon.getImage());
-		setTitle("Chương trình quản lý phòng máy thực hành");
+		setTitle("Chương trình quản lí phòng máy thực hành");
 		setVisible(true);
 	}
-	/**
-	 * Hàm khởi tạo thanh menu bar
-	 * @author Trần Văn Hòa
-	 */
+
 	private void khoiTaoMenuBar() {
 		ImageIcon icon;
 		mnuLop = new JMenuItem("Lớp");
@@ -58,50 +48,67 @@ public class AppGUI extends JFrame implements ActionListener {
 		icon = new ImageIcon(getClass().getResource("icon/class.png"));
 		mnuLop.setIcon(icon);
 		mnuLop.setFont(new Font("Arial", Font.ITALIC, 20));
+		mnuLop.setMnemonic(KeyEvent.VK_L);
+		
 		mnuGiangVien = new JMenuItem("Giảng viên");
 		mnuGiangVien.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/giangvien.png"));
 		mnuGiangVien.setIcon(icon);
 		mnuGiangVien.setFont(new Font("Arial", Font.ITALIC, 20));
+		mnuGiangVien.setMnemonic(KeyEvent.VK_G);
+		
 		mnuPhong = new JMenuItem("Phòng");
 		mnuPhong.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/phong.png"));
 		mnuPhong.setIcon(icon);
 		mnuPhong.setFont(new Font("Arial", Font.ITALIC, 20));
+		mnuPhong.setMnemonic(KeyEvent.VK_P);
+		
 		mnuDangKy = new JMenuItem("Đăng ký");
+		mnuDangKy.setMnemonic(KeyEvent.VK_N);
 		mnuDangKy.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/dangky.png"));
 		mnuDangKy.setIcon(icon);
 		mnuDangKy.setFont(new Font("Arial", Font.ITALIC, 20));
+		
 		mnuHuyDangKy = new JMenuItem("Hủy đăng ký");
 		mnuHuyDangKy.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/huy.png"));
 		mnuHuyDangKy.setIcon(icon);
 		mnuHuyDangKy.setFont(new Font("Arial", Font.ITALIC, 20));
+		mnuHuyDangKy.setMnemonic(KeyEvent.VK_H);
+		
 		mnuDangXuat = new JMenuItem("Đăng xuất");
 		mnuDangXuat.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/logout.png"));
 		mnuDangXuat.setIcon(icon);
 		mnuDangXuat.setFont(new Font("Arial", Font.ITALIC, 20));
+		mnuDangXuat.setMnemonic(KeyEvent.VK_X);
+		
 		mnuDoiMatKhau = new JMenuItem("Đổi mật khẩu");
 		mnuDoiMatKhau.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/pass.png"));
 		mnuDoiMatKhau.setIcon(icon);
 		mnuDoiMatKhau.setFont(new Font("Arial", Font.ITALIC, 20));
+		mnuDoiMatKhau.setMnemonic(KeyEvent.VK_M);
+		
 		mnuTaiKhoan = new JMenuItem("Tài khoản");
 		mnuTaiKhoan.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/taikhoan.png"));
 		mnuTaiKhoan.setIcon(icon);
 		mnuTaiKhoan.setFont(new Font("Arial", Font.ITALIC, 20));
+		mnuTaiKhoan.setMnemonic(KeyEvent.VK_T);
+		
 		mnuXemLich = new JMenuItem("Xem lịch");
 		mnuXemLich.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/xem.png"));
 		mnuXemLich.setIcon(icon);
 		mnuXemLich.setFont(new Font("Arial", Font.ITALIC, 20));
+		mnuXemLich.setMnemonic(KeyEvent.VK_X);
 		
 		mnuQuanLy = new JMenu("Quản lý");
 		mnuChucNang = new JMenu("Chức năng");
-		mnuTienIch = new JMenu("Tiện ích");
+		mnuTienIch = new JMenu("Tài khoản");
 		
 		mnuQuanLy.add(mnuPhong);
 		mnuQuanLy.add(mnuLop);
@@ -109,17 +116,20 @@ public class AppGUI extends JFrame implements ActionListener {
 		mnuQuanLy.add(mnuTaiKhoan);
 		mnuQuanLy.setFont(new Font("Arial", Font.BOLD, 30));
 		mnuQuanLy.setForeground(Color.WHITE);
+		mnuQuanLy.setMnemonic(KeyEvent.VK_Q);
 		
 		mnuChucNang.add(mnuDangKy);
 		mnuChucNang.add(mnuHuyDangKy);
 		mnuChucNang.add(mnuXemLich);
 		mnuChucNang.setFont(new Font("Arial", Font.BOLD, 30));
 		mnuChucNang.setForeground(Color.WHITE);
+		mnuChucNang.setMnemonic(KeyEvent.VK_C);
 		
 		mnuTienIch.add(mnuDangXuat);
 		mnuTienIch.add(mnuDoiMatKhau);
 		mnuTienIch.setFont(new Font("Arial", Font.BOLD, 30));
 		mnuTienIch.setForeground(Color.WHITE);
+		mnuTienIch.setMnemonic(KeyEvent.VK_T);
 		
 		menuBar = new JMenuBar();
 		menuBar.setBackground(new Color(30, 55, 153));
@@ -131,10 +141,10 @@ public class AppGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == mnuPhong) {
-			System.out.println("Phong");
+			new PhongGUI();
 		}
 		else if(e.getSource() == mnuLop) {
-			System.out.println("Lop");
+			new LopGUI();
 		}
 		else if(e.getSource() == mnuGiangVien) {
 			new TaiKhoanGiangVienGUI();
@@ -143,7 +153,7 @@ public class AppGUI extends JFrame implements ActionListener {
 			System.out.println("TaiKhoan");
 		}
 		else if(e.getSource() == mnuDangKy) {
-			System.out.println("DangKy");
+			new DangKyGUI();
 		}
 		else if(e.getSource() == mnuHuyDangKy) {
 			System.out.println("HuyDangKy");

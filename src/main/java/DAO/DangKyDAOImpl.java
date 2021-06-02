@@ -25,7 +25,23 @@ public class DangKyDAOImpl implements IDangKyDAO {
 
 	@Override
 	public ArrayList<DangKy> ListDangKy() {
-		// TODO Auto-generated method stub
+		ArrayList<DangKy> res = new ArrayList<DangKy>();
+		ResultSet rs;
+		String sql = "select * from dangky";
+		try {
+			cstmt = conn.getConnection().prepareCall(sql);
+			rs = cstmt.executeQuery();
+			while(rs.next()) {
+				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getInt(5));
+				res.add(item);
+//				System.out.println(item);
+			}
+			cstmt.close();
+			conn.closeConnection();
+			return res;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -41,7 +57,7 @@ public class DangKyDAOImpl implements IDangKyDAO {
 			while(rs.next()) {
 				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getInt(5));
 				res.add(item);
-				System.out.println(item);
+//				System.out.println(item);
 			}
 			cstmt.close();
 			conn.closeConnection();
@@ -49,7 +65,7 @@ public class DangKyDAOImpl implements IDangKyDAO {
 			e.printStackTrace();
 			return null;
 		}
-		return null;
+		return res;
 	}
 
 }
