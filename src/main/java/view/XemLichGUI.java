@@ -12,8 +12,6 @@ import javax.swing.JLabel;
 
 import com.mindfusion.common.DateTime;
 import com.mindfusion.scheduling.Calendar;
-import com.mindfusion.scheduling.CalendarView;
-import com.mindfusion.scheduling.Cursor;
 import com.mindfusion.scheduling.model.Appointment;
 import com.mindfusion.scheduling.model.Style;
 
