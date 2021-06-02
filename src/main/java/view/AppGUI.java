@@ -137,7 +137,7 @@ public class AppGUI extends JFrame implements ActionListener {
 			System.out.println("HuyDangKy");
 		}
 		else if(e.getSource() == mnuXemLich) {
-			System.out.println("XemLich");
+			new XemLichGUI();
 		}
 		else if(e.getSource() == mnuDangXuat) {
 			System.out.println("DangXuat");
