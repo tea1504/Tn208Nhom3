@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
@@ -92,10 +93,10 @@ public class DangKyGUI extends JFrame implements ActionListener {
 			public String valueToString(Object value) throws ParseException {
 				if (value == null)
 					return "Nhập ngày";
-				GregorianCalendar temp = (GregorianCalendar) value;
-				int year = temp.getTime().getYear() + 1900;
-				int month = temp.getTime().getMonth() + 1;
-				int date = temp.getTime().getDate();
+				Calendar temp = (GregorianCalendar) value;
+				int year = temp.get(Calendar.YEAR);
+				int month = temp.get(Calendar.MONTH) + 1;
+				int date = temp.get(Calendar.DATE);
 				return date + "/" + month + "/" + year;
 			}
 
