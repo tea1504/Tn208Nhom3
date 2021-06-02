@@ -1,9 +1,12 @@
 package DAO;
 
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import bean.DBConnection;
 import bean.DangKy;
@@ -32,7 +35,10 @@ public class DangKyDAOImpl implements IDangKyDAO {
 			cstmt = conn.getConnection().prepareCall(sql);
 			rs = cstmt.executeQuery();
 			while(rs.next()) {
-				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getInt(5));
+				Date date = rs.getDate(4);
+				Calendar calendar = new GregorianCalendar();
+				calendar.setTime(date);
+				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), calendar, rs.getInt(5));
 				res.add(item);
 //				System.out.println(item);
 			}
@@ -55,7 +61,10 @@ public class DangKyDAOImpl implements IDangKyDAO {
 			cstmt.setString(1, maGiangVien);
 			rs = cstmt.executeQuery();
 			while(rs.next()) {
-				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getInt(5));
+				Date date = rs.getDate(4);
+				Calendar calendar = new GregorianCalendar();
+				calendar.setTime(date);
+				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), calendar, rs.getInt(5));
 				res.add(item);
 //				System.out.println(item);
 			}

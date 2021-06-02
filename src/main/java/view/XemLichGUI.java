@@ -56,9 +56,9 @@ public class XemLichGUI extends JFrame {
 		DangKyDAOImpl dangKyDAO = new DangKyDAOImpl();
 		ArrayList<DangKy> listDangKy = dangKyDAO.ListDangKyTheoGV("GV020");
 		for (DangKy dangKy : listDangKy) {
-			int year = dangKy.getNgayDangKy().getYear() + 1900;
-			int month = dangKy.getNgayDangKy().getMonth() + 1;
-			int date = dangKy.getNgayDangKy().getDate();
+			int year = dangKy.getNgayDangKy().get(java.util.Calendar.YEAR);
+			int month = dangKy.getNgayDangKy().get(java.util.Calendar.MONTH) + 1;
+			int date = dangKy.getNgayDangKy().get(java.util.Calendar.DATE);
 			DateTime d = new DateTime(year, month, date);
 			Appointment app = new Appointment();
 			app.setStartTime(d);
