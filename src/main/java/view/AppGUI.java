@@ -14,6 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import view.lop.LopGUI;
 import view.phong.PhongGUI;
 
 @SuppressWarnings("serial")
@@ -143,7 +144,7 @@ public class AppGUI extends JFrame implements ActionListener {
 			new PhongGUI();
 		}
 		else if(e.getSource() == mnuLop) {
-			System.out.println("Lop");
+			new LopGUI();
 		}
 		else if(e.getSource() == mnuGiangVien) {
 			System.out.println("GiangVien");
