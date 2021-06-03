@@ -19,11 +19,11 @@ import DAO.DangKyDAOImpl;
 import bean.DangKy;
 
 @SuppressWarnings("serial")
-public class XemLichGUI extends JFrame {
+public class QLPM_XemLich extends JFrame {
 	Calendar calendar = new Calendar();
 	JLabel title = new JLabel("Xem lịch phòng máy");
 
-	public XemLichGUI() {
+	public QLPM_XemLich() {
 		khoiTaoFrame();
 	}
 

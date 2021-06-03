@@ -159,7 +159,7 @@ public class AppGUI extends JFrame implements ActionListener {
 			new HuyDangKyGUI();
 		}
 		else if(e.getSource() == mnuXemLich) {
-			new XemLichGUI();
+			new QLPM_XemLich();
 		}
 		else if(e.getSource() == mnuDangXuat) {
 			System.out.println("DangXuat");
