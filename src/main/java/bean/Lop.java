@@ -1,44 +1,51 @@
 package bean;
 
 public class Lop {
-	private String MaLop;
-	private String TenLop;
-	private int SiSoLop;
-	private String MaGiangVien;
+	private String maLop;
+	private String tenLop;
+	private int siSoLop;
+	private String maGiangVien;
+	private GiangVien giangVien;
 	public Lop()
 	{
 		
 	}
-	public Lop(String maLop, String tenLop, int siSoLop, String maGiangVien) {
+	public Lop(String maLop, String tenLop,  String maGiangVien, int siSoLop) {
 		super();
-		MaLop = maLop;
-		TenLop = tenLop;
-		SiSoLop = siSoLop;
-		MaGiangVien = maGiangVien;
+		this.maLop = maLop;
+		this.tenLop = tenLop;
+		this.siSoLop = siSoLop;
+		this.maGiangVien = maGiangVien;
 	}
 	public String getMaLop() {
-		return MaLop;
+		return maLop;
 	}
 	public void setMaLop(String maLop) {
-		MaLop = maLop;
+		this.maLop = maLop;
 	}
 	public String getTenLop() {
-		return TenLop;
+		return tenLop;
 	}
 	public void setTenLop(String tenLop) {
-		TenLop = tenLop;
+		this.tenLop = tenLop;
 	}
 	public int getSiSoLop() {
-		return SiSoLop;
+		return siSoLop;
 	}
 	public void setSiSoLop(int siSoLop) {
-		SiSoLop = siSoLop;
+		this.siSoLop = siSoLop;
 	}
 	public String getMaGiangVien() {
-		return MaGiangVien;
+		return maGiangVien;
 	}
 	public void setMaGiangVien(String maGiangVien) {
-		MaGiangVien = maGiangVien;
+		this.maGiangVien = maGiangVien;
+	}
+	public GiangVien getGiangVien() {
+		return giangVien;
+	}
+	public void setGiangVien(GiangVien giangVien) {
+		this.giangVien = giangVien;
 	}
 	@Override
 	public String toString() {

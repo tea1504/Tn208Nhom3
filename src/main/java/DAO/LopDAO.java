@@ -22,7 +22,7 @@ public class LopDAO {
 			while (rs.next()) {
 				Lop temp = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
 				GiangVienDAO gv = new GiangVienDAO();
-				temp.setGv(gv.getGiangVien(temp.getMaGV()));
+				temp.setGiangVien(gv.getGiangVien(temp.getMaGiangVien()));
 				list.add(temp);
 			}
 		} catch (SQLException e) {
@@ -43,7 +43,7 @@ public class LopDAO {
 			while (rs.next()) {
 				Lop temp = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
 				GiangVienDAO gv = new GiangVienDAO();
-				temp.setGv(gv.getGiangVien(temp.getMaGV()));
+				temp.setGiangVien(gv.getGiangVien(temp.getMaGiangVien()));
 				list.add(temp);
 			}
 		} catch (SQLException e) {
@@ -56,7 +56,7 @@ public class LopDAO {
 
 	public int ThemLop(Lop l) {
 		String query = "insert into lop (malop, magiangvien, tenlop, sisolop) values ('" + l.getMaLop() + "', '"
-				+ l.getMaGV() + "', N'" + l.getTenLop() + "'," + l.getSiSoLop() + ")";
+				+ l.getMaGiangVien() + "', N'" + l.getTenLop() + "'," + l.getSiSoLop() + ")";
 		conn.getConnection();
 		int r = conn.update(query);
 		conn.closeConnection();
@@ -64,7 +64,7 @@ public class LopDAO {
 	}
 
 	public int SuaLop(Lop l) {
-		String query = "update lop set magiangvien='" + l.getMaGV() + "', tenlop=N'" + l.getTenLop() + "', sisolop="
+		String query = "update lop set magiangvien='" + l.getMaGiangVien() + "', tenlop=N'" + l.getTenLop() + "', sisolop="
 				+ l.getSiSoLop() + " where malop='" + l.getMaLop() + "'";
 		conn.getConnection();
 		int r = conn.update(query);

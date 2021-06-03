@@ -25,8 +25,6 @@ public class GiangVienDAO {
 		try {
 			while (rs.next()) {
 				GiangVien temp = new GiangVien(rs.getString(1), rs.getString(2));
-				LopDAO lop = new LopDAO();
-				temp.setDsLop(lop.getLop(temp.getMa()));
 				list.add(temp);
 			}
 		} catch (SQLException e) {
@@ -45,8 +43,8 @@ public class GiangVienDAO {
 		rs = conn.excuted(query);
 		try {
 			while (rs.next()) {
-				gv.setMa(rs.getString(1));
-				gv.setTen(rs.getString(2));
+				gv.setMaGiangVien(rs.getString(1));
+				gv.setTenGiangVien(rs.getString(2));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
