@@ -60,8 +60,8 @@ public class QLPM_DangNhap extends JFrame{
 		lblMSGV = new JLabel("Mã giảng viên: ");
 		lblMatKhau = new JLabel("Mật khẩu: ");
 		lblAuthor = new JLabel("@TN208 - Nhóm 3");
-		txtMSGV = new JTextField();
-		pwfMatKhau = new JPasswordField();
+		txtMSGV = new JTextField("GV020");
+		pwfMatKhau = new JPasswordField("12345");
 
 		ImageIcon img = new ImageIcon(getClass().getResource("icon/icon-login.png"));
 		btnDangNhap = new JButton("Đăng nhập", new ImageIcon(img.getImage().getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING)));

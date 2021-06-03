@@ -3,7 +3,11 @@ package DAO;
 import java.util.ArrayList;
 
 import bean.DangKy;
-
+/**
+ * Interface cho chức năng đăng ký
+ * @author Trần Văn Hòa
+ *
+ */
 public interface IDangKyDAO {
 	/**
 	 * Đăng ký phòng máy
@@ -18,7 +22,7 @@ public interface IDangKyDAO {
 	 * @return số dòng đã xóa
 	 * @author Trần Văn Hòa
 	 */
-	int DeleteDangKy(DangKy dangKy);
+	int DeleteDangKy(int id);
 	/**
 	 * Lấy toàn bộ danh sách đăng ký trong CSDL
 	 * @return Toàn bộ danh sách đã đăng ký

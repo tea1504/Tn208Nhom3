@@ -10,7 +10,11 @@ import java.util.GregorianCalendar;
 
 import bean.DBConnection;
 import bean.DangKy;
-
+/**
+ * Lớp dùng để điều khiển đăng ký phòng máy
+ * @author Trần Văn Hòa
+ *
+ */
 public class DangKyDAOImpl implements IDangKyDAO {
 	DBConnection conn = new DBConnection();
 	CallableStatement cstmt;
@@ -21,8 +25,19 @@ public class DangKyDAOImpl implements IDangKyDAO {
 	}
 
 	@Override
-	public int DeleteDangKy(DangKy dangKy) {
-		// TODO Auto-generated method stub
+	public int DeleteDangKy(int id) {
+		String sql = "{call huyDangKy(?)}";
+		try {
+			cstmt = conn.getConnection().prepareCall(sql);
+			cstmt.setInt(1, id);
+			int res = cstmt.executeUpdate();
+			cstmt.close();
+			conn.closeConnection();
+			return res;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
@@ -66,7 +81,6 @@ public class DangKyDAOImpl implements IDangKyDAO {
 				calendar.setTime(date);
 				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), calendar, rs.getInt(5));
 				res.add(item);
-//				System.out.println(item);
 			}
 			cstmt.close();
 			conn.closeConnection();
