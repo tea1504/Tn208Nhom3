@@ -3,7 +3,11 @@ package DAO;
 import java.util.ArrayList;
 
 import bean.DangKy;
-
+/**
+ * Interface cho chức năng đăng ký
+ * @author Trần Văn Hòa
+ *
+ */
 public interface IDangKyDAO {
 	/**
 	 * Đăng ký phòng máy

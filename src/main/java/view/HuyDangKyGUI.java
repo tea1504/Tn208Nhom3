@@ -22,18 +22,27 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import DAO.DangKyDAOImpl;
-
+/**
+ * Tạo giao diện cho chức năng <strong>hủy đăng ký</strong>
+ * @author Trần Văn Hòa
+ */
 @SuppressWarnings("serial")
 public class HuyDangKyGUI extends JFrame implements ActionListener {
 	private JPanel pTitle, pTable, pButton;
 	private JLabel title;
 	private JTable table;
 	private JButton btnHuy;
-
+	/**
+	 * Khởi tạo giao diện cho chức năng <strong>hủy đăng ký</strong>
+	 * @author Trần Văn Hòa
+	 */
 	public HuyDangKyGUI() {
 		khoiTaoFrame();
 	}
-
+	/**
+	 * Khởi tạo frame cho chức năng <strong>hủy đăng ký</strong>
+	 * @author Trần Văn Hòa
+	 */
 	private void khoiTaoFrame() {
 		setupTitle();
 		setupTable();
@@ -47,33 +56,47 @@ public class HuyDangKyGUI extends JFrame implements ActionListener {
 		gbc.weighty = 0.1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		getContentPane().add(pTitle, gbc);
+		getContentPane().add(pTitle, gbc); //Thêm panel Title
 		gbc.weighty = 0.8;
 		gbc.gridy++;
 		gbc.insets = new Insets(10, 50, 10, 50);
-		getContentPane().add(pTable, gbc);
+		getContentPane().add(pTable, gbc); //Thêm panel Table
 		gbc.weighty = 0.1;
 		gbc.gridy++;
-		getContentPane().add(pButton, gbc);
+		getContentPane().add(pButton, gbc); //Thêm panel Button
 		setVisible(true);
 	}
-
+	/**
+	 * Khởi tạo <strong>panel Title</strong>, bao gồm:
+	 * <ul>
+	 * 	<li>JLabel title</li>
+	 * </ul>
+	 * @author Trần Văn Hòa
+	 */
 	private void setupTitle() {
 		title = new JLabel("Hủy đăng ký phòng máy");
 		pTitle = new JPanel();
 		title.setHorizontalAlignment(JLabel.HORIZONTAL);
 		title.setFont(new Font("Arial", Font.BOLD, 60));
 		title.setForeground(Color.WHITE);
-		pTitle.add(title, BorderLayout.CENTER);
+		pTitle.add(title, BorderLayout.CENTER); //Thêm title
 		pTitle.setBackground(new Color(9, 132, 227));
 	}
-
+	/**
+	 * Khởi tạo <strong>panel Table</strong>, bao gồm:
+	 * <ul>
+	 * 	<li>JTable table</li>
+	 * </ul>
+	 * @author Trần Văn Hòa
+	 */
 	private void setupTable() {
 		pTable = new JPanel();
 		table = new JTable(new DangKySetTableModel());
+		//Render cho cột buổi
 		TableColumnModel tcm = table.getColumnModel();
 		TableColumn tc = tcm.getColumn(4);
 		tc.setCellRenderer(new BuoiRenderer());
+		//Set font cho table
 		table.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 18));
 		table.setRowHeight(30);
@@ -88,7 +111,13 @@ public class HuyDangKyGUI extends JFrame implements ActionListener {
 		titleBorder.setTitleFont(new Font("Arial", Font.BOLD, 30));
 		pTable.setBorder(titleBorder);
 	}
-
+	/**
+	 * Khởi tạo <strong>panel Button</strong>, bao gồm:
+	 * <ul>
+	 * 	<li>JButton btnHuy</li>
+	 * </ul>
+	 * @author Trần Văn Hòa
+	 */
 	private void setupButton() {
 		btnHuy = new JButton("Hủy đăng ký");
 		btnHuy.setFont(new Font("Arial", Font.BOLD, 30));

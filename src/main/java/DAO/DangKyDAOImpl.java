@@ -10,7 +10,11 @@ import java.util.GregorianCalendar;
 
 import bean.DBConnection;
 import bean.DangKy;
-
+/**
+ * Lớp dùng để điều khiển đăng ký phòng máy
+ * @author Trần Văn Hòa
+ *
+ */
 public class DangKyDAOImpl implements IDangKyDAO {
 	DBConnection conn = new DBConnection();
 	CallableStatement cstmt;

@@ -13,6 +13,11 @@ import bean.DBConnection;
 import bean.TaiKhoan;
 import helpers.SharedData;
 
+/**
+ * Lớp khởi tạo model cho table hủy đăng ký
+ * @author Trần Văn Hòa
+ *
+ */
 @SuppressWarnings("serial")
 public class DangKySetTableModel extends AbstractTableModel {
 	private DBConnection conn = new DBConnection();
@@ -20,7 +25,18 @@ public class DangKySetTableModel extends AbstractTableModel {
 	CallableStatement cstmt;
 	private ResultSetMetaData rsmd;
 	private final String title[] = { "Mã đăng ký", "Tên lớp", "Tên phòng", "Ngày đăng ký", "Buổi đăng ký" };
-
+	/**
+	 * Hàm khởi tạo kết nối với CSDL để lấy dữ liệu <br/>
+	 * Dữ liệu được hiển thị bao gồm :
+	 * <ul>
+	 * 	<li>Mã đăng ký</li>
+	 * 	<li>Tên lớp</li>
+	 * 	<li>Tên phòng</li>
+	 * 	<li>Ngày đăng ký</li>
+	 * 	<li>Buổi đăng ký</li>
+	 * </ul>
+	 * @author Trần Văn Hòa
+	 */
 	public DangKySetTableModel() {
 		try {
 			String query = "{call getModelDangKy (?, ?)}";
@@ -36,7 +52,10 @@ public class DangKySetTableModel extends AbstractTableModel {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Hủy kết nối đến csdl
+	 * @author Trần Văn Hòa
+	 */
 	public void disconnect() {
 		try {
 			cstmt.close();
