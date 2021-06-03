@@ -28,9 +28,7 @@ public class Phong {
 	public void setSoMay(int soMay) {
 		SoLuongMay = soMay;
 	}
-	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return getMaPhong() + "\t" + getTenPhong() + "\t" + getSoLuongMay();
 	}
 }

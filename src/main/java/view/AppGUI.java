@@ -36,6 +36,7 @@ public class AppGUI extends JFrame implements ActionListener {
 		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
 		setIconImage(icon.getImage());
 		setTitle("Chương trình quản lí phòng máy thực hành");
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
