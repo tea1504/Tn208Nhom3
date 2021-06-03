@@ -14,7 +14,7 @@ public class DBConnection {
 	private Connection conn;
 	static final String PASSWORD = "tn208";
 	static final String USERNAME = "javanc";
-	static final String URL = "jdbc:mysql://localhost:3308/ql_phongmay";
+	static final String URL = "jdbc:mysql://localhost:3306/ql_phongmay";
 
 	/**
 	 * Hàm khởi tạo lớp kết nối CSDL

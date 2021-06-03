@@ -2,6 +2,9 @@ package view;
 
 import java.awt.EventQueue;
 
+import view.lop.LopGUI;
+import view.phong.PhongGUI;
+
 /**
  * Class chính cho chương trình
  * @author Trần Văn Hòa

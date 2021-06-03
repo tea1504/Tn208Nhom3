@@ -4,8 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
+
 import bean.DBConnection;
+import bean.GiangVien;
 import bean.Lop;
+
 
 
 
@@ -79,4 +83,6 @@ public class LopDAO {
 		conn.closeConnection();
 		return r;
 	}
+	
+	
 }
