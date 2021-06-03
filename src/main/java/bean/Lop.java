@@ -5,13 +5,10 @@ public class Lop {
 	private String TenLop;
 	private int SiSoLop;
 	private String MaGiangVien;
-	
-	
 	public Lop()
 	{
 		
 	}
-	
 	public Lop(String maLop, String tenLop, int siSoLop, String maGiangVien) {
 		super();
 		MaLop = maLop;
@@ -19,8 +16,6 @@ public class Lop {
 		SiSoLop = siSoLop;
 		MaGiangVien = maGiangVien;
 	}
-	
-	
 	public String getMaLop() {
 		return MaLop;
 	}
@@ -45,16 +40,9 @@ public class Lop {
 	public void setMaGiangVien(String maGiangVien) {
 		MaGiangVien = maGiangVien;
 	}
-	
-	
-	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return getMaLop() + " | " + getTenLop();
 	}
-	
-	
-	
-	
 }

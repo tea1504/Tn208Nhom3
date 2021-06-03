@@ -1,6 +1,9 @@
 package bean;
-
-
+/**
+ * Model Tài khoản
+ * @author Trịnh Thanh Thảo
+ *
+ */
 public class TaiKhoan {
 	private String maGiangVien;
 	private String userPassword;
@@ -9,57 +12,28 @@ public class TaiKhoan {
 	public TaiKhoan() {
 		super();
 	}
-	
-	
-	
 	public TaiKhoan(String maGiangVien, String userPassword, int quyenSD) {
 		super();
-		this.maGiangVien = maGiangVien;
-		this.userPassword = userPassword;
-		this.quyenSD = quyenSD;
+		this.maGiangVien=maGiangVien;
+		this.userPassword=userPassword;
+		this.quyenSD=quyenSD;
 	}
-
-
-
-	public String getMaGiangVien() {
+	
+	public String getmaGiangVien() {
 		return maGiangVien;
 	}
-
-
-
-	public void setMaGiangVien(String maGiangVien) {
-		this.maGiangVien = maGiangVien;
-	}
-
-
-
-	public String getUserPassword() {
+	
+	public String getuserPassword() {
 		return userPassword;
 	}
-
-
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
-
-
-	public int getQuyenSD() {
+	
+	public int getquyenSD() {
 		return quyenSD;
 	}
-
-
-
-	public void setQuyenSD(int quyenSD) {
-		this.quyenSD = quyenSD;
-	}
-
-
-
+	
 	public String toString() {
 		// TODO Auto-generated method stub
-		return getMaGiangVien() + "\t" + getQuyenSD();
+		return getmaGiangVien() + "\t" + getquyenSD();
 	}
 	
 }
