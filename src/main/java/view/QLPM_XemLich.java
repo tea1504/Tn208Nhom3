@@ -11,12 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import com.mindfusion.common.DateTime;
+import com.mindfusion.drawing.GradientBrush;
 import com.mindfusion.scheduling.Calendar;
 import com.mindfusion.scheduling.model.Appointment;
-import com.mindfusion.scheduling.model.Style;
 
 import DAO.DangKyDAOImpl;
 import bean.DangKy;
+import bean.TaiKhoan;
+import helpers.SharedData;
 
 @SuppressWarnings("serial")
 public class QLPM_XemLich extends JFrame {
@@ -27,6 +29,9 @@ public class QLPM_XemLich extends JFrame {
 		khoiTaoFrame();
 	}
 
+	/**
+	 * 
+	 */
 	private void khoiTaoFrame() {
 		setupCaculater();
 		setLayout(new GridBagLayout());
@@ -52,25 +57,45 @@ public class QLPM_XemLich extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Hàm này dùng để hiển thị thông tin lịch dạy của một giảng viên <br>
+	 * Cách lấy danh sách lịch dạy của một giảng viên
+	 * <ol>
+	 * <li>Lấy mã giảng viên đang đăng nhập - trong class <b>ShareData</b></li>
+	 * <li>Lấy danh sách đăng ký theo giảng viên - trong class
+	 * <b>DangKyDAOImpl</b></li>
+	 * </ol>
+	 * 
+	 * @author Trần Văn Hòa
+	 */
 	private void setupCaculater() {
 		DangKyDAOImpl dangKyDAO = new DangKyDAOImpl();
-		ArrayList<DangKy> listDangKy = dangKyDAO.ListDangKyTheoGV("GV020");
+		// Bước 1
+		TaiKhoan user = SharedData.CurentAccount;
+		// Bước 2
+		ArrayList<DangKy> listDangKy = dangKyDAO.ListDangKyTheoGV(user.getMaGiangVien());
 		for (DangKy dangKy : listDangKy) {
 			int year = dangKy.getNgayDangKy().get(java.util.Calendar.YEAR);
-			int month = dangKy.getNgayDangKy().get(java.util.Calendar.MONTH) + 1;
+			int month = dangKy.getNgayDangKy().get(java.util.Calendar.MONTH) + 1; // Tháng đầu tiên bắt đầu từ 0
 			int date = dangKy.getNgayDangKy().get(java.util.Calendar.DATE);
+			String buoi = new String();
+			if(dangKy.getBuoiDangKy() == 0)
+				buoi = "Buổi sáng";
+			else if (dangKy.getBuoiDangKy() == 1)
+				buoi="Buổi chiều";
+			else
+				buoi="Buổi tối";
 			DateTime d = new DateTime(year, month, date);
 			Appointment app = new Appointment();
 			app.setStartTime(d);
 			app.setEndTime(d);
-			app.setHeaderText("Lop lap trinh huong doi tuong tc19201 phong 12 Buoi sang");
+			app.setHeaderText("Lớp : " + dangKy.getMaLop() + " | " + dangKy.getMaPhong() + " | " + buoi);
 			app.setAllowMove(false);
 			app.setAllowChangeEnd(false);
 			app.setAllowChangeStart(false);
-			Style style = new Style();
-			style.setHeaderBorderBottomWidth(20);
-			app.setStyle(style);
 			calendar.getSchedule().getItems().add(app);
+			calendar.getItemSettings().setSize(30);
+			calendar.getItemSettings().getStyle().setBrush(new GradientBrush(new Color(161,255,254), new Color(250,255,209), 1));;
 		}
 
 	}
