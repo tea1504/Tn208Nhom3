@@ -1,24 +1,18 @@
-package view.lop;
+package view.taikhoangiangvien;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 
 import DAO.GiangVienDAO;
 import bean.GiangVien;
 
-
-
 @SuppressWarnings("serial")
 public class Table extends JPanel {
-	private LopSetTableModel model = new LopSetTableModel();
+	private GiangVienSetTableModel model = new GiangVienSetTableModel();
 	private JTable table;
 	private final ThongTin tt;
 	private JScrollPane pane;
@@ -72,9 +66,9 @@ public class Table extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (ok) {
 					int r = table.getSelectedRow();
-					tt.txtMaLop.setText(table.getValueAt(r, 0).toString());
-					tt.txtTenLop.setText(table.getValueAt(r, 2).toString());
-					String ma = table.getValueAt(r, 1).toString();
+					tt.txtMaGiangVien.setText(table.getValueAt(r, 0).toString());
+					tt.txtTenGiangVien.setText(table.getValueAt(r, 1).toString());
+					String ma = table.getValueAt(r, 0).toString();
 					GiangVienDAO gvdao = new GiangVienDAO();
 					ArrayList<GiangVien> list = gvdao.getGiangVien();
 					int index = -1;
@@ -82,18 +76,17 @@ public class Table extends JPanel {
 						if (list.get(i).getMaGiangVien().compareTo(ma) == 0)
 							index = i;
 					}
-					tt.cboGiangVien.setSelectedIndex(index);
-					tt.txtSiSo.setText(table.getValueAt(r, 3).toString());
+//					tt.cboQuyenSD.setSelectedIndex(index);
 				}
 			}
 		});
 	}
 
-	public LopSetTableModel getModel() {
+	public GiangVienSetTableModel getModel() {
 		return model;
 	}
 
-	public void setModel(LopSetTableModel model) {
+	public void setModel(GiangVienSetTableModel model) {
 		this.model = model;
 	}
 

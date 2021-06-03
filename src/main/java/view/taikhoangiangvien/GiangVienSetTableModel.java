@@ -1,4 +1,4 @@
-package view.lop;
+package view.taikhoangiangvien;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -8,24 +8,20 @@ import javax.swing.table.AbstractTableModel;
 
 import bean.DBConnection;
 
-
-
 @SuppressWarnings("serial")
-public class LopSetTableModel extends AbstractTableModel {
+public class GiangVienSetTableModel extends AbstractTableModel {
 	private DBConnection conn = new DBConnection();
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
-	private final String title[] = {"Mã lớp", "Giảng viên", "Tên lớp", "Sỉ số lớp"};
+	private final String title[] = {"Mã giảng viên", "Tên giảng viên"};
 	
-	public LopSetTableModel() {
-		// TODO Auto-generated constructor stub
+	public GiangVienSetTableModel() {
 		try {
 			conn.getConnection();
 			String query = "select * from giangvien";
 			rs = conn.excuted(query);
 			rsmd = rs.getMetaData();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -40,7 +36,6 @@ public class LopSetTableModel extends AbstractTableModel {
 			rs.last();
 			return rs.getRow();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
@@ -51,7 +46,6 @@ public class LopSetTableModel extends AbstractTableModel {
 		try {
 			return rsmd.getColumnCount();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
@@ -63,7 +57,6 @@ public class LopSetTableModel extends AbstractTableModel {
 			if (rs.absolute(rowIndex + 1))
 				return rs.getObject(columnIndex + 1);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -71,14 +64,6 @@ public class LopSetTableModel extends AbstractTableModel {
 
 	@Override
 	public String getColumnName(int column) {
-		// TODO Auto-generated method stub
-//		try {
-//			return rsmd.getColumnName(column + 1);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return null;
 		return title[column];
 	}
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import bean.DBConnection;
 import bean.GiangVien;
+import bean.Lop;
 
 
 
@@ -52,5 +53,30 @@ public class GiangVienDAO {
 		}
 		conn.closeConnection();
 		return gv;
+	}
+	
+	public int ThemGiangVien(GiangVien gv) {
+		String query = "insert into giangvien (magiangvien, tengiangvien) values ('" + gv.getMaGiangVien() + "', '"
+				+ gv.getTenGiangVien() + "')";
+		conn.getConnection();
+		int r = conn.update(query);
+		conn.closeConnection();
+		return r;
+	}
+
+	public int SuaGiangVien(GiangVien gv) {
+		String query = "update giangvien set tengiangvien='" + gv.getTenGiangVien()+"' where magiangvien='" + gv.getMaGiangVien() + "'";
+		conn.getConnection();
+		int r = conn.update(query);
+		conn.closeConnection();
+		return r;
+	}
+
+	public int XoaGiangVien(GiangVien gv) {
+		String query = "delete from giangvien where magiangvien='" + gv.getMaGiangVien() + "'";
+		conn.getConnection();
+		int r = conn.update(query);
+		conn.closeConnection();
+		return r;
 	}
 }

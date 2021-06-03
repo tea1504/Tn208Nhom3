@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 
 import view.lop.LopGUI;
 import view.phong.PhongGUI;
+import view.taikhoangiangvien.GiangVienGUI;
 
 @SuppressWarnings("serial")
 public class AppGUI extends JFrame implements ActionListener {
@@ -147,7 +148,7 @@ public class AppGUI extends JFrame implements ActionListener {
 			new LopGUI();
 		}
 		else if(e.getSource() == mnuGiangVien) {
-			new TaiKhoanGiangVienGUI();
+			new GiangVienGUI();
 		}
 		else if(e.getSource() == mnuTaiKhoan) {
 			System.out.println("TaiKhoan");
