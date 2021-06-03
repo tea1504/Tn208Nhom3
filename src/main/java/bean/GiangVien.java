@@ -20,17 +20,26 @@ public class GiangVien {
 		this.tenGiangVien=tenGiangVien;
 	}
 	
-	public String getmaGiangVien() {
+	
+	public String getMaGiangVien() {
 		return maGiangVien;
 	}
-	
-	public String gettenGiangVien() {
+
+	public void setMaGiangVien(String maGiangVien) {
+		this.maGiangVien = maGiangVien;
+	}
+
+	public String getTenGiangVien() {
 		return tenGiangVien;
 	}
-	
+
+	public void setTenGiangVien(String tenGiangVien) {
+		this.tenGiangVien = tenGiangVien;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return getmaGiangVien() + "\t" + gettenGiangVien();
+		return getMaGiangVien() + "\t" + getTenGiangVien();
 	}
 }

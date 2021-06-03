@@ -63,11 +63,11 @@ public class QLPM_DangNhap extends JFrame{
 		txtMSGV = new JTextField();
 		pwfMatKhau = new JPasswordField();
 
-		ImageIcon img = new ImageIcon(getClass().getResource("icon-login.png"));
+		ImageIcon img = new ImageIcon(getClass().getResource("icon/icon-login.png"));
 		btnDangNhap = new JButton("Đăng nhập", new ImageIcon(img.getImage().getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING)));
-		img = new ImageIcon(getClass().getResource("icon-exit.png"));
+		img = new ImageIcon(getClass().getResource("icon/icon-exit.png"));
 		btnThoat = new JButton("Thoát", new ImageIcon(img.getImage().getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING)));
-		img= new ImageIcon(this.getClass().getResource("login.png"));
+		img= new ImageIcon(this.getClass().getResource("icon/login.png"));
 		lblImg = new JLabel(new ImageIcon(img.getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
 	
 		
@@ -166,11 +166,12 @@ public class QLPM_DangNhap extends JFrame{
 					
 					//Không tìm thấy tài khoản
 					if(tk == null)
-						JOptionPane.showMessageDialog(null, "Sai MSGV hoặc mật khẩu!", "Lỗi",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Sai MSGV hoặc mật khẩu!", "Đăng nhập không thành công",JOptionPane.ERROR_MESSAGE);
 					else
 					{
 						//Đăng nhập thành công
 						SharedData.CurentAccount = tk; //Lưu thông tin tài khoản hiện tại
+						new AppGUI();
 						QLPM_DangNhap.this.dispose();
 					}
 				}

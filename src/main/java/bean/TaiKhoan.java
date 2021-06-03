@@ -19,21 +19,29 @@ public class TaiKhoan {
 		this.quyenSD=quyenSD;
 	}
 	
-	public String getmaGiangVien() {
+	
+	
+	public String getMaGiangVien() {
 		return maGiangVien;
 	}
-	
-	public String getuserPassword() {
+	public void setMaGiangVien(String maGiangVien) {
+		this.maGiangVien = maGiangVien;
+	}
+	public String getUserPassword() {
 		return userPassword;
 	}
-	
-	public int getquyenSD() {
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+	public int getQuyenSD() {
 		return quyenSD;
 	}
-	
+	public void setQuyenSD(int quyenSD) {
+		this.quyenSD = quyenSD;
+	}
 	public String toString() {
 		// TODO Auto-generated method stub
-		return getmaGiangVien() + "\t" + getquyenSD();
+		return getMaGiangVien() + "\t" + getQuyenSD();
 	}
 	
 }
