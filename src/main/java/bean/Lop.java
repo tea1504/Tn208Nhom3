@@ -4,25 +4,17 @@ public class Lop {
 	private String MaLop;
 	private String TenLop;
 	private int SiSoLop;
-	private String MaGV;
-	public String getMaGV() {
-		return MaGV;
+	private String MaGiangVien;
+	public Lop()
+	{
+		
 	}
-	public void setMaGV(String maGV) {
-		MaGV = maGV;
-	}
-	private GiangVien gv;
-	public int getSiSoLop() {
-		return SiSoLop;
-	}
-	public void setSiSoLop(int siSoLop) {
+	public Lop(String maLop, String tenLop, int siSoLop, String maGiangVien) {
+		super();
+		MaLop = maLop;
+		TenLop = tenLop;
 		SiSoLop = siSoLop;
-	}
-	public GiangVien getGv() {
-		return gv;
-	}
-	public void setGv(GiangVien gv) {
-		this.gv = gv;
+		MaGiangVien = maGiangVien;
 	}
 	public String getMaLop() {
 		return MaLop;
@@ -33,18 +25,20 @@ public class Lop {
 	public String getTenLop() {
 		return TenLop;
 	}
-	public Lop(String maLop, String maGV, String tenLop, int siSoLop) {
-		super();
-		MaLop = maLop;
-		TenLop = tenLop;
-		SiSoLop = siSoLop;
-		MaGV = maGV;
-	}
-	public Lop() {
-		// TODO Auto-generated constructor stub
-	}
 	public void setTenLop(String tenLop) {
 		TenLop = tenLop;
+	}
+	public int getSiSoLop() {
+		return SiSoLop;
+	}
+	public void setSiSoLop(int siSoLop) {
+		SiSoLop = siSoLop;
+	}
+	public String getMaGiangVien() {
+		return MaGiangVien;
+	}
+	public void setMaGiangVien(String maGiangVien) {
+		MaGiangVien = maGiangVien;
 	}
 	@Override
 	public String toString() {

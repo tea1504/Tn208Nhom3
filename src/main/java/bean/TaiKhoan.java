@@ -12,7 +12,6 @@ public class TaiKhoan {
 	public TaiKhoan() {
 		super();
 	}
-	
 	public TaiKhoan(String maGiangVien, String userPassword, int quyenSD) {
 		super();
 		this.maGiangVien=maGiangVien;
