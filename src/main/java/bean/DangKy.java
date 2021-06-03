@@ -1,18 +1,20 @@
 package bean;
 
-import java.sql.Date;
+import java.util.Calendar;
 
 public class DangKy {
 	private int maDangKy;
 	private String maPhong;
 	private String maLop;
-	private Date ngayDangKy;
+	private Calendar ngayDangKy;
 	private int buoiDangKy;
-	
+	private Lop lop;
+	private Phong phong;
+
 	public DangKy() {
 		super();
 	}
-	public DangKy(int maDangKy, String maPhong, String maLop, Date ngayDangKy, int buoiDangKy) {
+	public DangKy(int maDangKy, String maPhong, String maLop, Calendar ngayDangKy, int buoiDangKy) {
 		super();
 		this.maDangKy = maDangKy;
 		this.maPhong = maPhong;
@@ -38,10 +40,10 @@ public class DangKy {
 	public void setMaLop(String maLop) {
 		this.maLop = maLop;
 	}
-	public Date getNgayDangKy() {
+	public Calendar getNgayDangKy() {
 		return ngayDangKy;
 	}
-	public void setNgayDangKy(Date ngayDangKy) {
+	public void setNgayDangKy(Calendar ngayDangKy) {
 		this.ngayDangKy = ngayDangKy;
 	}
 	public int getBuoiDangKy() {
@@ -49,6 +51,18 @@ public class DangKy {
 	}
 	public void setBuoiDangKy(int buoiDangKy) {
 		this.buoiDangKy = buoiDangKy;
+	}
+	public Lop getLop() {
+		return lop;
+	}
+	public void setLop(Lop lop) {
+		this.lop = lop;
+	}
+	public Phong getPhong() {
+		return phong;
+	}
+	public void setPhong(Phong phong) {
+		this.phong = phong;
 	}
 	@Override
 	public String toString() {
