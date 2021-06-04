@@ -12,28 +12,33 @@ import bean.Phong;
 public class PhongDAO implements IPhongMayDAO{
 	DBConnection conn = new DBConnection();
 	CallableStatement cs;
-	public int ThemPhong(Phong p) {
-		String query = "insert into phongmay (maphong, tenphong, somay) values ('" + p.getMaPhong() + "', '"
-				+ p.getTenPhong() + "'," + p.getSoLuongMay() + ")";
-		conn.getConnection();
-		int r = conn.update(query);
+	public boolean ThemPhong(Phong p) throws SQLException {
+		String query = "{call themPhong (?,?,?)}";
+		cs = conn.getConnection().prepareCall(query);
+		cs.setString(1, p.getMaPhong());
+		cs.setString(2, p.getTenPhong());
+		cs.setInt(3, p.getSoLuongMay());
+		boolean r = cs.execute();
 		conn.closeConnection();
 		return r;
 	}
 
-	public int SuaPhong(Phong p) {
-		String query = "update phongmay set tenphong='" + p.getTenPhong() + "', somay="
-				+ p.getSoLuongMay() + " where maphong='" + p.getMaPhong() + "'";
-		conn.getConnection();
-		int r = conn.update(query);
+	public boolean SuaPhong(Phong p) throws SQLException {
+		String query = "{call suaPhong (?,?,?)}";
+		cs = conn.getConnection().prepareCall(query);
+		cs.setString(1, p.getMaPhong());
+		cs.setString(2, p.getTenPhong());
+		cs.setInt(3, p.getSoLuongMay());
+		boolean r = cs.execute();
 		conn.closeConnection();
 		return r;
 	}
 
-	public int XoaPhong(Phong p) {
-		String query = "delete from phongmay where maphong='" + p.getMaPhong() + "'";
-		conn.getConnection();
-		int r = conn.update(query);
+	public boolean XoaPhong(Phong p) throws SQLException {
+		String query = "{call xoaPhong (?)}";
+		cs = conn.getConnection().prepareCall(query);
+		cs.setString(1, p.getMaPhong());
+		boolean r = cs.execute();
 		conn.closeConnection();
 		return r;
 	}
@@ -46,8 +51,7 @@ public class PhongDAO implements IPhongMayDAO{
         
         try{
             conn.getConnection();
-            String query = "{call timKiem (?)}";
-//            String query = "SELECT * FROM `phongmay` WHERE CONCAT(`maphong`, `tenphong`, `somay`) LIKE '%" + searchText + "%'";
+            String query = "{call timPhong (?)}";
             cs = conn.getConnection().prepareCall(query);
 			cs.setString(1, searchText);
 			rs = cs.executeQuery();

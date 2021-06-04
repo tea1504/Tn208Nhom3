@@ -2,6 +2,7 @@ package view.phong;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 	JLabel lblMaPhong = new JLabel("Mã phòng:");
 	JLabel lblTenPhong = new JLabel("Tên phòng:");
 	JLabel lblSoLuongMay = new JLabel("Số lượng máy:");
-	JLabel lblTimKiem = new JLabel("Tìm kiếm:");
+	JLabel lblTimKiem = new JLabel("Tìm phòng:");
 	JTextField txtMaPhong = new JTextField(10);
 	JTextField txtTenPhong = new JTextField(10);
 	JTextField txtSoLuongMay = new JTextField(10);
@@ -262,6 +263,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 			JButton b = (JButton) e.getSource();
 			switch (b.getText()) {
 			case "Hủy":
+				table.setRowSelectionInterval(0, 0);
 				DKKBT();
 				GanDL();
 				them = false;
@@ -271,11 +273,21 @@ public class PhongGUI extends JFrame implements ActionListener{
 				DKKT();
 				break;
 			case "Lưu":
-				Luu();
+				try {
+					Luu();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				them = false;
 				break;
 			case "Xóa":
-				Xoa();
+				try {
+					Xoa();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				break;
 			case "Sửa":
 				DKKS();
@@ -284,7 +296,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 				this.dispose();
 				break;
 			case "Tìm kiếm":
-				TimKiem();
+				TimPhong();
 				break;
 			default:
 				break;
@@ -303,20 +315,23 @@ public class PhongGUI extends JFrame implements ActionListener{
 		txtMaPhong.setEditable(false);
 		txtTenPhong.setEditable(false);
 		txtSoLuongMay.setEditable(false);
+		txtTimKiem.setEditable(true);
+		txtTimKiem.setText("");
 		btnLuu.setEnabled(false);
 		btnHuy.setEnabled(false);
 		btnThem.setEnabled(true);
 		btnSua.setEnabled(true);
 		btnXoa.setEnabled(true);
 		btnThoat.setEnabled(true);
+		btnTimKiem.setEnabled(true);
 		table.setEnabled(true);
 		ok = true;
-		
 	}
 
 	private void DKKT() {
 		DKKS();
 		txtMaPhong.setEditable(true);
+		txtMaPhong.requestFocus();
 		txtMaPhong.setText("");
 		txtTenPhong.setText("");
 		txtSoLuongMay.setText("");
@@ -326,37 +341,44 @@ public class PhongGUI extends JFrame implements ActionListener{
 
 	private void DKKS() {
 		txtTenPhong.setEditable(true);
+		txtTenPhong.requestFocus();
 		txtSoLuongMay.setEditable(true);
+		txtTimKiem.setText("");
+		txtTimKiem.setEditable(false);
 		btnLuu.setEnabled(true);
 		btnHuy.setEnabled(true);
 		btnThem.setEnabled(false);
 		btnSua.setEnabled(false);
 		btnXoa.setEnabled(false);
 		btnThoat.setEnabled(false);
+		btnTimKiem.doClick();
+		btnTimKiem.setEnabled(false);
+		
 	}
 
-	private void Luu() {
+	private void Luu() throws SQLException {
 		if (check()) {
 			int row = table.getSelectedRow();
 			if (them) {
 				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(), Integer.parseInt(txtSoLuongMay.getText()));
 				PhongDAO ctrl = new PhongDAO();
-				int r = ctrl.ThemPhong(p);
+				boolean r = ctrl.ThemPhong(p);
 				PhongSetTableModel model = new PhongSetTableModel();
 				table.setModel(model);
 				table.changeSelection(row, 0, false, false);
-				if (r == -1)
+				if (r)
 					JOptionPane.showMessageDialog(null, "Lưu không thành công", "Thông báo", JOptionPane.ERROR_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(null, "Lưu Thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				table.setRowSelectionInterval(0, 0);
 			}
 			else {
 				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(), Integer.parseInt(txtSoLuongMay.getText()));
 				PhongDAO ctrl = new PhongDAO();
-				int r = ctrl.SuaPhong(p);
+				boolean r = ctrl.SuaPhong(p);
 				table.setModel(new PhongSetTableModel());
 				table.changeSelection(row, 0, false, false);
-				if (r == -1)
+				if (r)
 					JOptionPane.showMessageDialog(null, "Lưu không thành công", "Thông báo", JOptionPane.ERROR_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(null, "Lưu Thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -366,17 +388,17 @@ public class PhongGUI extends JFrame implements ActionListener{
 		}
 	};
 
-	private void Xoa() {
+	private void Xoa() throws SQLException {
 		int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa ?", "Thông báo", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null);
 		if (result == JOptionPane.YES_OPTION) {
 			Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(),Integer.parseInt(txtSoLuongMay.getText()));
 			PhongDAO ctrl = new PhongDAO();
-			int r = ctrl.XoaPhong(p);
+			boolean r = ctrl.XoaPhong(p);
 			PhongSetTableModel model = new PhongSetTableModel();
 			table.setModel(model);
 			table.changeSelection(0, 0, false, false);
-			if (r == -1)
+			if (r)
 				JOptionPane.showMessageDialog(null, "Xóa không thành công", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			else
 				JOptionPane.showMessageDialog(null, "Xóa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -386,7 +408,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		GanDL();
 	}
 
-	public void TimKiem()
+	public void TimPhong()
     {
 		PhongDAO ctrl = new PhongDAO();
         ArrayList<Phong> phongs = ctrl.TimPhong(txtTimKiem.getText());
@@ -402,7 +424,8 @@ public class PhongGUI extends JFrame implements ActionListener{
             model.addRow(row);
         }
        table.setModel(model);
-       
+       table.setRowSelectionInterval(0, 0);
+       GanDL();
     }
 	
 	public static boolean isNumeric(String str) { 
