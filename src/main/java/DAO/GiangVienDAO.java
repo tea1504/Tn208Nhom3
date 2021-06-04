@@ -26,7 +26,7 @@ public class GiangVienDAO {
 			while (rs.next()) {
 				GiangVien temp = new GiangVien(rs.getString(1), rs.getString(2));
 				LopDAO lop = new LopDAO();
-				temp.setDsLop(lop.getLop(temp.getmaGiangVien()));
+				temp.setDsLop(lop.getLopTheoMaGiangVien(temp.getmaGiangVien()));
 				list.add(temp);
 			}
 		} catch (SQLException e) {

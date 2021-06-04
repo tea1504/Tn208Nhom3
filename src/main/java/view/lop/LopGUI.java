@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -307,7 +308,6 @@ public class LopGUI extends JFrame {
 			btnTimKiem.addActionListener(this);
 			icon = new ImageIcon(this.getClass().getResource("close.png"));
 			btnTimKiem.setIcon(icon);
-			btnTimKiem.setSize(20, HEIGHT);
 		}
 
 		@Override
@@ -326,11 +326,21 @@ public class LopGUI extends JFrame {
 					DKKT();
 					break;
 				case "Lưu":
-					Luu();
+					try {
+						Luu();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					them = false;
 					break;
 				case "Xóa":
-					Xoa();
+					try {
+						Xoa();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					break;
 				case "Sửa":
 					DKKS();
@@ -339,7 +349,7 @@ public class LopGUI extends JFrame {
 					lop.dispose();
 					break;
 				case "Tìm kiếm":
-					TimKiem();
+					timlop();;
 					break;
 				default:
 					break;
@@ -390,18 +400,18 @@ public class LopGUI extends JFrame {
 			btnThoat.setEnabled(false);
 		}
 // chuc nang luu
-		private void Luu() {
+		private void Luu() throws SQLException {
 			if (check()) {
 				int row = tb.getTable().getSelectedRow();
 				if (them) {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
 					Lop l = new Lop(tt.txtMaLop.getText(), gv.getmaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
 					LopDAO ctrl = new LopDAO();
-					int r = ctrl.ThemLop(l);
+					boolean r = ctrl.ThemLop(l);
 					LopSetTableModel model = new LopSetTableModel();
 					tb.getTable().setModel(model);
 					tb.getTable().changeSelection(row, 0, false, false);
-					if (r == -1)
+					if (r)
 						JOptionPane.showMessageDialog(null, "không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
 					else
 						JOptionPane.showMessageDialog(null, "thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
@@ -410,10 +420,10 @@ public class LopGUI extends JFrame {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
 					Lop l = new Lop(tt.txtMaLop.getText(), gv.getmaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
 					LopDAO ctrl = new LopDAO();
-					int r = ctrl.SuaLop(l);
+					boolean r = ctrl.SuaLop(l);
 					tb.getTable().setModel(new LopSetTableModel());
 					tb.getTable().changeSelection(row, 0, false, false);
-					if (r == -1)
+					if (r)
 						JOptionPane.showMessageDialog(null, "không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
 					else
 						JOptionPane.showMessageDialog(null, "thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
@@ -423,7 +433,7 @@ public class LopGUI extends JFrame {
 			}
 		};
 // chuc nang xoa
-		private void Xoa() {
+		private void Xoa() throws SQLException {
 			int result = JOptionPane.showConfirmDialog(null, "Xác nhận", "thông báo", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null);
 			if (result == JOptionPane.YES_OPTION) {
@@ -431,11 +441,11 @@ public class LopGUI extends JFrame {
 				Lop l = new Lop(tt.txtMaLop.getText(), gv.getmaGiangVien(), tt.txtTenLop.getText(),
 						Integer.parseInt(tt.txtSiSo.getText()));
 				LopDAO ctrl = new LopDAO();
-				int r = ctrl.XoaLop(l);
+				boolean r = ctrl.XoaLop(l);
 				LopSetTableModel model = new LopSetTableModel();
 				tb.getTable().setModel(model);
 				tb.getTable().changeSelection(0, 0, false, false);
-				if (r == -1)
+				if (r)
 					JOptionPane.showMessageDialog(null, "không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(null, "thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
@@ -449,7 +459,25 @@ public class LopGUI extends JFrame {
 		}
 		//ham tim kiem lop
 		
-		
+		public void timlop()
+	    {
+			LopDAO lopDAO = new LopDAO();
+	        ArrayList<Lop> lop = lopDAO.timloptheoma(tt.txttimkiem.getText());
+	        DefaultTableModel model = new DefaultTableModel();
+	        model.setColumnIdentifiers(new Object[]{"Mã lớp","Tên lớp","Sỉ số lớp","Mã giảng viên"});
+	        Object[] row = new Object[4];
+	        
+	        for(int i = 0; i < lop.size(); i++)
+	        {
+	            row[0] = lop.get(i).getMaLop();
+	            row[1] = lop.get(i).getTenLop();
+	            row[2] = lop.get(i).getSiSoLop();
+	            row[3] = lop.get(i).getMaGV();
+	            model.addRow(row);
+	        }
+	       tb.getTable().setModel(model);
+	       
+	    }
 		
 		private boolean isNumeric(String str) { 
 			  try {  
@@ -475,30 +503,9 @@ public class LopGUI extends JFrame {
 			}
 			return true;
 		}
-		//// tim kiem
-		public void TimKiem()
-	    {
-			LopDAO lopDAO = new LopDAO();
-	        ArrayList<Lop> lopA = lopDAO.timlop(tt.txttimkiem.getText());
-	        
-	        DefaultTableModel model = new DefaultTableModel();
-	        model.setColumnIdentifiers(new Object[]{"Mã lớp","Mã giang viên","Tên lớp","Sỉ số"});
-	        Object[] row = new Object[4];
-	        
-	        for(int i = 0; i < lopA.size(); i++)
-	        {
-	            row[0] = lopA.get(i).getMaLop();
-	            row[1] = lopA.get(i).getMaGV();
-	            row[2] = lopA.get(i).getTenLop();
-	            row[3] = lopA.get(i).getSiSoLop();
-	            model.addRow(row);
-	        }
-	        tb.getTable().setModel(model);
-	       
-	    }
 	}
 	
-	/////// cai view cho khung hien thi ///////
+	/////// cai view cho khung hien thi ////////////
 	
 	private class ThongTin extends JPanel implements ActionListener {
 		JLabel lblMaLop = new JLabel("Mã lớp:");
@@ -609,4 +616,3 @@ public class LopGUI extends JFrame {
 		}
 	}
 }
-
