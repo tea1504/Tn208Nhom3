@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import DAO.GiangVienDAO;
 import DAO.LopDAO;
@@ -306,6 +307,7 @@ public class LopGUI extends JFrame {
 			btnTimKiem.addActionListener(this);
 			icon = new ImageIcon(this.getClass().getResource("close.png"));
 			btnTimKiem.setIcon(icon);
+			btnTimKiem.setSize(20, HEIGHT);
 		}
 
 		@Override
@@ -335,6 +337,9 @@ public class LopGUI extends JFrame {
 					break;
 				case "Thoát":
 					lop.dispose();
+					break;
+				case "Tìm kiếm":
+					TimKiem();
 					break;
 				default:
 					break;
@@ -470,11 +475,32 @@ public class LopGUI extends JFrame {
 			}
 			return true;
 		}
+		//// tim kiem
+		public void TimKiem()
+	    {
+			LopDAO lopDAO = new LopDAO();
+	        ArrayList<Lop> lopA = lopDAO.timlop(tt.txttimkiem.getText());
+	        
+	        DefaultTableModel model = new DefaultTableModel();
+	        model.setColumnIdentifiers(new Object[]{"Mã lớp","Mã giang viên","Tên lớp","Sỉ số"});
+	        Object[] row = new Object[4];
+	        
+	        for(int i = 0; i < lopA.size(); i++)
+	        {
+	            row[0] = lopA.get(i).getMaLop();
+	            row[1] = lopA.get(i).getMaGV();
+	            row[2] = lopA.get(i).getTenLop();
+	            row[3] = lopA.get(i).getSiSoLop();
+	            model.addRow(row);
+	        }
+	        tb.getTable().setModel(model);
+	       
+	    }
 	}
 	
-	/////// cai view cho khung hien thi
+	/////// cai view cho khung hien thi ///////
 	
-	public class ThongTin extends JPanel implements ActionListener {
+	private class ThongTin extends JPanel implements ActionListener {
 		JLabel lblMaLop = new JLabel("Mã lớp:");
 		JLabel lblTenLop = new JLabel("Tên lớp:");
 		JLabel lblGiaoVien = new JLabel("Giảng viên dạy:");

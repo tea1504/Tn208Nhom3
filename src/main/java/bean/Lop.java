@@ -5,6 +5,7 @@ public class Lop {
 	private String TenLop;
 	private int SiSoLop;
 	private String MaGV;
+	
 	public String getMaGV() {
 		return MaGV;
 	}
