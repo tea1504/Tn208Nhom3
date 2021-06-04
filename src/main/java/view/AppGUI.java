@@ -15,7 +15,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import view.lop.LopGUI;
-import view.phong.PhongGUI;
+
 
 @SuppressWarnings("serial")
 public class AppGUI extends JFrame implements ActionListener {
@@ -141,7 +141,7 @@ public class AppGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == mnuPhong) {
-			new PhongGUI();
+			
 		}
 		else if(e.getSource() == mnuLop) {
 			new LopGUI();
