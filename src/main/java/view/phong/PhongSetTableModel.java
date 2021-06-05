@@ -25,6 +25,7 @@ public class PhongSetTableModel extends AbstractTableModel {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void disconnect() {
 		conn.closeConnection();
