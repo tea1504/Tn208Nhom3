@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import DAO.GiangVienDAO;
 import DAO.GiangVienDAO;
 import bean.GiangVien;
+import bean.TaiKhoan;
 import bean.GiangVien;
 
 
@@ -163,7 +164,12 @@ public class dieukhien extends JPanel implements ActionListener {
 			if (list.get(i).getMaGiangVien().compareTo(ma) == 0)
 				index = i;
 		}
-//		tt.cboQuyenSD.setSelectedIndex(index);
+		if(Integer.parseInt(tb.getTable().getValueAt(r,2).toString())==0) {
+			tt.cboQuyenSD.setSelectedIndex(1);
+		}else {
+			tt.cboQuyenSD.setSelectedIndex(0);
+		}
+		
 	}
 
 	private void DKKBT() {
@@ -206,7 +212,7 @@ public class dieukhien extends JPanel implements ActionListener {
 				if (r == -1)
 					JOptionPane.showMessageDialog(null, "Không lưu được", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				else
-					JOptionPane.showMessageDialog(null, "Đã lưu", "OK", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Đã lưu \n Mã giảng viên: "+ tt.txtMaGiangVien.getText()+" \nTên giảng viên:" + tt.txtTenGiangVien.getText() +"\n Mật khẩu: 12345 "+"\n Quyền sử dụng: User" , "OK", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
 				GiangVien gv = new GiangVien(tt.txtMaGiangVien.getText(), tt.txtTenGiangVien.getText());
@@ -217,7 +223,7 @@ public class dieukhien extends JPanel implements ActionListener {
 				if (r == -1)
 					JOptionPane.showMessageDialog(null, "Không lưu được", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				else
-					JOptionPane.showMessageDialog(null, "Đã lưu", "OK", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Đã lưu \n Mã giảng viên: "+ tt.txtMaGiangVien.getText()+" \nTên giảng viên:" + tt.txtTenGiangVien.getText()+"\n Lưu ý: Chỉ có thể sửa quyền sử dụng ở bảng Tài Khoản", "OK", JOptionPane.INFORMATION_MESSAGE);
 			}
 			DKKBT();
 			GanDL();
@@ -237,7 +243,7 @@ public class dieukhien extends JPanel implements ActionListener {
 			if (r == -1)
 				JOptionPane.showMessageDialog(null, "Không xóa được", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			else
-				JOptionPane.showMessageDialog(null, "Đã xóa", "OK", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Đã xóa"+ tt.txtTenGiangVien.getText(), "OK", JOptionPane.INFORMATION_MESSAGE);
 
 		}
 		else {

@@ -9,7 +9,7 @@ package bean;
 public class GiangVien {
 	private String maGiangVien;
 	private String tenGiangVien;
-	
+	private int quyenSD;
 	public GiangVien() {
 		super();
 	}
@@ -19,7 +19,12 @@ public class GiangVien {
 		this.maGiangVien=maGiangVien;
 		this.tenGiangVien=tenGiangVien;
 	}
-	
+	public GiangVien(String maGiangVien, String tenGiangVien, int quyenSD) {
+		super();
+		this.maGiangVien=maGiangVien;
+		this.tenGiangVien=tenGiangVien;
+		this.quyenSD=quyenSD;
+	}
 	
 	public String getMaGiangVien() {
 		return maGiangVien;

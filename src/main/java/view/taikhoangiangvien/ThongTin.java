@@ -25,11 +25,10 @@ public class ThongTin extends JPanel implements ActionListener {
 	JLabel lblMaGiangVien = new JLabel("Mã giảng viên:");
 	JLabel lblTenGiangVien = new JLabel("Tên giảng viên:");
 	JTextField txtMaGiangVien = new JTextField(10);
-	JTextField txtTenGiangVien = new JTextField(10);
-	
-//	JLabel lblQuyenSD = new JLabel("Quyền sử dụng:");
-//	String quyensd[] = {"Admin","User"};
-//	JComboBox cboQuyenSD = new JComboBox(quyensd);
+	JTextField txtTenGiangVien = new JTextField(10);	
+	JLabel lblQuyenSD = new JLabel("Quyền sử dụng:");
+	String quyensd[] = {"Admin","User"};
+	JComboBox cboQuyenSD = new JComboBox(quyensd);
 
 	public ThongTin() {
 //		cboQuyenSD.addActionListener(this);
@@ -45,7 +44,7 @@ public class ThongTin extends JPanel implements ActionListener {
 		gbc.gridy++;
 		add(lblTenGiangVien, gbc);
 		gbc.gridy++;
-//		add(lblQuyenSD, gbc);
+		add(lblQuyenSD, gbc);
 		gbc.gridx++;
 		gbc.gridy = 0;
 		gbc.weightx = 1.0;
@@ -55,7 +54,7 @@ public class ThongTin extends JPanel implements ActionListener {
 		gbc.gridy++;
 		add(txtTenGiangVien, gbc);
 		gbc.gridy++;
-//		add(cboQuyenSD, gbc);
+		add(cboQuyenSD, gbc);
 		DKKBT();
 	}
 
@@ -66,11 +65,13 @@ public class ThongTin extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-//		if(e.getSource() == cboQuyenSD) {
-//		}
+		if(e.getSource() == cboQuyenSD) {
+			
+		}
 	}
 	public void DKKBT() {
-//		cboQuyenSD.setEnabled(false);
+		cboQuyenSD.setEnabled(false);
+		cboQuyenSD.setEditable(false);
 		txtMaGiangVien.setEditable(false);
 		txtTenGiangVien.setEditable(false);
 	}
@@ -80,18 +81,20 @@ public class ThongTin extends JPanel implements ActionListener {
 		txtTenGiangVien.setEditable(true);
 		txtMaGiangVien.setText("");
 		txtTenGiangVien.setText("");
-//		cboQuyenSD.setSelectedIndex(0);
+		cboQuyenSD.setSelectedIndex(1);
+		cboQuyenSD.setEditable(false);
 	}
 	public void DKKS() {
 		txtTenGiangVien.setEditable(true);
-//		cboQuyenSD.setEnabled(true);
+		cboQuyenSD.setSelectedIndex(1);
+		cboQuyenSD.setEditable(false);
 	}
 	public void setup() {
 		 lblMaGiangVien.setFont(new Font("Arial", Font.BOLD, 18));
 		 lblTenGiangVien.setFont(new Font("Arial", Font.BOLD, 18));
 		 txtMaGiangVien.setFont(new Font("Arial",0, 18));
 		 txtTenGiangVien.setFont(new Font("Arial",0, 18));
-//		 lblQuyenSD.setFont(new Font("Arial", Font.BOLD, 18));
-//		 cboQuyenSD.setFont(new Font("Arial", 0, 18));
+		 lblQuyenSD.setFont(new Font("Arial", Font.BOLD, 18));
+		 cboQuyenSD.setFont(new Font("Arial", 0, 18));
 	}
 }

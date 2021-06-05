@@ -13,12 +13,12 @@ public class GiangVienSetTableModel extends AbstractTableModel {
 	private DBConnection conn = new DBConnection();
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
-	private final String title[] = {"Mã giảng viên", "Tên giảng viên"};
+	private final String title[] = {"Mã giảng viên", "Tên giảng viên", "Quyền sử dụng"};
 	
 	public GiangVienSetTableModel() {
 		try {
 			conn.getConnection();
-			String query = "select * from giangvien";
+			String query = "SELECT gv.magiangvien, gv.tengiangvien , tk.quyensd FROM giangvien gv INNER JOIN taikhoan tk ON gv.magiangvien=tk.magiangvien";
 			rs = conn.excuted(query);
 			rsmd = rs.getMetaData();
 		} catch (SQLException e) {

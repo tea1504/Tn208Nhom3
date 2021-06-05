@@ -76,7 +76,12 @@ public class Table extends JPanel {
 						if (list.get(i).getMaGiangVien().compareTo(ma) == 0)
 							index = i;
 					}
-//					tt.cboQuyenSD.setSelectedIndex(index);
+					if(Integer.parseInt(table.getValueAt(r,2).toString())==0) {
+						tt.cboQuyenSD.setSelectedIndex(1);
+					}else {
+						tt.cboQuyenSD.setSelectedIndex(0);
+					}
+					
 				}
 			}
 		});
