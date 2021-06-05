@@ -9,7 +9,13 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Date;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
@@ -30,6 +36,12 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import DAO.LopDAO;
+import DAO.PhongDAO;
+import bean.Lop;
+import bean.Phong;
+import bean.TaiKhoan;
+import helpers.SharedData;
 
 @SuppressWarnings("serial")
 public class DangKyGUI extends JFrame implements ActionListener {
@@ -37,10 +49,18 @@ public class DangKyGUI extends JFrame implements ActionListener {
 	private JLabel title = new JLabel();
 	private JButton btnDangKy, btnNhapLai;
 	private JLabel lblPhong, lblLop, lblNgay, lblBuoi;
-	private JComboBox<String> cboPhong, cboLop, cboBuoi;
+	private JComboBox<String> cboBuoi;
+	private JComboBox<Phong> cboPhong;
+	private JComboBox<Lop> cboLop;
 	private UtilDateModel model;
 	private JDatePanelImpl datePane;
 	private JDatePickerImpl datePicker;
+	private Calendar selectedDate = new GregorianCalendar();
+	private String now = selectedDate.get(Calendar.YEAR) + "-" + (selectedDate.get(Calendar.MONTH) + 1) + "-"
+			+ selectedDate.get(Calendar.DATE);
+	private int selectedBuoi = 0;
+	private int selectedSiSo = 0;
+	private TaiKhoan user = SharedData.CurentAccount;
 
 	public DangKyGUI() {
 		khoiTaoFrame();
@@ -119,13 +139,51 @@ public class DangKyGUI extends JFrame implements ActionListener {
 		cboBuoi.setFont(new Font("Arial", Font.PLAIN, 30));
 		cboBuoi.addActionListener(this);
 		// cboPhong
-		cboPhong = new JComboBox<String>();
+		cboPhong = new JComboBox<Phong>();
 		cboPhong.setFont(new Font("Arial", Font.PLAIN, 30));
 		cboPhong.addActionListener(this);
+		setupComboboxPhong();
+		cboPhong.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				if (datePicker.getModel().getValue() != null) {
+					now = datePicker.getModel().getYear() + "-" + (datePicker.getModel().getMonth()+1) + "-"
+							+ datePicker.getModel().getDay();
+				}
+				setupComboboxPhong();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				if (datePicker.getModel().getValue() != null) {
+					now = datePicker.getModel().getYear() + "-" + (datePicker.getModel().getMonth()+1) + "-"
+							+ datePicker.getModel().getDay();
+				}
+				setupComboboxPhong();
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		// cboLop
-		cboLop = new JComboBox<String>();
+		cboLop = new JComboBox<Lop>();
 		cboLop.setFont(new Font("Arial", Font.PLAIN, 30));
 		cboLop.addActionListener(this);
+		LopDAO lopDAO = new LopDAO();
+		ArrayList<Lop> listLop = lopDAO.getLop(user.getMaGiangVien());
+		for (Lop lop : listLop) {
+			cboLop.addItem(lop);
+		}
 		// pNhapLieu
 		pNhapLieu = new JPanel(new GridBagLayout());
 		TitledBorder titleBorder = BorderFactory.createTitledBorder("Chọn thông tin");
@@ -142,9 +200,9 @@ public class DangKyGUI extends JFrame implements ActionListener {
 		gbc.gridy++;
 		pNhapLieu.add(lblBuoi, gbc);
 		gbc.gridy++;
-		pNhapLieu.add(lblPhong, gbc);
-		gbc.gridy++;
 		pNhapLieu.add(lblLop, gbc);
+		gbc.gridy++;
+		pNhapLieu.add(lblPhong, gbc);
 		gbc.weightx = 0.9;
 		gbc.insets = new Insets(10, 0, 10, 50);
 		gbc.gridx = 1;
@@ -153,9 +211,18 @@ public class DangKyGUI extends JFrame implements ActionListener {
 		gbc.gridy++;
 		pNhapLieu.add(cboBuoi, gbc);
 		gbc.gridy++;
-		pNhapLieu.add(cboPhong, gbc);
-		gbc.gridy++;
 		pNhapLieu.add(cboLop, gbc);
+		gbc.gridy++;
+		pNhapLieu.add(cboPhong, gbc);
+	}
+
+	private void setupComboboxPhong() {
+		cboPhong.removeAllItems();
+		PhongDAO phongDAO = new PhongDAO();
+		ArrayList<Phong> listPhong = phongDAO.getPhongChuaDangKy(now, selectedBuoi, selectedSiSo);
+		for (Phong phong : listPhong) {
+			cboPhong.addItem(phong);
+		}
 	}
 
 	private void setupButton() {
@@ -209,7 +276,11 @@ public class DangKyGUI extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnNhapLai) {
 			datePicker.getModel().setValue(null);
 		} else if (e.getSource() == cboBuoi) {
-			System.out.println("CboBuoi");
+			selectedBuoi = cboBuoi.getSelectedIndex();
+			setupComboboxPhong();
+		} else if (e.getSource() == cboLop) {
+			selectedSiSo = ((Lop) cboLop.getSelectedItem()).getSiSoLop();
+			setupComboboxPhong();
 		}
 	}
 }

@@ -12,5 +12,5 @@ public interface IPhongMayDAO {
 	boolean XoaPhong(Phong p) throws SQLException;
 	ArrayList<Phong> TimPhong(String searchText);
 	ArrayList<Phong> ListPhong();
-	ArrayList<Phong> getPhongChuaDangKy(Date ngaydangky, int buoidangky);
+	ArrayList<Phong> getPhongChuaDangKy(String ngaydangky, int buoidangky, int siso);
 }
