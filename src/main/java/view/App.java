@@ -13,7 +13,7 @@ public class App {
 			
 			@Override
 			public void run() {
-				new QLPM_DangNhap("Đăng nhập");
+				new AppGUI();
 			}
 		});
 	}

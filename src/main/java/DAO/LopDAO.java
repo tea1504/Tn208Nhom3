@@ -17,12 +17,12 @@ import bean.Phong;
 public class LopDAO implements ILopDAO {
 	DBConnection conn = new DBConnection();
 	CallableStatement callableStatement;
-
+// lay danh sach lop su dung procedure
 	public ArrayList<Lop> getLop() {
 		ResultSet rs;
 		ArrayList<Lop> list = new ArrayList<Lop>();
 		conn.getConnection();
-		String query = "{call listlop ()}";;
+		String query = "{call listlop()}";;
 		rs = conn.excuted(query);
 		try {
 			while (rs.next()) {
@@ -38,14 +38,17 @@ public class LopDAO implements ILopDAO {
 		conn.closeConnection();
 		return list;
 	}
-
-	public ArrayList<Lop> getLopTheoMaGiangVien(String id) {
+// lấy danh sách lớp theo mã giang vien su dung procedure
+	public ArrayList<Lop> getLopTheoMaGiangVien(String ma) {
 		ResultSet rs;
 		ArrayList<Lop> list = new ArrayList<Lop>();
-		conn.getConnection();
-		String query = "select * from lop where magiangvien='" + id + "'";
-		rs = conn.excuted(query);
+		
 		try {
+		conn.getConnection();
+		String query = "{call getLopTheoMaGiangVien(?)}";
+		callableStatement = conn.getConnection().prepareCall(query);
+		callableStatement.setString(1, ma);
+		rs = callableStatement.executeQuery();
 			while (rs.next()) {
 				Lop temp = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
 				GiangVienDAO gv = new GiangVienDAO();
@@ -59,40 +62,40 @@ public class LopDAO implements ILopDAO {
 		conn.closeConnection();
 		return list;
 	}
-
+// thêm lớp mới sử dụng procedure
 	public boolean ThemLop(Lop l) throws SQLException {
-		String query = "{call themlopmoi (?,?,?,?)}";
+		String query = "{call themlopmoi(?,?,?,?)}";
 		callableStatement = conn.getConnection().prepareCall(query);
 		callableStatement.setString(1, l.getMaLop());
 		callableStatement.setString(2, l.getTenLop());
-		callableStatement.setInt(3, l.getSiSoLop());
-		callableStatement.setString(4, l.getMaGiangVien());
+		callableStatement.setString(3, l.getMaGiangVien());
+		callableStatement.setInt(4, l.getSiSoLop());
 		boolean r = callableStatement.execute();
 		conn.closeConnection();
 		return r;
 	}
-
+// sửa lớp sử dụng procedure
 	public boolean SuaLop(Lop l) throws SQLException {
-		String query = "{call sualop3(?,?,?,?)}";
+		String query = "{call sualop(?,?,?,?)}";
 		callableStatement = conn.getConnection().prepareCall(query);
 		callableStatement.setString(1, l.getMaLop());
 		callableStatement.setString(2, l.getTenLop());
-		callableStatement.setInt(3, l.getSiSoLop());
-		callableStatement.setString(4, l.getMaGiangVien());
+		callableStatement.setString(3, l.getMaGiangVien());
+		callableStatement.setInt(4, l.getSiSoLop());
 		boolean r = callableStatement.execute();
 		conn.closeConnection();
 		return r;
 	}
-
-	public boolean XoaLop(Lop l) throws SQLException {
-		String query = "{call xoalop4(?)}";
+// xóa lớp sử dụng procedure
+	public boolean XoaLop(Lop l) throws SQLException{
+		String query = "{call xoalop(?)}";
 		callableStatement = conn.getConnection().prepareCall(query);
 		callableStatement.setString(1, l.getMaLop());
 		boolean r = callableStatement.execute();
 		conn.closeConnection();
 		return r;
 	}
-	
+	// tim kiem lớp sử dụng procedure
 	public ArrayList<Lop> timloptheoma(String searchMa)
     {
         ArrayList<Lop> list = new ArrayList<Lop>();
@@ -101,7 +104,7 @@ public class LopDAO implements ILopDAO {
         
         try{
             conn.getConnection();
-            String query = "{call timkiem4 (?)}";
+            String query = "{call timlop(?)}";
             callableStatement = conn.getConnection().prepareCall(query);
 			callableStatement.setString(1, searchMa);
 			rs = callableStatement.executeQuery();

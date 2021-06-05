@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/DAO/LopDAO.java=UTF-8
 encoding//src/main/java/bean/DBConnection.java=UTF-8
 encoding//src/main/java/view/AppGUI.java=UTF-8
 encoding//src/main/java/view/lop/LopGUI.java=UTF-8

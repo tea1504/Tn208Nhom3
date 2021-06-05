@@ -44,7 +44,9 @@ public class LopGUI extends JFrame {
 	
 	private JScrollPane pane;
 	private boolean ok = true;
-// lop GUI
+	
+// lop giao dien
+	
 	public LopGUI() {
 		thongtin = new ThongTin();
 		table = new Table(thongtin);
@@ -85,7 +87,7 @@ public class LopGUI extends JFrame {
 		setTitle("Quản lý lớp học");
 		setVisible(true);
 	}
-	///////set table
+	///////set table//////////
 	private class Table extends JPanel {
 		private LopSetTableModel model = new LopSetTableModel();
 		private JTable table;
@@ -202,7 +204,7 @@ public class LopGUI extends JFrame {
 	}
 	
 	
-	////////////////nut chuc nang
+	////////////////nut chuc nang//////////
 	
 	public class dieukhien extends JPanel implements ActionListener {
 		private JButton btnThem = new JButton("Thêm");
@@ -244,7 +246,7 @@ public class LopGUI extends JFrame {
 			add(btnTimKiem, gbc);
 			DKKBT();
 		}
-//cai dat cac nut chuc nang
+           //cai dat cac nut chuc nang///////
 		private void setup() {
 			btnThem.setFont(new Font("Arial", Font.BOLD, 24));
 			btnThem.setBackground(new Color(9, 132, 227));
@@ -360,8 +362,8 @@ public class LopGUI extends JFrame {
 		private void GanDL() {
 			int r = tb.getTable().getSelectedRow();
 			tt.txtMaLop.setText(tb.getTable().getValueAt(r, 0).toString());
-			tt.txtTenLop.setText(tb.getTable().getValueAt(r, 2).toString());
-			String ma = tb.getTable().getValueAt(r, 1).toString();
+			tt.txtTenLop.setText(tb.getTable().getValueAt(r, 1).toString());
+			String ma = tb.getTable().getValueAt(r, 2).toString();
 			GiangVienDAO gvdao = new GiangVienDAO();
 			ArrayList<GiangVien> list = gvdao.getGiangVien();
 			int index = -1;
@@ -387,6 +389,7 @@ public class LopGUI extends JFrame {
 		private void DKKT() {
 			DKKS();
 			tt.DKKT();
+			btnTimKiem.setEnabled(false);
 		}
 // dieu khien khi chinh sua
 		private void DKKS() {
@@ -398,6 +401,7 @@ public class LopGUI extends JFrame {
 			btnSua.setEnabled(false);
 			btnXoa.setEnabled(false);
 			btnThoat.setEnabled(false);
+			btnTimKiem.setEnabled(false);
 		}
 // chuc nang luu
 		private void Luu() throws SQLException {
@@ -405,7 +409,7 @@ public class LopGUI extends JFrame {
 				int row = tb.getTable().getSelectedRow();
 				if (them) {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-					Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
+					Lop l = new Lop(tt.txtMaLop.getText(), tt.txtTenLop.getText(), gv.getMaGiangVien(), Integer.parseInt(tt.txtSiSo.getText()));
 					LopDAO ctrl = new LopDAO();
 					boolean r = ctrl.ThemLop(l);
 					LopSetTableModel model = new LopSetTableModel();
@@ -418,7 +422,7 @@ public class LopGUI extends JFrame {
 				}
 				else {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-					Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
+					Lop l = new Lop(tt.txtMaLop.getText(),tt.txtTenLop.getText(),gv.getMaGiangVien(),Integer.parseInt(tt.txtSiSo.getText()));
 					LopDAO ctrl = new LopDAO();
 					boolean r = ctrl.SuaLop(l);
 					tb.getTable().setModel(new LopSetTableModel());
@@ -438,8 +442,7 @@ public class LopGUI extends JFrame {
 					JOptionPane.QUESTION_MESSAGE, null);
 			if (result == JOptionPane.YES_OPTION) {
 				GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-				Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(),
-						Integer.parseInt(tt.txtSiSo.getText()));
+				Lop l = new Lop(tt.txtMaLop.getText(),tt.txtTenLop.getText(), gv.getMaGiangVien(),Integer.parseInt(tt.txtSiSo.getText()));
 				LopDAO ctrl = new LopDAO();
 				boolean r = ctrl.XoaLop(l);
 				LopSetTableModel model = new LopSetTableModel();
@@ -457,6 +460,9 @@ public class LopGUI extends JFrame {
 			DKKBT();
 			GanDL();
 		}
+		
+		
+
 		//ham tim kiem lop
 		
 		public void timlop()
@@ -470,9 +476,9 @@ public class LopGUI extends JFrame {
 	        for(int i = 0; i < lop.size(); i++)
 	        {
 	            row[0] = lop.get(i).getMaLop();
-	            row[1] = lop.get(i).getTenLop();
+	            row[1] = lop.get(i).getMaGiangVien();
 	            row[2] = lop.get(i).getSiSoLop();
-	            row[3] = lop.get(i).getGiangVien();
+	            row[3] = lop.get(i).getTenLop();
 	            model.addRow(row);
 	        }
 	       tb.getTable().setModel(model);
