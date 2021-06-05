@@ -160,7 +160,7 @@ public class dieukhien extends JPanel implements ActionListener {
 		ArrayList<GiangVien> list = gvdao.getGiangVien();
 		int index = -1;
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getMa().compareTo(ma) == 0)
+			if (list.get(i).getMaGiangVien().compareTo(ma) == 0)
 				index = i;
 		}
 		tt.cboGiangVien.setSelectedIndex(index);
@@ -199,7 +199,7 @@ public class dieukhien extends JPanel implements ActionListener {
 			int row = tb.getTable().getSelectedRow();
 			if (them) {
 				GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-				Lop l = new Lop(tt.txtMaLop.getText(), gv.getMa(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
+				Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
 				LopDAO ctrl = new LopDAO();
 				int r = ctrl.ThemLop(l);
 				LopSetTableModel model = new LopSetTableModel();
@@ -212,7 +212,7 @@ public class dieukhien extends JPanel implements ActionListener {
 			}
 			else {
 				GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-				Lop l = new Lop(tt.txtMaLop.getText(), gv.getMa(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
+				Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
 				LopDAO ctrl = new LopDAO();
 				int r = ctrl.SuaLop(l);
 				tb.getTable().setModel(new LopSetTableModel());
@@ -232,7 +232,7 @@ public class dieukhien extends JPanel implements ActionListener {
 				JOptionPane.QUESTION_MESSAGE, null);
 		if (result == JOptionPane.YES_OPTION) {
 			GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-			Lop l = new Lop(tt.txtMaLop.getText(), gv.getMa(), tt.txtTenLop.getText(),
+			Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(),
 					Integer.parseInt(tt.txtSiSo.getText()));
 			LopDAO ctrl = new LopDAO();
 			int r = ctrl.XoaLop(l);

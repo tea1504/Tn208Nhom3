@@ -79,7 +79,7 @@ public class Table extends JPanel {
 					ArrayList<GiangVien> list = gvdao.getGiangVien();
 					int index = -1;
 					for (int i = 0; i < list.size(); i++) {
-						if (list.get(i).getMa().compareTo(ma) == 0)
+						if (list.get(i).getMaGiangVien().compareTo(ma) == 0)
 							index = i;
 					}
 					tt.cboGiangVien.setSelectedIndex(index);

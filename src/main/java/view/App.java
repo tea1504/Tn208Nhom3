@@ -2,6 +2,10 @@ package view;
 
 import java.awt.EventQueue;
 
+import view.phong.PhongGUI;
+import view.taikhoan.TaiKhoanGUI;
+
+
 /**
  * Class chính cho chương trình
  * @author Trần Văn Hòa
