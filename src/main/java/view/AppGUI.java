@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import helpers.SharedData;
 import view.lop.LopGUI;
 import view.phong.PhongGUI;
+import view.taikhoangiangvien.GiangVienGUI;
 import view.taikhoan.DoiMatKhauGUI;
 import view.taikhoan.TaiKhoanGUI;
 
@@ -154,7 +155,7 @@ public class AppGUI extends JFrame implements ActionListener {
 			new LopGUI();
 		}
 		else if(e.getSource() == mnuGiangVien) {
-			new TaiKhoanGiangVienGUI();
+			new GiangVienGUI();
 		}
 		else if(e.getSource() == mnuTaiKhoan) {
 			new TaiKhoanGUI();
