@@ -180,7 +180,7 @@ public class DangKyGUI extends JFrame implements ActionListener {
 		cboLop.setFont(new Font("Arial", Font.PLAIN, 30));
 		cboLop.addActionListener(this);
 		LopDAO lopDAO = new LopDAO();
-		ArrayList<Lop> listLop = lopDAO.getLop(user.getMaGiangVien());
+		ArrayList<Lop> listLop = lopDAO.getLopTheoMaGiangVien(user.getMaGiangVien());
 		for (Lop lop : listLop) {
 			cboLop.addItem(lop);
 		}
