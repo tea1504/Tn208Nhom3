@@ -4,19 +4,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.sql.CallableStatement;
+
 import bean.DBConnection;
+import bean.GiangVien;
 import bean.Lop;
+import bean.Phong;
 
 
 
-public class LopDAO {
+
+public class LopDAO implements ILopDAO {
 	DBConnection conn = new DBConnection();
-
+	CallableStatement callableStatement;
+// lay danh sach lop su dung procedure
 	public ArrayList<Lop> getLop() {
 		ResultSet rs;
 		ArrayList<Lop> list = new ArrayList<Lop>();
 		conn.getConnection();
-		String query = "select * from lop";
+		String query = "{call listlop()}";;
 		rs = conn.excuted(query);
 		try {
 			while (rs.next()) {
@@ -32,14 +38,17 @@ public class LopDAO {
 		conn.closeConnection();
 		return list;
 	}
-
-	public ArrayList<Lop> getLop(String id) {
+// lấy danh sách lớp theo mã giang vien su dung procedure
+	public ArrayList<Lop> getLopTheoMaGiangVien(String ma) {
 		ResultSet rs;
 		ArrayList<Lop> list = new ArrayList<Lop>();
-		conn.getConnection();
-		String query = "select * from lop where magiangvien='" + id + "'";
-		rs = conn.excuted(query);
+		
 		try {
+		conn.getConnection();
+		String query = "{call getLopTheoMaGiangVien(?)}";
+		callableStatement = conn.getConnection().prepareCall(query);
+		callableStatement.setString(1, ma);
+		rs = callableStatement.executeQuery();
 			while (rs.next()) {
 				Lop temp = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
 				GiangVienDAO gv = new GiangVienDAO();
@@ -53,30 +62,62 @@ public class LopDAO {
 		conn.closeConnection();
 		return list;
 	}
-
-	public int ThemLop(Lop l) {
-		String query = "insert into lop (malop, magiangvien, tenlop, sisolop) values ('" + l.getMaLop() + "', '"
-				+ l.getMaGiangVien() + "', N'" + l.getTenLop() + "'," + l.getSiSoLop() + ")";
-		conn.getConnection();
-		int r = conn.update(query);
+// thêm lớp mới sử dụng procedure
+	public boolean ThemLop(Lop l) throws SQLException {
+		String query = "{call themlopmoi(?,?,?,?)}";
+		callableStatement = conn.getConnection().prepareCall(query);
+		callableStatement.setString(1, l.getMaLop());
+		callableStatement.setString(2, l.getTenLop());
+		callableStatement.setString(3, l.getMaGiangVien());
+		callableStatement.setInt(4, l.getSiSoLop());
+		boolean r = callableStatement.execute();
 		conn.closeConnection();
 		return r;
 	}
-
-	public int SuaLop(Lop l) {
-		String query = "update lop set magiangvien='" + l.getMaGiangVien() + "', tenlop=N'" + l.getTenLop() + "', sisolop="
-				+ l.getSiSoLop() + " where malop='" + l.getMaLop() + "'";
-		conn.getConnection();
-		int r = conn.update(query);
+// sửa lớp sử dụng procedure
+	public boolean SuaLop(Lop l) throws SQLException {
+		String query = "{call sualop(?,?,?,?)}";
+		callableStatement = conn.getConnection().prepareCall(query);
+		callableStatement.setString(1, l.getMaLop());
+		callableStatement.setString(2, l.getTenLop());
+		callableStatement.setString(3, l.getMaGiangVien());
+		callableStatement.setInt(4, l.getSiSoLop());
+		boolean r = callableStatement.execute();
 		conn.closeConnection();
 		return r;
 	}
-
-	public int XoaLop(Lop l) {
-		String query = "delete from lop where malop='" + l.getMaLop() + "'";
-		conn.getConnection();
-		int r = conn.update(query);
+// xóa lớp sử dụng procedure
+	public boolean XoaLop(Lop l) throws SQLException{
+		String query = "{call xoalop(?)}";
+		callableStatement = conn.getConnection().prepareCall(query);
+		callableStatement.setString(1, l.getMaLop());
+		boolean r = callableStatement.execute();
 		conn.closeConnection();
 		return r;
 	}
+	// tim kiem lớp sử dụng procedure
+	public ArrayList<Lop> timloptheoma(String searchMa)
+    {
+        ArrayList<Lop> list = new ArrayList<Lop>();
+      
+        ResultSet rs;
+        
+        try{
+            conn.getConnection();
+            String query = "{call timlop(?)}";
+            callableStatement = conn.getConnection().prepareCall(query);
+			callableStatement.setString(1, searchMa);
+			rs = callableStatement.executeQuery();
+            while(rs.next())
+            {
+            	Lop lop = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+            	list.add(lop);
+            }
+            
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        
+        return list;
+    }
 }
