@@ -14,8 +14,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import helpers.SharedData;
 import view.lop.LopGUI;
 import view.phong.PhongGUI;
+import view.taikhoan.DoiMatKhauGUI;
+import view.taikhoan.TaiKhoanGUI;
 
 @SuppressWarnings("serial")
 public class AppGUI extends JFrame implements ActionListener {
@@ -37,6 +40,9 @@ public class AppGUI extends JFrame implements ActionListener {
 		setBounds(300, 100, 1200, 800);
 		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
 		setIconImage(icon.getImage());
+		JLabel lblTaiKhoan = new JLabel("Mã giảng viên: "+ SharedData.CurentAccount.getMaGiangVien());// thêm lable hiện mã giảng viên đang đăng nhập
+		lblTaiKhoan.setFont(new Font("Arial", Font.ITALIC, 20));
+		add(lblTaiKhoan, BorderLayout.SOUTH);
 		setTitle("Chương trình quản lí phòng máy thực hành");
 //		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
@@ -151,7 +157,7 @@ public class AppGUI extends JFrame implements ActionListener {
 			new TaiKhoanGiangVienGUI();
 		}
 		else if(e.getSource() == mnuTaiKhoan) {
-			System.out.println("TaiKhoan");
+			new TaiKhoanGUI();
 		}
 		else if(e.getSource() == mnuDangKy) {
 			new DangKyGUI();
@@ -162,12 +168,15 @@ public class AppGUI extends JFrame implements ActionListener {
 		else if(e.getSource() == mnuXemLich) {
 			new QLPM_XemLich();
 		}
-		else if(e.getSource() == mnuDangXuat) {
-			System.out.println("DangXuat");
-		}
 		else if(e.getSource() == mnuDoiMatKhau) {
-			System.out.println("DoiMatKhau");
+			new DoiMatKhauGUI();
 		}
+		else if(e.getSource() == mnuDangXuat) {
+			SharedData.CurentAccount = null;
+			this.dispose();
+			new QLPM_DangNhap("Đăng nhập");
+		}
+		
 	}
 
 }

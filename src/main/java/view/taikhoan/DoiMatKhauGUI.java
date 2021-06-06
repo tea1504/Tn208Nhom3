@@ -1,4 +1,4 @@
-package view;
+package view.taikhoan;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,7 +11,6 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,44 +29,44 @@ import helpers.DataValidator;
 import helpers.PassWordHelper;
 import helpers.SharedData;
 
-
-public class QLPM_DangNhap extends JFrame{
+public class DoiMatKhauGUI extends JFrame{
 	private JPanel panel;
-	private JTextField txtMSGV;
-	private JPasswordField pwfMatKhau;
-	private JButton btnDangNhap, btnThoat;
+	private JPasswordField pwfMatKhau_old, pwfMatKhau_new, pwfMatKhau_nhaplai;
+	private JButton btnLuu, btnThoat;
 
-	private JLabel lblTitle, lblMSGV, lblMatKhau, lblImg, lblAuthor;
+	private JLabel lblTitle, lblMK_old, lblMK_new, lblMK_nhaplai,lblImg, lblAuthor;
 	private GridBagConstraints gbc;
 	
-	public QLPM_DangNhap(String title) throws HeadlessException
+	public DoiMatKhauGUI() throws HeadlessException
 	{
 		//Khởi tạo các thuộc tính
 		
-		super(title);
-		setSize(520,255); 
+		super();
+		setSize(550,255); 
 		setLocationRelativeTo(null); //center
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		setTitle("Đổi mật khẩu");
 		
-		lblTitle = new JLabel("QUẢN LÝ PHÒNG MÁY");
+		lblTitle = new JLabel("Đổi mật khẩu");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Arial", Font.BOLD, 16));
 		Border margin = new EmptyBorder(10,10,10,10);
 		lblTitle.setBorder(margin);
 		
 		panel = new JPanel();
-		lblMSGV = new JLabel("Mã giảng viên: ");
-		lblMatKhau = new JLabel("Mật khẩu: ");
+		lblMK_old = new JLabel("Mật khẩu cũ: ");
+		lblMK_new = new JLabel("Mật khẩu mới: ");
+		lblMK_nhaplai = new JLabel("Xác nhận lại: ");
 		lblAuthor = new JLabel("@TN208 - Nhóm 3");
-		txtMSGV = new JTextField("GV020");
-		pwfMatKhau = new JPasswordField("12345");
+		pwfMatKhau_old =new JPasswordField();
+		pwfMatKhau_new =new JPasswordField();
+		pwfMatKhau_nhaplai =new JPasswordField();
 
-		ImageIcon img = new ImageIcon(getClass().getResource("icon/icon-login.png"));
-		btnDangNhap = new JButton("Đăng nhập", new ImageIcon(img.getImage().getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING)));
-		img = new ImageIcon(getClass().getResource("icon/icon-exit.png"));
+		ImageIcon img = new ImageIcon(getClass().getResource("../icon/save.png"));
+		btnLuu = new JButton("Lưu thay đổi", new ImageIcon(img.getImage().getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING)));
+		img = new ImageIcon(getClass().getResource("../icon/icon-exit.png"));
 		btnThoat = new JButton("Thoát", new ImageIcon(img.getImage().getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING)));
-		img= new ImageIcon(this.getClass().getResource("icon/login.png"));
+		img= new ImageIcon(this.getClass().getResource("../icon/password-window.png"));
 		lblImg = new JLabel(new ImageIcon(img.getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
 	
 		
@@ -82,15 +81,15 @@ public class QLPM_DangNhap extends JFrame{
 	
 		//add panel's components 
 		GridBagLayout();
-		txtMSGV.requestFocus();
+		pwfMatKhau_old.requestFocus();
 		
 		// register event handlers
-		btnDangNhap.addActionListener(new ButtonHandler()); //inner class for button event handling
+		btnLuu.addActionListener(new ButtonHandler()); //inner class for button event handling
 		btnThoat.addActionListener(new ActionListener() {
 			// anonymous inner class
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				DoiMatKhauGUI.this.dispose();
 				
 			}
 		});
@@ -108,12 +107,13 @@ public class QLPM_DangNhap extends JFrame{
 		pAddComponent(lblImg, 0, 0, 1, 7);
 		
 		gbc.anchor=GridBagConstraints.CENTER;
-		pAddComponent(lblMSGV, 0, 1, 1, 1);
-		pAddComponent(lblMatKhau, 1, 1, 1, 1);
+		pAddComponent(lblMK_old, 0, 1, 1, 1);
+		pAddComponent(lblMK_new, 1, 1, 1, 1);
+		pAddComponent(lblMK_nhaplai, 2, 1, 1, 1);
 		
-		
-		pAddComponent(txtMSGV, 0, 2, 3, 1);
-		pAddComponent(pwfMatKhau, 1, 2, 3, 1);
+		pAddComponent(pwfMatKhau_old, 0, 2, 3, 1);
+		pAddComponent(pwfMatKhau_new, 1, 2, 3, 1);
+		pAddComponent(pwfMatKhau_nhaplai, 2, 2, 3, 1);
 		
 		gbc.weightx=0.5;
 		JLabel temp = new JLabel();
@@ -122,7 +122,7 @@ public class QLPM_DangNhap extends JFrame{
 		gbc.weightx=0;
 		gbc.weighty=0.5;
 		gbc.anchor=GridBagConstraints.LAST_LINE_END;
-		pAddComponent(btnDangNhap, 6, 3, 1, 1);
+		pAddComponent(btnLuu, 6, 3, 1, 1);
 		pAddComponent(btnThoat, 6, 4, 1, 1);
 	}
 	
@@ -137,16 +137,20 @@ public class QLPM_DangNhap extends JFrame{
 		} 
 		
 		
-	//Sự kiện cho btnDangNhap
+	//Sự kiện cho btnLuu
 		private class ButtonHandler implements ActionListener
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				StringBuilder str = new StringBuilder();
 				
-				//Kiểm tra dữ liệu đã nhập đủ chưa
-				DataValidator.validateEmptyPassWordField(pwfMatKhau, str, "Mật khẩu không được trống!");
-				DataValidator.validateEmptyTextField(txtMSGV, str, "Tên đăng nhập không được trống!");
+				//Kiểm tra tính hợp lệ của dữ liệu đã nhập
+				//Kiểm tra rỗng
+				DataValidator.validateEmptyPassWordField(pwfMatKhau_nhaplai, str, "Vui lòng xác nhận lại mật khẩu mới!");
+				DataValidator.validateEmptyPassWordField(pwfMatKhau_new, str, "Vui lòng nhập mật khẩu mới!");
+				DataValidator.validateEmptyPassWordField(pwfMatKhau_old, str, "Vui lòng nhập mật khẩu cũ!");
+				//Kiểm tra độ dài
+				DataValidator.validatePassWordFieldLength(pwfMatKhau_new, 50, str, "Độ dài mật khẩu phải dưới 50 ký tự!");
 				
 				//Nếu nhập chưa đủ thì hiện thông báo lỗi và return
 				if(str.length()>0)
@@ -156,23 +160,52 @@ public class QLPM_DangNhap extends JFrame{
 				}
 				
 				//Nếu đã nhập đủ
+				String mk_cu = PassWordHelper.getPassWordField(pwfMatKhau_old);
+				String mk_moi = PassWordHelper.getPassWordField(pwfMatKhau_new);
+				String mk_nhaplai = PassWordHelper.getPassWordField(pwfMatKhau_nhaplai);
 				
+				//Kiểm tra mật khẩu mới có khác mật khẩu cũ không
+				if(mk_moi.equals(mk_cu))
+				{
+					JOptionPane.showMessageDialog(null, "Mật khẩu mới phải khác mật khẩu cũ!", "Lỗi",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				//Kiểm tra nhập lại mật khẩu mới
+				if(!mk_moi.equals(mk_nhaplai))
+				{
+					JOptionPane.showMessageDialog(null, "Mật khẩu nhập lại không chính xác!", "Lỗi",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+					
 				TaiKhoanDAOImpl tkDAO = new TaiKhoanDAOImpl();
 				TaiKhoan tk = new TaiKhoan();
-				
+				String maGiangVien = SharedData.CurentAccount.getMaGiangVien();
 				try
 				{
-					tk = tkDAO.checkLogin(txtMSGV.getText(), PassWordHelper.getPassWordField(pwfMatKhau));			
-					//Không tìm thấy tài khoản
+					//Kiểm tra mật khẩu cũ nhập vào đúng không
+					tk = tkDAO.checkLogin(maGiangVien, PassWordHelper.getPassWordField(pwfMatKhau_old));	
+					
 					if(tk == null)
-						JOptionPane.showMessageDialog(null, "Sai MSGV hoặc mật khẩu!", "Đăng nhập không thành công",JOptionPane.ERROR_MESSAGE);
+					{
+						JOptionPane.showMessageDialog(null, "Mật khẩu cũ không chính xác!", "Lỗi",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					
+					//Nếu đổi mật khẩu thành công
+					if(tkDAO.changePassWord(maGiangVien, mk_moi) > 0)
+					{
+						JOptionPane.showMessageDialog(null, "Đổi mật khẩu thành công!", "Thành công",JOptionPane.INFORMATION_MESSAGE);
+						DoiMatKhauGUI.this.dispose();
+						return;
+					}
 					else
 					{
-						//Đăng nhập thành công
-						SharedData.CurentAccount = tk; //Lưu thông tin tài khoản hiện tại
-						new AppGUI();
-						QLPM_DangNhap.this.dispose();
+						JOptionPane.showMessageDialog(null, "Đổi mật khẩu không thành công!", "Lỗi",JOptionPane.ERROR_MESSAGE);
+						return;
 					}
+				
+					
 				}
 				catch (Exception ex) {
 					ex.printStackTrace();
@@ -182,5 +215,4 @@ public class QLPM_DangNhap extends JFrame{
 			}
 
 		}
-	
 }
