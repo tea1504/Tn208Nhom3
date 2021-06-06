@@ -9,10 +9,11 @@ import bean.DBConnection;
 import bean.DangKy;
 import bean.GiangVien;
 import bean.Lop;
+import bean.Phong;
 import DAO.IGiangVienDAO;
 
 
-public class GiangVienDAO implements IDangKyDAO{
+public class GiangVienDAO implements IGiangVienDAO{
 	DBConnection conn = new DBConnection();
 	CallableStatement cstmt;
 	/**
@@ -57,100 +58,79 @@ public class GiangVienDAO implements IDangKyDAO{
 		return gv;
 	}
 	
-	public int ThemGiangVien(GiangVien gv){
+	public boolean ThemGiangVien(GiangVien gv) throws SQLException {
 		String query= "{call themGiangVien(?,?)}";
-		try {
 			cstmt =conn.getConnection().prepareCall(query);
 			cstmt.setString(1, gv.getMaGiangVien());
 			cstmt.setString(2, gv.getTenGiangVien());
-			int r = cstmt.executeUpdate();
+			boolean r = cstmt.execute();
 			conn.closeConnection();
 			return r;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
 	}
 	
-	public int SuaGiangVien(GiangVien gv){
+	public boolean SuaGiangVien(GiangVien gv) throws SQLException{
 		String query= "{call suaGiangVien(?,?)}";
-		try {
 			cstmt =conn.getConnection().prepareCall(query);
 			cstmt.setString(1, gv.getMaGiangVien());
 			cstmt.setString(2, gv.getTenGiangVien());
-			int r = cstmt.executeUpdate();
+			boolean r = cstmt.execute();
 			conn.closeConnection();
 			return r;
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return 0;
-		
 	}
 
-	public int XoaGiangVien(GiangVien gv){
+	public boolean XoaGiangVien(GiangVien gv)throws SQLException {
 		String query= "{call xoaGiangVien(?)}";
-		try {
 			cstmt =conn.getConnection().prepareCall(query);
 			cstmt.setString(1, gv.getMaGiangVien());
-			int r = cstmt.executeUpdate();
+			boolean r = cstmt.execute();
 			conn.closeConnection();
 			return r;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}	
-		return 0;
 	}
 
-//	public int ThemGiangVien(GiangVien gv) {
-//		String query = "insert into giangvien (magiangvien, tengiangvien) values ('" + gv.getMaGiangVien() + "', '"
-//				+ gv.getTenGiangVien() + "')";
-//		conn.getConnection();
-//		int r = conn.update(query);
-//		conn.closeConnection();
-//		return r;
-//	}
-//
-//	public int SuaGiangVien(GiangVien gv) {
-//		String query = "update giangvien set tengiangvien='" + gv.getTenGiangVien()+"' where magiangvien='" + gv.getMaGiangVien() + "'";
-//		conn.getConnection();
-//		int r = conn.update(query);
-//		conn.closeConnection();
-//		return r;
-//	}
-//
-//	public int XoaGiangVien(GiangVien gv) {
-//		String query = "delete from giangvien where magiangvien='" + gv.getMaGiangVien() + "'";
-//		conn.getConnection();
-//		int r = conn.update(query);
-//		query = "delete from taikhoan where magiangvien='" + gv.getMaGiangVien() + "'";
-//		conn.getConnection();
-//		r = conn.update(query);		
-//		conn.closeConnection();
-//		return r;
-//	}
-	
+	public ArrayList<GiangVien> TimGiangVien(String searchText)
+    {
+        ArrayList<GiangVien> gvList = new ArrayList<GiangVien>();      
+        ResultSet rs;
+        
+        try{
+            conn.getConnection();
+            String query = "{call timGiangVien(?)}";
+            cstmt = conn.getConnection().prepareCall(query);
+			cstmt.setString(1, searchText);
+			rs = cstmt.executeQuery();
+			
+            GiangVien gv;
+          
+            while(rs.next())
+            {
+            	gv = new GiangVien(
+                                 rs.getString("magiangvien"),
+                                 rs.getString("tengiangvien")
+                                );
+            	gvList.add(gv);
+            }
+            
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }        
+        return gvList;
+    }
+
 	
 	@Override
-	public int CreateDangKy(DangKy dangKy) {
+	public int CreateGiangVien(GiangVien gv) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int DeleteDangKy(int id) {
+	public int DeleteGiangVien(GiangVien gv) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ArrayList<DangKy> ListDangKy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<DangKy> ListDangKyTheoGV(String maGiangVien) {
+	public ArrayList<GiangVien> ListGiangVien() {
 		// TODO Auto-generated method stub
 		return null;
 	}
