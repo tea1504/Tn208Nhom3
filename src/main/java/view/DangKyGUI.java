@@ -223,6 +223,9 @@ public class DangKyGUI extends JFrame implements ActionListener {
 		for (Phong phong : listPhong) {
 			cboPhong.addItem(phong);
 		}
+		if(listPhong.isEmpty()) {
+			System.out.println("Không có phòng phù hợp");
+		}
 	}
 
 	private void setupButton() {
