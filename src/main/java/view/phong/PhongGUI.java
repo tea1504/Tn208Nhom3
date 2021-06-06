@@ -16,6 +16,7 @@ import helpers.SharedData;
 public class PhongGUI extends JFrame implements ActionListener{
 	private JLabel title = new JLabel("QUẢN LÝ PHÒNG HỌC");
 	
+//	Khai báo các JLabel và JTextField phần thông tin
 	JLabel lblMaPhong = new JLabel("Mã phòng:");
 	JLabel lblTenPhong = new JLabel("Tên phòng:");
 	JLabel lblSoLuongMay = new JLabel("Số lượng máy:");
@@ -25,6 +26,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 	JTextField txtSoLuongMay = new JTextField(10);
 	JTextField txtTimKiem = new JTextField(10);
 	
+//	Khai báo các JButton điều khiển
 	private JButton btnTimKiem = new JButton("Tìm kiếm");
 	private JButton btnThem = new JButton("Thêm");
 	private JButton btnSua = new JButton("Sửa");
@@ -34,6 +36,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 	private JButton btnThoat = new JButton("Thoát");
 	private boolean them = false;
 	
+//	Khai báo TableModel và JTable 
 	private PhongSetTableModel model = new PhongSetTableModel();
 	private JTable table = new JTable();
 	private JScrollPane pane;
@@ -46,6 +49,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		setSize(1000, 700);
 		getContentPane().setLayout(new GridBagLayout());
 		
+//		Cài đặt GUI phần tiêu đề
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -53,6 +57,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		gbc.insets = new Insets(20, 0, 20, 0);
 		getContentPane().add(title, gbc);
 		
+//		Cài đặt GUI phần thông tin
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 30, 0, 30 );
 		gbc.fill = GridBagConstraints.BOTH;
@@ -88,6 +93,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		add(btnTimKiem, gbc);
 		DKKBT();
 		
+//		Cài đặt GUI phần JTable
 		table = new JTable(model);
 		table.changeSelection(0, 0, false, false);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -108,6 +114,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		add(pane, gbc);
 		GanDL();
 
+//		MouseListener của JTable
 		table.addMouseListener(new MouseListener() {
 
 			public void mouseReleased(MouseEvent e) {
@@ -132,6 +139,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 			}
 		});
 		
+//		Cài đặt GUI các JButton
 		gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(0, 20, 10, 20);
@@ -157,22 +165,27 @@ public class PhongGUI extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 
+//	Phương thức gán dữ liệu TextField mã phòng
 	public void setTxtMaPhong(String text) {
 		txtMaPhong.setText(text);
 	}
 	
+//	Phương thức lấy TableModel
 	public PhongSetTableModel getModel() {
 		return model;
 	}
 
+//	Phương thức gán TableModel
 	public void setModel(PhongSetTableModel model) {
 		this.model = model;
 	}
 
+//	Phương thức lấy JScrollPane
 	public JScrollPane getPane() {
 		return pane;
 	}
-
+	
+//	Phương thức gán JScrollPane
 	public void setPane(JScrollPane pane) {
 		this.pane = pane;
 	}
@@ -185,6 +198,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		this.ok = ok;
 	}
 	
+//	Phương thức định dạng các thành phần trong form
 	private void setup() {
 		lblMaPhong.setFont(new Font("Arial", Font.BOLD, 18));
 		lblTenPhong.setFont(new Font("Arial", Font.BOLD, 18));
@@ -259,6 +273,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		btnThoat.setIcon(icon);
 	}
 
+//	Phương thức thực thi hành động của JButton
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof JButton) {
 			JButton b = (JButton) e.getSource();
@@ -305,6 +320,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		}
 	}
 
+//	Phương thức gán dữ liệu
 	private void GanDL() {
 		int r = table.getSelectedRow();
 		txtMaPhong.setText(table.getValueAt(r, 0).toString());
@@ -312,6 +328,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		txtSoLuongMay.setText(table.getValueAt(r, 2).toString());
 	}
 
+//	Phương thức quy định điều khiển khi bình thường
 	private void DKKBT() {
 		txtMaPhong.setEditable(false);
 		txtTenPhong.setEditable(false);
@@ -330,6 +347,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		phanQuyen();
 	}
 
+//	Phương thức quy định điều khiển khi bình thêm
 	private void DKKT() {
 		DKKS();
 		txtMaPhong.setEditable(true);
@@ -341,6 +359,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		ok = false;
 	}
 
+//	Phương thức quy định điều khiển khi chỉnh sửa
 	private void DKKS() {
 		txtTenPhong.setEditable(true);
 		txtTenPhong.requestFocus();
@@ -357,6 +376,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		btnTimKiem.setEnabled(false);
 	}
 	
+//	Phương thức phân quyền tài khoản
 	private void phanQuyen() {
 		if (SharedData.CurentAccount.getQuyenSD() == 1) {
 			btnThem.setEnabled(true);
@@ -370,6 +390,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		}
 	}
 
+//	Phương thức lưu
 	private void Luu() throws SQLException {
 		if (check()) {
 			int row = table.getSelectedRow();
@@ -402,6 +423,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		}
 	};
 
+//	Phương thức xóa
 	private void Xoa() throws SQLException {
 		int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa ?", "Thông báo", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null);
@@ -422,6 +444,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		GanDL();
 	}
 
+//	Phương thức tìm phòng
 	public void TimPhong()
     {
 		PhongDAO ctrl = new PhongDAO();
@@ -450,6 +473,8 @@ public class PhongGUI extends JFrame implements ActionListener{
 		    return false;  
 		  }  
 		}
+	
+//	Phương thức kiểm tra các trường TextField cần nhập	
 	private boolean check() {
 		if (txtMaPhong.getText().trim().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Vui lòng nhập mã phòng", "Thông báo", JOptionPane.ERROR_MESSAGE);

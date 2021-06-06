@@ -12,6 +12,8 @@ import bean.Phong;
 public class PhongDAO implements IPhongMayDAO{
 	DBConnection conn = new DBConnection();
 	CallableStatement cs;
+	
+//	Phương thức thêm phòng
 	public boolean ThemPhong(Phong p) throws SQLException {
 		String query = "{call themPhong (?,?,?)}";
 		cs = conn.getConnection().prepareCall(query);
@@ -23,6 +25,7 @@ public class PhongDAO implements IPhongMayDAO{
 		return r;
 	}
 
+//	Phương thức sửa phòng
 	public boolean SuaPhong(Phong p) throws SQLException {
 		String query = "{call suaPhong (?,?,?)}";
 		cs = conn.getConnection().prepareCall(query);
@@ -34,6 +37,7 @@ public class PhongDAO implements IPhongMayDAO{
 		return r;
 	}
 
+//	Phương thức xóa phòng
 	public boolean XoaPhong(Phong p) throws SQLException {
 		String query = "{call xoaPhong (?)}";
 		cs = conn.getConnection().prepareCall(query);
@@ -43,6 +47,7 @@ public class PhongDAO implements IPhongMayDAO{
 		return r;
 	}
 	
+//	Phương thức tìm phòng
 	public ArrayList<Phong> TimPhong(String searchText)
     {
         ArrayList<Phong> phongList = new ArrayList<Phong>();
@@ -72,9 +77,11 @@ public class PhongDAO implements IPhongMayDAO{
             System.out.println(e.getMessage());
         }
         
+//      Trả về ArrayList danh sách phòng tìm được
         return phongList;
     }
 
+//	Phương thức lấy tất cả các phòng
 	public ArrayList<Phong> ListPhong() {
 		ArrayList<Phong> list = new ArrayList<Phong>();
 		String query = "{call listPhong ()}";
@@ -88,9 +95,11 @@ public class PhongDAO implements IPhongMayDAO{
 			e.printStackTrace();
 		}
 		conn.closeConnection();
+//      Trả về ArrayList danh sách phòng
 		return list;
 	}
 
+//	Phương thức lấy phòng chưa đăng ký
 	public ArrayList<Phong> getPhongChuaDangKy(String ngaydangky, int buoidangky, int siso) {
 		ArrayList<Phong> res = new ArrayList<Phong>();
 		ResultSet rs;
@@ -111,6 +120,7 @@ public class PhongDAO implements IPhongMayDAO{
 			e.printStackTrace();
 			return null;
 		}
+//      Trả về ArrayList danh sách phòng chưa đăng ký
 		return res;
 	}
 	
