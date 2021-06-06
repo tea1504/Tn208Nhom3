@@ -2,8 +2,8 @@ package view;
 
 import java.awt.EventQueue;
 
-import view.phong.PhongGUI;
-import view.taikhoan.TaiKhoanGUI;
+import view.lop.LopGUI;
+
 
 
 /**
@@ -17,7 +17,7 @@ public class App {
 			
 			@Override
 			public void run() {
-				new QLPM_DangNhap("Đăng nhập");
+				new AppGUI();
 			}
 		});
 	}

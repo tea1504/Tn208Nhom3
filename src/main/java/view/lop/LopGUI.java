@@ -31,6 +31,7 @@ import DAO.GiangVienDAO;
 import DAO.LopDAO;
 import bean.GiangVien;
 import bean.Lop;
+import helpers.SharedData;
 
 @SuppressWarnings("serial")
 public class LopGUI extends JFrame {
@@ -224,6 +225,7 @@ public class LopGUI extends JFrame {
 			tb = _tb;
 			lop = l;
 			setup();
+			phanquyentrenLop();
 			GanDL();
 			setLayout(new GridBagLayout());
 			GridBagConstraints gbc = new GridBagConstraints();
@@ -376,6 +378,7 @@ public class LopGUI extends JFrame {
 		}
 //dieu khien khi binh thuong
 		private void DKKBT() {
+			phanquyentrenLop();
 			tt.DKKBT();
 			tb.DKKBT();
 			btnLuu.setEnabled(false);
@@ -384,12 +387,15 @@ public class LopGUI extends JFrame {
 			btnSua.setEnabled(true);
 			btnXoa.setEnabled(true);
 			btnThoat.setEnabled(true);
+			btnTimKiem.setEnabled(true);
+			tt.txttimkiem.setEnabled(true);
 		}
 //dieu khien khi them
 		private void DKKT() {
 			DKKS();
 			tt.DKKT();
 			btnTimKiem.setEnabled(false);
+			tt.txttimkiem.setEnabled(false);
 		}
 // dieu khien khi chinh sua
 		private void DKKS() {
@@ -402,6 +408,7 @@ public class LopGUI extends JFrame {
 			btnXoa.setEnabled(false);
 			btnThoat.setEnabled(false);
 			btnTimKiem.setEnabled(false);
+			tt.txttimkiem.setEnabled(false);
 		}
 // chuc nang luu
 		private void Luu() throws SQLException {
@@ -508,6 +515,23 @@ public class LopGUI extends JFrame {
 				return false;
 			}
 			return true;
+		}
+		
+		//phan quyen tren lop
+		
+		private void phanquyentrenLop() {
+			if (SharedData.CurentAccount.getQuyenSD() == 1) {
+				btnXoa.setEnabled(true);
+				btnThem.setEnabled(true);
+				btnSua.setEnabled(true);
+				
+			} 
+			else {
+				btnThem.setEnabled(false);
+				btnSua.setEnabled(false);
+				btnXoa.setEnabled(false);
+				
+			}
 		}
 	}
 	
