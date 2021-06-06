@@ -91,14 +91,15 @@ public class PhongDAO implements IPhongMayDAO{
 		return list;
 	}
 
-	public ArrayList<Phong> getPhongChuaDangKy(Date ngaydangky, int buoidangky) {
+	public ArrayList<Phong> getPhongChuaDangKy(String ngaydangky, int buoidangky, int siso) {
 		ArrayList<Phong> res = new ArrayList<Phong>();
 		ResultSet rs;
-		String query = "{call getPhongChuaDangKy (?,?)}";
+		String query = "{call getPhongChuaDangKy (?,?, ?)}";
 		try {
 			cs = conn.getConnection().prepareCall(query);
-			cs.setDate(1, ngaydangky);
+			cs.setString(1, ngaydangky);
 			cs.setInt(2, buoidangky);
+			cs.setInt(3, siso);
 			rs = cs.executeQuery();
 			while(rs.next()) {
 				Phong item = new Phong(rs.getString(1), rs.getString(2), rs.getInt(3));
@@ -110,7 +111,7 @@ public class PhongDAO implements IPhongMayDAO{
 			e.printStackTrace();
 			return null;
 		}
-		return null;
+		return res;
 	}
 	
 }
