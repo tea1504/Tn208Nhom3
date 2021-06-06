@@ -2,6 +2,10 @@ package view;
 
 import java.awt.EventQueue;
 
+import view.phong.PhongGUI;
+import view.taikhoan.TaiKhoanGUI;
+
+
 /**
  * Class chính cho chương trình
  * @author Trần Văn Hòa
@@ -13,7 +17,7 @@ public class App {
 			
 			@Override
 			public void run() {
-				new QLPM_DangNhap("Đăng nhập");
+				new AppGUI();
 			}
 		});
 	}
