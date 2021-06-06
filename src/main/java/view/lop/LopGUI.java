@@ -378,7 +378,6 @@ public class LopGUI extends JFrame {
 		}
 //dieu khien khi binh thuong
 		private void DKKBT() {
-			phanquyentrenLop();
 			tt.DKKBT();
 			tb.DKKBT();
 			btnLuu.setEnabled(false);
@@ -389,6 +388,7 @@ public class LopGUI extends JFrame {
 			btnThoat.setEnabled(true);
 			btnTimKiem.setEnabled(true);
 			tt.txttimkiem.setEnabled(true);
+			phanquyentrenLop();
 		}
 //dieu khien khi them
 		private void DKKT() {
