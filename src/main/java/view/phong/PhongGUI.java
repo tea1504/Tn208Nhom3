@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import DAO.PhongDAO;
 import bean.Phong;
+import helpers.SharedData;
 
 @SuppressWarnings("serial")
 public class PhongGUI extends JFrame implements ActionListener{
@@ -40,7 +41,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 
 	public PhongGUI() {
 		setup();
-
+		phanQuyen();
 		title.setFont(new Font("Arial", Font.BOLD, 50));
 		setSize(1000, 700);
 		getContentPane().setLayout(new GridBagLayout());
@@ -326,6 +327,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 		btnTimKiem.setEnabled(true);
 		table.setEnabled(true);
 		ok = true;
+		phanQuyen();
 	}
 
 	private void DKKT() {
@@ -353,7 +355,19 @@ public class PhongGUI extends JFrame implements ActionListener{
 		btnThoat.setEnabled(false);
 		btnTimKiem.doClick();
 		btnTimKiem.setEnabled(false);
-		
+	}
+	
+	private void phanQuyen() {
+		if (SharedData.CurentAccount.getQuyenSD() == 1) {
+			btnThem.setEnabled(true);
+			btnSua.setEnabled(true);
+			btnXoa.setEnabled(true);
+		} 
+		else {
+			btnThem.setEnabled(false);
+			btnSua.setEnabled(false);
+			btnXoa.setEnabled(false);
+		}
 	}
 
 	private void Luu() throws SQLException {
