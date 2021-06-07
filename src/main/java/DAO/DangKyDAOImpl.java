@@ -61,7 +61,7 @@ public class DangKyDAOImpl implements IDangKyDAO {
 	public ArrayList<DangKy> ListDangKy() {
 		ArrayList<DangKy> res = new ArrayList<DangKy>();
 		ResultSet rs;
-		String sql = "select * from dangky";
+		String sql = "call listDangKy()";
 		try {
 			cstmt = conn.getConnection().prepareCall(sql);
 			rs = cstmt.executeQuery();
