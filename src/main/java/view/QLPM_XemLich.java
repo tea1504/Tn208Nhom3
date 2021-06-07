@@ -23,7 +23,12 @@ import bean.Lop;
 import bean.Phong;
 import bean.TaiKhoan;
 import helpers.SharedData;
-
+/**
+ * Class tạo giao diện chức năng xem lịch <br/>
+ * Chức năng này dùng để xem lịch đăng ký phòng của giảng viên đang đăng nhập vào hệ thông
+ * @author Trần Văn Hòa
+ *
+ */
 @SuppressWarnings("serial")
 public class QLPM_XemLich extends JFrame {
 	Calendar calendar = new Calendar();
@@ -34,7 +39,10 @@ public class QLPM_XemLich extends JFrame {
 	}
 
 	/**
-	 * 
+	 * Phương thức khởi tạo Frame <br/>
+	 * Frame sử dụng LayoutManager là <strong>GridBagLayout</strong> để quản lý layout <br/>
+	 * Gọi phương thức <strong>setupCaculater</strong>
+	 * @author Trần Văn Hòa
 	 */
 	private void khoiTaoFrame() {
 		setupCaculater();
@@ -53,10 +61,11 @@ public class QLPM_XemLich extends JFrame {
 		gbc.gridy++;
 		gbc.weighty = 0.9;
 		getContentPane().add(calendar, gbc);
-		setBounds(300, 100, 1200, 800);
+		setSize(1200, 800);
 		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
 		setIconImage(icon.getImage());
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setLocationRelativeTo(null);
 		setTitle("Xem lịch phòng máy");
 		setVisible(true);
 	}
@@ -82,10 +91,6 @@ public class QLPM_XemLich extends JFrame {
 			int year = dangKy.getNgayDangKy().get(java.util.Calendar.YEAR);
 			int month = dangKy.getNgayDangKy().get(java.util.Calendar.MONTH) + 1; // Tháng đầu tiên bắt đầu từ 0
 			int date = dangKy.getNgayDangKy().get(java.util.Calendar.DATE);
-			LopDAO lopDAO = new LopDAO();
-			PhongDAO phongDAO = new PhongDAO();
-			Phong phong = phongDAO.TimPhong(dangKy.getMaPhong()).get(0);
-			Lop lop = lopDAO.timloptheoma(dangKy.getMaLop()).get(0);
 			String buoi = new String();
 			if(dangKy.getBuoiDangKy() == 0)
 				buoi = "Buổi sáng";
@@ -97,14 +102,15 @@ public class QLPM_XemLich extends JFrame {
 			Appointment app = new Appointment();
 			app.setStartTime(d);
 			app.setEndTime(d);
-			app.setHeaderText("Lớp : " + lop.getTenLop() + " | " + phong.getTenPhong() + " | " + buoi);
+			app.setHeaderText("Lớp : " + dangKy.getLop().getTenLop() + " | " + dangKy.getPhong().getTenPhong() + " | " + buoi);
 			app.setAllowMove(false);
 			app.setAllowChangeEnd(false);
 			app.setAllowChangeStart(false);
 			calendar.getSchedule().getItems().add(app);
-			calendar.getItemSettings().setSize(30);
-			calendar.getItemSettings().getStyle().setBrush(new GradientBrush(new Color(161,255,254), new Color(250,255,209), 1));;
 		}
+		calendar.getItemSettings().setSize(30);
+		calendar.getItemSettings().getStyle()
+				.setBrush(new GradientBrush(new Color(161, 255, 254), new Color(250, 255, 209), 1));
 
 	}
 }
