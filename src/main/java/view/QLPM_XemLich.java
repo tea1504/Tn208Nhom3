@@ -16,7 +16,7 @@ import com.mindfusion.scheduling.Calendar;
 import com.mindfusion.scheduling.model.Appointment;
 
 import DAO.DangKyDAOImpl;
-import DAO.LopDAO;
+import DAO.LopDAOImpl;
 import DAO.PhongDAO;
 import bean.DangKy;
 import bean.Lop;

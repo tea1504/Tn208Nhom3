@@ -28,7 +28,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.GiangVienDAOImpl;
-import DAO.LopDAO;
+import DAO.LopDAOImpl;
 import bean.GiangVien;
 import bean.Lop;
 import helpers.SharedData;
@@ -417,7 +417,7 @@ public class LopGUI extends JFrame {
 				if (them) {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
 					Lop l = new Lop(tt.txtMaLop.getText(), tt.txtTenLop.getText(), gv.getMaGiangVien(), Integer.parseInt(tt.txtSiSo.getText()));
-					LopDAO ctrl = new LopDAO();
+					LopDAOImpl ctrl = new LopDAOImpl();
 					boolean r = ctrl.ThemLop(l);
 					LopSetTableModel model = new LopSetTableModel();
 					tb.getTable().setModel(model);
@@ -430,7 +430,7 @@ public class LopGUI extends JFrame {
 				else {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
 					Lop l = new Lop(tt.txtMaLop.getText(),tt.txtTenLop.getText(),gv.getMaGiangVien(),Integer.parseInt(tt.txtSiSo.getText()));
-					LopDAO ctrl = new LopDAO();
+					LopDAOImpl ctrl = new LopDAOImpl();
 					boolean r = ctrl.SuaLop(l);
 					tb.getTable().setModel(new LopSetTableModel());
 					tb.getTable().changeSelection(row, 0, false, false);
@@ -450,7 +450,7 @@ public class LopGUI extends JFrame {
 			if (result == JOptionPane.YES_OPTION) {
 				GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
 				Lop l = new Lop(tt.txtMaLop.getText(),tt.txtTenLop.getText(), gv.getMaGiangVien(),Integer.parseInt(tt.txtSiSo.getText()));
-				LopDAO ctrl = new LopDAO();
+				LopDAOImpl ctrl = new LopDAOImpl();
 				boolean r = ctrl.XoaLop(l);
 				LopSetTableModel model = new LopSetTableModel();
 				tb.getTable().setModel(model);
@@ -474,7 +474,7 @@ public class LopGUI extends JFrame {
 		
 		public void timlop()
 	    {
-			LopDAO lopDAO = new LopDAO();
+			LopDAOImpl lopDAO = new LopDAOImpl();
 	        ArrayList<Lop> lop = lopDAO.timLop(tt.txttimkiem.getText());
 	        DefaultTableModel model = new DefaultTableModel();
 	        model.setColumnIdentifiers(new Object[]{"Mã lớp","Tên lớp","Sỉ số lớp","Mã giảng viên"});

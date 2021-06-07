@@ -37,7 +37,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import DAO.DangKyDAOImpl;
-import DAO.LopDAO;
+import DAO.LopDAOImpl;
 import DAO.PhongDAO;
 import bean.DangKy;
 import bean.Lop;
@@ -183,7 +183,7 @@ public class DangKyGUI extends JFrame implements ActionListener {
 		cboLop = new JComboBox<Lop>();
 		cboLop.setFont(new Font("Arial", Font.PLAIN, 30));
 		cboLop.addActionListener(this);
-		LopDAO lopDAO = new LopDAO();
+		LopDAOImpl lopDAO = new LopDAOImpl();
 		ArrayList<Lop> listLop = lopDAO.getLopTheoMaGiangVien(user.getMaGiangVien());
 		for (Lop lop : listLop) {
 			cboLop.addItem(lop);

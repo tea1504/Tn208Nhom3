@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import bean.Lop;
 
-public interface ILopDAOImpl {
+public interface ILopDAO {
 	ArrayList<Lop> getLop();
 	Lop getLop(String searchMa);
 	boolean ThemLop(Lop lop) throws SQLException;

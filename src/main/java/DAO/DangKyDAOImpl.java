@@ -96,7 +96,7 @@ public class DangKyDAOImpl implements IDangKyDAO {
 				Calendar calendar = new GregorianCalendar();
 				calendar.setTime(date);
 				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), calendar, rs.getInt(5));
-				LopDAO lopDAO = new LopDAO();
+				LopDAOImpl lopDAO = new LopDAOImpl();
 				PhongDAO phongDAO = new PhongDAO();
 				item.setLop(lopDAO.timloptheoma(item.getMaLop()));
 				item.setPhong(phongDAO.TimPhong(item.getMaPhong()));

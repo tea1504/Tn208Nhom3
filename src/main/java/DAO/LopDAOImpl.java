@@ -7,14 +7,9 @@ import java.util.ArrayList;
 import java.sql.CallableStatement;
 
 import bean.DBConnection;
-import bean.GiangVien;
 import bean.Lop;
-import bean.Phong;
 
-
-
-
-public class LopDAO implements ILopDAOImpl {
+public class LopDAOImpl implements ILopDAO {
 	DBConnection conn = new DBConnection();
 	CallableStatement callableStatement;
 // lay danh sach lop su dung procedure
