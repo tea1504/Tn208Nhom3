@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bean.DBConnection;
+import bean.Lop;
 import bean.Phong;
 
 public class PhongDAO implements IPhongMayDAO{
@@ -79,6 +80,26 @@ public class PhongDAO implements IPhongMayDAO{
 //      Trả về ArrayList danh sách phòng tìm được
         return listPhong;
     }
+	public Phong getPhong(String maPhong) {
+		Phong phong = new Phong();
+		ResultSet res;
+        String query = "call getPhongTheoMa(?)";
+        try {
+			cs = conn.getConnection().prepareCall(query);
+			cs.setString(1, maPhong);
+			res = cs.executeQuery();
+			while(res.next())
+            {
+            	phong = new Phong(res.getString(1), res.getString(2), res.getInt(3));
+            }
+			cs.close();
+			conn.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return phong;
+	}
 
 //	Phương thức lấy tất cả các phòng
 	public ArrayList<Phong> ListPhong() {

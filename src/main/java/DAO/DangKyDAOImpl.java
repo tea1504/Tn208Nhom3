@@ -98,8 +98,8 @@ public class DangKyDAOImpl implements IDangKyDAO {
 				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), calendar, rs.getInt(5));
 				LopDAOImpl lopDAO = new LopDAOImpl();
 				PhongDAO phongDAO = new PhongDAO();
-				item.setLop(lopDAO.timloptheoma(item.getMaLop()));
-				item.setPhong(phongDAO.TimPhong(item.getMaPhong()));
+				item.setLop(lopDAO.getLop(item.getMaLop()));
+				item.setPhong(phongDAO.getPhong(item.getMaPhong()));
 				res.add(item);
 			}
 			cstmt.close();

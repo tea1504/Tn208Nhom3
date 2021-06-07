@@ -95,9 +95,10 @@ public class LopDAOImpl implements ILopDAO {
     {
         Lop lop = new Lop();
         ResultSet rs;
-        String query = "call getLopTheoMa()";
+        String query = "call getLopTheoMa(?)";
         try {
 			callableStatement = conn.getConnection().prepareCall(query);
+			callableStatement.setString(1, searchMa);
 			rs = callableStatement.executeQuery();
 			while(rs.next())
             {
