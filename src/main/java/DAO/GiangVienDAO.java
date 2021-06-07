@@ -20,6 +20,7 @@ public class GiangVienDAO implements IGiangVienDAO {
 	 * 
 	 * @return
 	 */
+	@Override
 	public ArrayList<GiangVien> getGiangVien() {
 		ResultSet rs;
 		ArrayList<GiangVien> list = new ArrayList<GiangVien>();
@@ -39,6 +40,7 @@ public class GiangVienDAO implements IGiangVienDAO {
 		return list;
 	}
 
+	@Override
 	public GiangVien getGiangVien(String id) {
 		ResultSet rs;
 		GiangVien gv = new GiangVien();
@@ -59,35 +61,60 @@ public class GiangVienDAO implements IGiangVienDAO {
 		return gv;
 	}
 
-	public boolean ThemGiangVien(GiangVien gv) throws SQLException {
+	@Override
+	public boolean ThemGiangVien(GiangVien gv) {
 		String query = "{call themGiangVien(?,?)}";
-		cstmt = conn.getConnection().prepareCall(query);
-		cstmt.setString(1, gv.getMaGiangVien());
-		cstmt.setString(2, gv.getTenGiangVien());
-		boolean r = cstmt.execute();
-		conn.closeConnection();
+		boolean r = false;
+		try {
+			cstmt = conn.getConnection().prepareCall(query);
+			cstmt.setString(1, gv.getMaGiangVien());
+			cstmt.setString(2, gv.getTenGiangVien());
+			r = cstmt.execute();
+			cstmt.close();
+			conn.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return r;
 	}
 
-	public boolean SuaGiangVien(GiangVien gv) throws SQLException {
+	@Override
+	public boolean SuaGiangVien(GiangVien gv) {
 		String query = "{call suaGiangVien(?,?)}";
-		cstmt = conn.getConnection().prepareCall(query);
-		cstmt.setString(1, gv.getMaGiangVien());
-		cstmt.setString(2, gv.getTenGiangVien());
-		boolean r = cstmt.execute();
-		conn.closeConnection();
+		boolean r = false;
+		try {
+			cstmt = conn.getConnection().prepareCall(query);
+			cstmt.setString(1, gv.getMaGiangVien());
+			cstmt.setString(2, gv.getTenGiangVien());
+			r = cstmt.execute();
+			cstmt.close();
+			conn.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return r;
 	}
 
-	public boolean XoaGiangVien(GiangVien gv) throws SQLException {
+	@Override
+	public boolean XoaGiangVien(GiangVien gv) {
 		String query = "{call xoaGiangVien(?)}";
-		cstmt = conn.getConnection().prepareCall(query);
-		cstmt.setString(1, gv.getMaGiangVien());
-		boolean r = cstmt.execute();
-		conn.closeConnection();
+		boolean r = false;
+		try {
+			cstmt = conn.getConnection().prepareCall(query);
+			cstmt.setString(1, gv.getMaGiangVien());
+			r = cstmt.execute();
+			cstmt.close();
+			conn.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return r;
 	}
 
+	@Override
 	public ArrayList<GiangVien> TimGiangVien(String searchText) {
 		ArrayList<GiangVien> gvList = new ArrayList<GiangVien>();
 		ResultSet rs;
@@ -110,23 +137,5 @@ public class GiangVienDAO implements IGiangVienDAO {
 			System.out.println(e.getMessage());
 		}
 		return gvList;
-	}
-
-	@Override
-	public int CreateGiangVien(GiangVien gv) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int DeleteGiangVien(GiangVien gv) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ArrayList<GiangVien> ListGiangVien() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
