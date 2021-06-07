@@ -16,7 +16,11 @@ import com.mindfusion.scheduling.Calendar;
 import com.mindfusion.scheduling.model.Appointment;
 
 import DAO.DangKyDAOImpl;
+import DAO.LopDAO;
+import DAO.PhongDAO;
 import bean.DangKy;
+import bean.Lop;
+import bean.Phong;
 import bean.TaiKhoan;
 import helpers.SharedData;
 
@@ -78,6 +82,10 @@ public class QLPM_XemLich extends JFrame {
 			int year = dangKy.getNgayDangKy().get(java.util.Calendar.YEAR);
 			int month = dangKy.getNgayDangKy().get(java.util.Calendar.MONTH) + 1; // Tháng đầu tiên bắt đầu từ 0
 			int date = dangKy.getNgayDangKy().get(java.util.Calendar.DATE);
+			LopDAO lopDAO = new LopDAO();
+			PhongDAO phongDAO = new PhongDAO();
+			Phong phong = phongDAO.TimPhong(dangKy.getMaPhong()).get(0);
+			Lop lop = lopDAO.timloptheoma(dangKy.getMaLop()).get(0);
 			String buoi = new String();
 			if(dangKy.getBuoiDangKy() == 0)
 				buoi = "Buổi sáng";
@@ -89,7 +97,7 @@ public class QLPM_XemLich extends JFrame {
 			Appointment app = new Appointment();
 			app.setStartTime(d);
 			app.setEndTime(d);
-			app.setHeaderText("Lớp : " + dangKy.getMaLop() + " | " + dangKy.getMaPhong() + " | " + buoi);
+			app.setHeaderText("Lớp : " + lop.getTenLop() + " | " + phong.getTenPhong() + " | " + buoi);
 			app.setAllowMove(false);
 			app.setAllowChangeEnd(false);
 			app.setAllowChangeStart(false);
