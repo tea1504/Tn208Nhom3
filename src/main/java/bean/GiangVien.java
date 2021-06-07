@@ -41,6 +41,14 @@ public class GiangVien {
 	public void setTenGiangVien(String tenGiangVien) {
 		this.tenGiangVien = tenGiangVien;
 	}
+	
+	public int getQuyenSD() {
+		return quyenSD;
+	}
+
+	public void setQuyenSD(int quyenSD) {
+		this.quyenSD = quyenSD;
+	}	
 
 	@Override
 	public String toString() {
