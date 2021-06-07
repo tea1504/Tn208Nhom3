@@ -13,4 +13,5 @@ public interface IPhongMayDAO {
 	ArrayList<Phong> TimPhong(String searchText);
 	ArrayList<Phong> ListPhong();
 	ArrayList<Phong> getPhongChuaDangKy(String ngaydangky, int buoidangky, int siso);
+	Phong getPhong(String maPhong);
 }

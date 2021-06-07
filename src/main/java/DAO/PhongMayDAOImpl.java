@@ -61,8 +61,6 @@ public class PhongMayDAOImpl implements IPhongMayDAO{
             cs = conn.getConnection().prepareCall(query);
 			cs.setString(1, searchText);
 			rs = cs.executeQuery();
-           
-          
             while(rs.next())
             {
             	Phong phong = new Phong(
@@ -72,7 +70,8 @@ public class PhongMayDAOImpl implements IPhongMayDAO{
                                 );
             	listPhong.add(phong);
             }
-            
+            cs.close();
+            conn.closeConnection();
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
