@@ -1,11 +1,11 @@
 package DAO;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bean.Phong;
 
+//Lớp giao tiếp
 public interface IPhongMayDAO {
 	boolean ThemPhong(Phong p) throws SQLException;
 	boolean SuaPhong(Phong p) throws SQLException;

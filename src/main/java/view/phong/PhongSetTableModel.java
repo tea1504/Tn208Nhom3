@@ -15,6 +15,8 @@ public class PhongSetTableModel extends AbstractTableModel {
 	private ResultSetMetaData rsmd;
 	private final String title[] = {"Mã phòng", "Tên phòng", "Số lượng máy"};
 	
+	
+//	Phương thức mô hình bảng 
 	public PhongSetTableModel() {
 		try {
 			conn.getConnection();
@@ -26,7 +28,7 @@ public class PhongSetTableModel extends AbstractTableModel {
 		}
 	}
 	
-
+//	Phương thức ngắt kết nối
 	public void disconnect() {
 		conn.closeConnection();
 	}
