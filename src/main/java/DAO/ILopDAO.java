@@ -11,5 +11,5 @@ public interface ILopDAO {
 	boolean SuaLop(Lop lop) throws SQLException;
 	boolean XoaLop(Lop lop) throws SQLException;
 	ArrayList<Lop> getLop();
-	ArrayList<Lop> timloptheoma(String searchMa);
+	Lop timloptheoma(String searchMa);
 }

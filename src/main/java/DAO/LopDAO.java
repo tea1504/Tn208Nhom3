@@ -96,9 +96,9 @@ public class LopDAO implements ILopDAO {
 		return r;
 	}
 	// tim kiem lớp sử dụng procedure
-	public ArrayList<Lop> timloptheoma(String searchMa)
+	public Lop timloptheoma(String searchMa)
     {
-        ArrayList<Lop> list = new ArrayList<Lop>();
+        Lop lop = new Lop();
       
         ResultSet rs;
         
@@ -110,14 +110,13 @@ public class LopDAO implements ILopDAO {
 			rs = callableStatement.executeQuery();
             while(rs.next())
             {
-            	Lop lop = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
-            	list.add(lop);
+            	lop = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
             }
             
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
         
-        return list;
+        return lop;
     }
 }
