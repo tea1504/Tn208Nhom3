@@ -25,7 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.GiangVienDAOImpl;
-import DAO.PhongDAOImpl;
+import DAO.PhongMayDAOImpl;
 import bean.GiangVien;
 import bean.Phong;
 import helpers.SharedData;

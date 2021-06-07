@@ -10,7 +10,7 @@ import bean.DBConnection;
 import bean.Lop;
 import bean.Phong;
 
-public class PhongDAOImpl implements IPhongMayDAO{
+public class PhongMayDAOImpl implements IPhongMayDAO{
 	DBConnection conn = new DBConnection();
 	CallableStatement cs;
 	

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.PhongDAOImpl;
+import DAO.PhongMayDAOImpl;
 import bean.Phong;
 import helpers.SharedData;
 
@@ -397,7 +397,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 			int row = table.getSelectedRow();
 			if (them) {
 				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(), Integer.parseInt(txtSoLuongMay.getText()));
-				PhongDAOImpl ctrl = new PhongDAOImpl();
+				PhongMayDAOImpl ctrl = new PhongMayDAOImpl();
 				boolean r = ctrl.ThemPhong(p);
 				PhongSetTableModel model = new PhongSetTableModel();
 				table.setModel(model);
@@ -410,7 +410,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 			}
 			else {
 				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(), Integer.parseInt(txtSoLuongMay.getText()));
-				PhongDAOImpl ctrl = new PhongDAOImpl();
+				PhongMayDAOImpl ctrl = new PhongMayDAOImpl();
 				boolean r = ctrl.SuaPhong(p);
 				table.setModel(new PhongSetTableModel());
 				table.changeSelection(row, 0, false, false);
@@ -430,7 +430,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 				JOptionPane.QUESTION_MESSAGE, null);
 		if (result == JOptionPane.YES_OPTION) {
 			Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(),Integer.parseInt(txtSoLuongMay.getText()));
-			PhongDAOImpl ctrl = new PhongDAOImpl();
+			PhongMayDAOImpl ctrl = new PhongMayDAOImpl();
 			boolean r = ctrl.XoaPhong(p);
 			PhongSetTableModel model = new PhongSetTableModel();
 			table.setModel(model);
@@ -448,7 +448,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 //	Phương thức tìm phòng
 	public void TimPhong()
     {
-		PhongDAOImpl ctrl = new PhongDAOImpl();
+		PhongMayDAOImpl ctrl = new PhongMayDAOImpl();
         ArrayList<Phong> phongs = ctrl.TimPhong(txtTimKiem.getText());
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new Object[]{"Mã phòng","Tên phòng","Số lượng máy"});
