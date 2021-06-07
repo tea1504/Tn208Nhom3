@@ -21,7 +21,7 @@ public class LopSetTableModel extends AbstractTableModel {
 		// TODO Auto-generated constructor stub
 		try {
 			conn.getConnection();
-			String query = "select * from lop";
+			String query = "call listLop()";
 			rs = conn.excuted(query);
 			rsmd = rs.getMetaData();
 		} catch (SQLException e) {
