@@ -170,7 +170,7 @@ public class QLPM_DangNhap extends JFrame{
 					{
 						//Đăng nhập thành công
 						SharedData.CurentAccount = tk; //Lưu thông tin tài khoản hiện tại
-						new AppGUI();
+						new QLPM_Main();
 						QLPM_DangNhap.this.dispose();
 					}
 				}

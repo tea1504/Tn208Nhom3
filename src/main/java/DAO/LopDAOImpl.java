@@ -90,7 +90,6 @@ public class LopDAOImpl implements ILopDAO {
 		conn.closeConnection();
 		return r;
 	}
-	// tim kiem lớp sử dụng procedure
 	public Lop getLop(String searchMa)
     {
         Lop lop = new Lop();

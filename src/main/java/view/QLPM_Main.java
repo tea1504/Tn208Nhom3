@@ -25,12 +25,12 @@ import view.taikhoan.DoiMatKhauGUI;
 import view.taikhoan.TaiKhoanGUI;
 
 @SuppressWarnings("serial")
-public class AppGUI extends JFrame implements ActionListener {
+public class QLPM_Main extends JFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JMenu mnuQuanLy, mnuChucNang, mnuTienIch;
 	private JMenuItem mnuLop, mnuGiangVien, mnuPhong, mnuTaiKhoan, mnuDangKy, mnuHuyDangKy, mnuDangXuat, mnuDoiMatKhau, mnuXemLich;
 	private TaiKhoan user = SharedData.CurentAccount;
-	public AppGUI() {
+	public QLPM_Main() {
 		khoiTaoFrame();
 		if(user.getQuyenSD() == 0) {
 			mnuTaiKhoan.setEnabled(false);
