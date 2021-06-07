@@ -22,8 +22,10 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import DAO.DangKyDAOImpl;
+
 /**
  * Tạo giao diện cho chức năng <strong>hủy đăng ký</strong>
+ * 
  * @author Trần Văn Hòa
  */
 @SuppressWarnings("serial")
@@ -32,15 +34,19 @@ public class HuyDangKyGUI extends JFrame implements ActionListener {
 	private JLabel title;
 	private JTable table;
 	private JButton btnHuy;
+
 	/**
 	 * Khởi tạo giao diện cho chức năng <strong>hủy đăng ký</strong>
+	 * 
 	 * @author Trần Văn Hòa
 	 */
 	public HuyDangKyGUI() {
 		khoiTaoFrame();
 	}
+
 	/**
 	 * Khởi tạo frame cho chức năng <strong>hủy đăng ký</strong>
+	 * 
 	 * @author Trần Văn Hòa
 	 */
 	private void khoiTaoFrame() {
@@ -56,21 +62,23 @@ public class HuyDangKyGUI extends JFrame implements ActionListener {
 		gbc.weighty = 0.1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		getContentPane().add(pTitle, gbc); //Thêm panel Title
+		getContentPane().add(pTitle, gbc); // Thêm panel Title
 		gbc.weighty = 0.8;
 		gbc.gridy++;
 		gbc.insets = new Insets(10, 50, 10, 50);
-		getContentPane().add(pTable, gbc); //Thêm panel Table
+		getContentPane().add(pTable, gbc); // Thêm panel Table
 		gbc.weighty = 0.1;
 		gbc.gridy++;
-		getContentPane().add(pButton, gbc); //Thêm panel Button
+		getContentPane().add(pButton, gbc); // Thêm panel Button
 		setVisible(true);
 	}
+
 	/**
 	 * Khởi tạo <strong>panel Title</strong>, bao gồm:
 	 * <ul>
-	 * 	<li>JLabel title</li>
+	 * <li>JLabel title</li>
 	 * </ul>
+	 * 
 	 * @author Trần Văn Hòa
 	 */
 	private void setupTitle() {
@@ -79,24 +87,26 @@ public class HuyDangKyGUI extends JFrame implements ActionListener {
 		title.setHorizontalAlignment(JLabel.HORIZONTAL);
 		title.setFont(new Font("Arial", Font.BOLD, 60));
 		title.setForeground(Color.WHITE);
-		pTitle.add(title, BorderLayout.CENTER); //Thêm title
+		pTitle.add(title, BorderLayout.CENTER); // Thêm title
 		pTitle.setBackground(new Color(9, 132, 227));
 	}
+
 	/**
 	 * Khởi tạo <strong>panel Table</strong>, bao gồm:
 	 * <ul>
-	 * 	<li>JTable table</li>
+	 * <li>JTable table</li>
 	 * </ul>
+	 * 
 	 * @author Trần Văn Hòa
 	 */
 	private void setupTable() {
 		pTable = new JPanel();
 		table = new JTable(new DangKySetTableModel());
-		//Render cho cột buổi
+		// Render cho cột buổi
 		TableColumnModel tcm = table.getColumnModel();
 		TableColumn tc = tcm.getColumn(4);
 		tc.setCellRenderer(new BuoiRenderer());
-		//Set font cho table
+		// Set font cho table
 		table.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 18));
 		table.setRowHeight(30);
@@ -111,11 +121,13 @@ public class HuyDangKyGUI extends JFrame implements ActionListener {
 		titleBorder.setTitleFont(new Font("Arial", Font.BOLD, 30));
 		pTable.setBorder(titleBorder);
 	}
+
 	/**
 	 * Khởi tạo <strong>panel Button</strong>, bao gồm:
 	 * <ul>
-	 * 	<li>JButton btnHuy</li>
+	 * <li>JButton btnHuy</li>
 	 * </ul>
+	 * 
 	 * @author Trần Văn Hòa
 	 */
 	private void setupButton() {
@@ -137,14 +149,23 @@ public class HuyDangKyGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		DangKyDAOImpl dangKyDAO = new DangKyDAOImpl();
-		if(e.getSource() == btnHuy) {
-			int res = dangKyDAO.DeleteDangKy((int)table.getValueAt(table.getSelectedRow(), 0));
-			if(res == 1) {
-				JOptionPane.showMessageDialog(null, "Hủy đăng ký thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-				table.setModel(new DangKySetTableModel());;
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "Hủy đăng ký không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+		if (e.getSource() == btnHuy) {
+			int result = JOptionPane.showConfirmDialog(null, "Thầy/Cô muốn hủy đăng ký phòng", "Xác nhận",
+					JOptionPane.YES_NO_OPTION);
+			if (result == JOptionPane.YES_OPTION) {
+				int res = dangKyDAO.DeleteDangKy((int) table.getValueAt(table.getSelectedRow(), 0));
+				if (res == 1) {
+					JOptionPane.showMessageDialog(null, "Hủy đăng ký thành công", "Thành công",
+							JOptionPane.INFORMATION_MESSAGE);
+					table.setModel(new DangKySetTableModel());
+					// Render cho cột buổi
+					TableColumnModel tcm = table.getColumnModel();
+					TableColumn tc = tcm.getColumn(4);
+					tc.setCellRenderer(new BuoiRenderer());
+				} else {
+					JOptionPane.showMessageDialog(null, "Hủy đăng ký không thành công", "Lỗi",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 	}
