@@ -38,7 +38,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import DAO.DangKyDAOImpl;
 import DAO.LopDAOImpl;
-import DAO.PhongDAO;
+import DAO.PhongDAOImpl;
 import bean.DangKy;
 import bean.Lop;
 import bean.Phong;
@@ -223,7 +223,7 @@ public class DangKyGUI extends JFrame implements ActionListener {
 	private void setupComboboxPhong() {
 		int index = cboPhong.getSelectedIndex();
 		cboPhong.removeAllItems();
-		PhongDAO phongDAO = new PhongDAO();
+		PhongDAOImpl phongDAO = new PhongDAOImpl();
 		ArrayList<Phong> listPhong = phongDAO.getPhongChuaDangKy(now, selectedBuoi, selectedSiSo);
 		for (Phong phong : listPhong) {
 			cboPhong.addItem(phong);
