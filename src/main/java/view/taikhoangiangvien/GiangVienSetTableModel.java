@@ -18,7 +18,7 @@ public class GiangVienSetTableModel extends AbstractTableModel {
 	public GiangVienSetTableModel() {
 		try {
 			conn.getConnection();
-			String query = "SELECT gv.magiangvien, gv.tengiangvien , tk.quyensd FROM giangvien gv INNER JOIN taikhoan tk ON gv.magiangvien=tk.magiangvien";
+			String query = "call getModelGiangVien()";
 			rs = conn.excuted(query);
 			rsmd = rs.getMetaData();
 		} catch (SQLException e) {
