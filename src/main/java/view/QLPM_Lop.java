@@ -1,4 +1,4 @@
-package view.lop;
+package view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -83,7 +83,7 @@ public class QLPM_Lop extends JFrame {
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.gridheight = 3;
 		getContentPane().add(table, gbc);
-		ImageIcon icon = new ImageIcon(this.getClass().getResource("a.png"));
+		ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
 		setIconImage(icon.getImage());
 		setTitle("Quản lý lớp học");
 		setVisible(true);
@@ -256,7 +256,7 @@ public class QLPM_Lop extends JFrame {
 			btnThem.setFocusable(false);
 			btnThem.setForeground(Color.white);
 			btnThem.addActionListener(this);
-			Icon icon = new ImageIcon(this.getClass().getResource("add.png"));
+			Icon icon = new ImageIcon(this.getClass().getResource("icon/add.png"));
 			btnThem.setIcon(icon);
 
 			btnHuy.setFont(new Font("Arial", Font.BOLD, 24));
@@ -265,7 +265,7 @@ public class QLPM_Lop extends JFrame {
 			btnHuy.setFocusable(false);
 			btnHuy.setForeground(Color.white);
 			btnHuy.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("huy.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/huy2.png"));
 			btnHuy.setIcon(icon);
 
 			btnSua.setFont(new Font("Arial", Font.BOLD, 24));
@@ -274,7 +274,7 @@ public class QLPM_Lop extends JFrame {
 			btnSua.setFocusable(false);
 			btnSua.setForeground(Color.white);
 			btnSua.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("sua.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/sua.png"));
 			btnSua.setIcon(icon);
 
 			btnXoa.setFont(new Font("Arial", Font.BOLD, 24));
@@ -283,7 +283,7 @@ public class QLPM_Lop extends JFrame {
 			btnXoa.setFocusable(false);
 			btnXoa.setForeground(Color.white);
 			btnXoa.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("xoa.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/xoa.png"));
 			btnXoa.setIcon(icon);
 
 			btnLuu.setFont(new Font("Arial", Font.BOLD, 24));
@@ -292,7 +292,7 @@ public class QLPM_Lop extends JFrame {
 			btnLuu.setFocusable(false);
 			btnLuu.setForeground(Color.white);
 			btnLuu.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("luu.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/luu.png"));
 			btnLuu.setIcon(icon);
 
 			btnThoat.setFont(new Font("Arial", Font.BOLD, 24));
@@ -301,7 +301,7 @@ public class QLPM_Lop extends JFrame {
 			btnThoat.setFocusable(false);
 			btnThoat.setForeground(Color.white);
 			btnThoat.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("close.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/close.png"));
 			btnThoat.setIcon(icon);
 			
 			btnTimKiem.setFont(new Font("Arial", Font.BOLD, 24));
@@ -310,7 +310,7 @@ public class QLPM_Lop extends JFrame {
 			btnTimKiem.setFocusable(false);
 			btnTimKiem.setForeground(Color.white);
 			btnTimKiem.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("close.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/timkiem.png"));
 			btnTimKiem.setIcon(icon);
 		}
 

@@ -1,4 +1,4 @@
-package view.phong;
+package view;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

@@ -18,11 +18,6 @@ import DAO.GiangVienDAOImpl;
 import bean.GiangVien;
 import bean.TaiKhoan;
 import helpers.SharedData;
-import view.lop.QLPM_Lop;
-import view.phong.QLPM_PhongMay;
-import view.taikhoangiangvien.GiangVienGUI;
-import view.taikhoan.QLPM_DoiMatKhau;
-import view.taikhoan.QLPM_TaiKhoan;
 
 @SuppressWarnings("serial")
 public class QLPM_Main extends JFrame implements ActionListener {
@@ -164,7 +159,7 @@ public class QLPM_Main extends JFrame implements ActionListener {
 			new QLPM_Lop();
 		}
 		else if(e.getSource() == mnuGiangVien) {
-			new GiangVienGUI();
+			new QLPM_GiangVien();
 		}
 		else if(e.getSource() == mnuTaiKhoan) {
 			new QLPM_TaiKhoan();

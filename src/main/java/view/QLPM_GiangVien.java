@@ -1,4 +1,4 @@
-package view.taikhoangiangvien;
+package view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -29,11 +29,9 @@ import DAO.PhongMayDAOImpl;
 import bean.GiangVien;
 import bean.Phong;
 import helpers.SharedData;
-import view.phong.PhongSetTableModel;
-import view.taikhoan.TaiKhoanSetTableModel;
 
 @SuppressWarnings("serial")
-public class GiangVienGUI extends JFrame implements ActionListener{
+public class QLPM_GiangVien extends JFrame implements ActionListener{
 	
 	private JLabel title = new JLabel("QUẢN LÝ GIẢNG VIÊN");
 	
@@ -64,7 +62,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 	private JScrollPane pane;
 	private boolean ok = true;
 
-	public GiangVienGUI() {
+	public QLPM_GiangVien() {
 		setup();
 		phanQuyen();
 		
@@ -204,7 +202,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 			gbc.gridx = GridBagConstraints.RELATIVE;
 			add(btnThoat, gbc);
 	
-			ImageIcon icon = new ImageIcon(this.getClass().getResource("a.png"));
+			ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
 			setIconImage(icon.getImage());
 			setTitle("Quản lý phòng học");
 			setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -254,7 +252,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 		btnTimKiem.setFocusable(false);
 		btnTimKiem.setForeground(Color.white);
 		btnTimKiem.addActionListener(this);
-		Icon icon = new ImageIcon(this.getClass().getResource("search.png"));
+		Icon icon = new ImageIcon(this.getClass().getResource("icon/timkiem.png"));
 		btnTimKiem.setIcon(icon);
 		
 		btnThem.setFont(new Font("Arial", Font.BOLD, 24));
@@ -263,7 +261,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 		btnThem.setFocusable(false);
 		btnThem.setForeground(Color.white);
 		btnThem.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("add.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/add.png"));
 		btnThem.setIcon(icon);
 
 		btnHuy.setFont(new Font("Arial", Font.BOLD, 24));
@@ -272,7 +270,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 		btnHuy.setFocusable(false);
 		btnHuy.setForeground(Color.white);
 		btnHuy.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("huy.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/huy2.png"));
 		btnHuy.setIcon(icon);
 
 		btnSua.setFont(new Font("Arial", Font.BOLD, 24));
@@ -281,7 +279,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 		btnSua.setFocusable(false);
 		btnSua.setForeground(Color.white);
 		btnSua.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("sua.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/sua.png"));
 		btnSua.setIcon(icon);
 
 		btnXoa.setFont(new Font("Arial", Font.BOLD, 24));
@@ -290,7 +288,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 		btnXoa.setFocusable(false);
 		btnXoa.setForeground(Color.white);
 		btnXoa.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("xoa.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/xoa.png"));
 		btnXoa.setIcon(icon);
 
 		btnLuu.setFont(new Font("Arial", Font.BOLD, 24));
@@ -299,7 +297,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 		btnLuu.setFocusable(false);
 		btnLuu.setForeground(Color.white);
 		btnLuu.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("luu.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/luu.png"));
 		btnLuu.setIcon(icon);
 
 		btnThoat.setFont(new Font("Arial", Font.BOLD, 24));
@@ -308,7 +306,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 		btnThoat.setFocusable(false);
 		btnThoat.setForeground(Color.white);
 		btnThoat.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("close.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/close.png"));
 		btnThoat.setIcon(icon);
 	}
 

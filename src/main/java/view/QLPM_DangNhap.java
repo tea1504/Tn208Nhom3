@@ -48,6 +48,8 @@ public class QLPM_DangNhap extends JFrame{
 		setSize(520,255); 
 		setLocationRelativeTo(null); //center
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
+		setIconImage(icon.getImage());
 		setVisible(true);
 		
 		lblTitle = new JLabel("QUẢN LÝ PHÒNG MÁY");

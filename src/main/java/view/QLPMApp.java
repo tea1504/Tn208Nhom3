@@ -2,8 +2,6 @@ package view;
 
 import java.awt.EventQueue;
 
-import view.lop.QLPM_Lop;
-
 
 
 /**

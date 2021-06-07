@@ -1,4 +1,4 @@
-package view.taikhoan;
+package view;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;

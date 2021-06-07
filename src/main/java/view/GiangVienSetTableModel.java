@@ -1,4 +1,4 @@
-package view.taikhoangiangvien;
+package view;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
