@@ -48,9 +48,9 @@ public class PhongDAO implements IPhongMayDAO{
 	}
 	
 //	Phương thức tìm phòng
-	public Phong TimPhong(String searchText)
+	public ArrayList<Phong> TimPhong(String searchText)
     {
-        Phong phong = new Phong();
+        ArrayList<Phong> listPhong = new ArrayList<Phong>();
       
         ResultSet rs;
         
@@ -64,11 +64,12 @@ public class PhongDAO implements IPhongMayDAO{
           
             while(rs.next())
             {
-            	phong = new Phong(
+            	Phong phong = new Phong(
                                  rs.getString("maphong"),
                                  rs.getString("tenphong"),
                                  rs.getInt("somay")
                                 );
+            	listPhong.add(phong);
             }
             
         }catch(Exception e){
@@ -76,7 +77,7 @@ public class PhongDAO implements IPhongMayDAO{
         }
         
 //      Trả về ArrayList danh sách phòng tìm được
-        return phong;
+        return listPhong;
     }
 
 //	Phương thức lấy tất cả các phòng

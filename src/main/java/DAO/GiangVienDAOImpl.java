@@ -12,7 +12,7 @@ import bean.Lop;
 import bean.Phong;
 import DAO.IGiangVienDAO;
 
-public class GiangVienDAO implements IGiangVienDAO {
+public class GiangVienDAOImpl implements IGiangVienDAO {
 	DBConnection conn = new DBConnection();
 	CallableStatement cstmt;
 

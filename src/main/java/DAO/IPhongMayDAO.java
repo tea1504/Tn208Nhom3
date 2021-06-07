@@ -10,7 +10,7 @@ public interface IPhongMayDAO {
 	boolean ThemPhong(Phong p) throws SQLException;
 	boolean SuaPhong(Phong p) throws SQLException;
 	boolean XoaPhong(Phong p) throws SQLException;
-	Phong TimPhong(String searchText);
+	ArrayList<Phong> TimPhong(String searchText);
 	ArrayList<Phong> ListPhong();
 	ArrayList<Phong> getPhongChuaDangKy(String ngaydangky, int buoidangky, int siso);
 }

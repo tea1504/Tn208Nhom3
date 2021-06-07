@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.GiangVienDAO;
+import DAO.GiangVienDAOImpl;
 import DAO.LopDAO;
 import bean.GiangVien;
 import bean.Lop;
@@ -147,7 +147,7 @@ public class LopGUI extends JFrame {
 						tt.txtMaLop.setText(table.getValueAt(r, 0).toString());
 						tt.txtTenLop.setText(table.getValueAt(r, 2).toString());
 						String ma = table.getValueAt(r, 1).toString();
-						GiangVienDAO gvdao = new GiangVienDAO();
+						GiangVienDAOImpl gvdao = new GiangVienDAOImpl();
 						ArrayList<GiangVien> list = gvdao.getGiangVien();
 						int index = -1;
 						for (int i = 0; i < list.size(); i++) {
@@ -366,7 +366,7 @@ public class LopGUI extends JFrame {
 			tt.txtMaLop.setText(tb.getTable().getValueAt(r, 0).toString());
 			tt.txtTenLop.setText(tb.getTable().getValueAt(r, 1).toString());
 			String ma = tb.getTable().getValueAt(r, 2).toString();
-			GiangVienDAO gvdao = new GiangVienDAO();
+			GiangVienDAOImpl gvdao = new GiangVienDAOImpl();
 			ArrayList<GiangVien> list = gvdao.getGiangVien();
 			int index = -1;
 			for (int i = 0; i < list.size(); i++) {
@@ -475,7 +475,7 @@ public class LopGUI extends JFrame {
 		public void timlop()
 	    {
 			LopDAO lopDAO = new LopDAO();
-	        ArrayList<Lop> lop = lopDAO.timloptheoma(tt.txttimkiem.getText());
+	        ArrayList<Lop> lop = lopDAO.timLop(tt.txttimkiem.getText());
 	        DefaultTableModel model = new DefaultTableModel();
 	        model.setColumnIdentifiers(new Object[]{"Mã lớp","Tên lớp","Sỉ số lớp","Mã giảng viên"});
 	        Object[] row = new Object[4];
@@ -592,7 +592,7 @@ public class LopGUI extends JFrame {
 		}
 		// cai dat list giang vien
 		public void setCombobox() {
-			GiangVienDAO gv = new GiangVienDAO();
+			GiangVienDAOImpl gv = new GiangVienDAOImpl();
 			ArrayList<GiangVien> list = gv.getGiangVien();
 			for(GiangVien item: list) {
 				cboGiangVien.addItem(item);

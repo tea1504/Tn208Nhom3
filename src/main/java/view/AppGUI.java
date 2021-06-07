@@ -14,7 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import DAO.GiangVienDAO;
+import DAO.GiangVienDAOImpl;
 import bean.GiangVien;
 import bean.TaiKhoan;
 import helpers.SharedData;
@@ -48,7 +48,7 @@ public class AppGUI extends JFrame implements ActionListener {
 		setBounds(300, 100, 1200, 800);
 		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
 		setIconImage(icon.getImage());
-		GiangVienDAO giangVienDAO = new GiangVienDAO();
+		GiangVienDAOImpl giangVienDAO = new GiangVienDAOImpl();
 		GiangVien giangVien = giangVienDAO.getGiangVien(user.getMaGiangVien());
 		JLabel lblTaiKhoan = new JLabel("Xin chào: "+ giangVien.getTenGiangVien());// thêm lable hiện tên giảng viên đang đăng nhập
 		lblTaiKhoan.setFont(new Font("Arial", Font.ITALIC, 20));

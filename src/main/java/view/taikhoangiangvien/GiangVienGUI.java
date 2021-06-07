@@ -24,7 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.GiangVienDAO;
+import DAO.GiangVienDAOImpl;
 import DAO.PhongDAO;
 import bean.GiangVien;
 import bean.Phong;
@@ -168,7 +168,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 					txtMaGiangVien.setText(table.getValueAt(r, 0).toString());
 					txtTenGiangVien.setText(table.getValueAt(r, 1).toString());
 					String ma = table.getValueAt(r, 0).toString();
-					GiangVienDAO gvdao = new GiangVienDAO();
+					GiangVienDAOImpl gvdao = new GiangVienDAOImpl();
 					ArrayList<GiangVien> list = gvdao.getGiangVien();
 					int index = -1;
 					for (int i = 0; i < list.size(); i++) {
@@ -365,7 +365,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 		txtMaGiangVien.setText(table.getValueAt(r, 0).toString());
 		txtTenGiangVien.setText(table.getValueAt(r, 1).toString());
 		String ma = table.getValueAt(r, 0).toString();
-		GiangVienDAO gvdao = new GiangVienDAO();
+		GiangVienDAOImpl gvdao = new GiangVienDAOImpl();
 		ArrayList<GiangVien> list = gvdao.getGiangVien();
 		int index = -1;
 		for (int i = 0; i < list.size(); i++) {
@@ -455,7 +455,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 			int row = table.getSelectedRow();
 			if (them) {
 				GiangVien gv = new GiangVien(txtMaGiangVien.getText(), txtTenGiangVien.getText());
-				GiangVienDAO ctrl = new GiangVienDAO();
+				GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
 				boolean r = ctrl.ThemGiangVien(gv);
 				GiangVienSetTableModel model = new GiangVienSetTableModel();
 				table.setModel(model);
@@ -467,7 +467,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 			}
 			else {
 				GiangVien gv = new GiangVien(txtMaGiangVien.getText(), txtTenGiangVien.getText());
-				GiangVienDAO ctrl = new GiangVienDAO();
+				GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
 				boolean r = ctrl.SuaGiangVien(gv);
 				table.setModel(new GiangVienSetTableModel());
 				table.changeSelection(row, 0, false, false);
@@ -486,7 +486,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 				JOptionPane.QUESTION_MESSAGE, null);
 		if (result == JOptionPane.YES_OPTION) {
 			GiangVien gv = new GiangVien(txtMaGiangVien.getText(), txtTenGiangVien.getText());
-			GiangVienDAO ctrl = new GiangVienDAO();
+			GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
 			boolean r = ctrl.XoaGiangVien(gv);
 			GiangVienSetTableModel model = new GiangVienSetTableModel();
 			table.setModel(model);
@@ -516,7 +516,7 @@ public class GiangVienGUI extends JFrame implements ActionListener{
 	}
 	public void TimPhong()
     {
-		GiangVienDAO ctrl = new GiangVienDAO();
+		GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
         ArrayList<GiangVien> gv = ctrl.TimGiangVien(txtTKMGV.getText());
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new Object[]{"Mã giảng viên","Tên giảng viên","Quyền sử dụng"});
