@@ -20,7 +20,7 @@ public class PhongSetTableModel extends AbstractTableModel {
 	public PhongSetTableModel() {
 		try {
 			conn.getConnection();
-			String query = "select * from phongmay";
+			String query = "call listPhong()";
 			rs = conn.excuted(query);
 			rsmd = rs.getMetaData();
 		} catch (SQLException e) {
