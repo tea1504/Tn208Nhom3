@@ -14,7 +14,7 @@ import helpers.SharedData;
 
 
 @SuppressWarnings("serial")
-public class PhongGUI extends JFrame implements ActionListener{
+public class QLPM_PhongMay extends JFrame implements ActionListener{
 	private JLabel title = new JLabel("QUẢN LÝ PHÒNG HỌC");
 	
 //	Khai báo các JLabel và JTextField phần thông tin
@@ -43,7 +43,7 @@ public class PhongGUI extends JFrame implements ActionListener{
 	private JScrollPane pane;
 	private boolean ok = true;
 
-	public PhongGUI() {
+	public QLPM_PhongMay() {
 		setup();
 		phanQuyen();
 		title.setFont(new Font("Arial", Font.BOLD, 50));

@@ -34,7 +34,7 @@ import bean.Lop;
 import helpers.SharedData;
 
 @SuppressWarnings("serial")
-public class LopGUI extends JFrame {
+public class QLPM_Lop extends JFrame {
 	private ThongTin thongtin;
 	private Table table;
 	private dieukhien dk;
@@ -48,7 +48,7 @@ public class LopGUI extends JFrame {
 	
 // lop giao dien
 	
-	public LopGUI() {
+	public QLPM_Lop() {
 		thongtin = new ThongTin();
 		table = new Table(thongtin);
 		dk = new dieukhien(thongtin, table, this);
@@ -217,10 +217,10 @@ public class LopGUI extends JFrame {
 		private JButton btnTimKiem = new JButton("Tìm kiếm");
 		private final ThongTin tt;
 		private final Table tb;
-		private final LopGUI lop;
+		private final QLPM_Lop lop;
 		private boolean them = false;
 
-		public dieukhien(ThongTin _tt, Table _tb, LopGUI l) {
+		public dieukhien(ThongTin _tt, Table _tb, QLPM_Lop l) {
 			tt = _tt;
 			tb = _tb;
 			lop = l;

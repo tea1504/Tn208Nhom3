@@ -46,7 +46,7 @@ import bean.TaiKhoan;
 import helpers.SharedData;
 
 @SuppressWarnings("serial")
-public class DangKyGUI extends JFrame implements ActionListener {
+public class QLPM_DangKy extends JFrame implements ActionListener {
 	private JPanel pTitle, pNhapLieu, pButton;
 	private JLabel title = new JLabel();
 	private JButton btnDangKy, btnNhapLai;
@@ -64,7 +64,7 @@ public class DangKyGUI extends JFrame implements ActionListener {
 	private int selectedSiSo = 0;
 	private TaiKhoan user = SharedData.CurentAccount;
 
-	public DangKyGUI() {
+	public QLPM_DangKy() {
 		khoiTaoFrame();
 	}
 

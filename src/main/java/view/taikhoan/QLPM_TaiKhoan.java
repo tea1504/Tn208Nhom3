@@ -31,7 +31,7 @@ import bean.TaiKhoan;
 import helpers.DataValidator;
 
 @SuppressWarnings("serial")
-public class TaiKhoanGUI extends JFrame implements ActionListener {
+public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 	private JLabel lblMSGV, lblTenGV, lblQuyenSD, lblTitle, lblTimKiem;
 	private JTextField txtMSGV, txtTenGV, txtTimKiem;
 	private JComboBox<String> cbbQuyenSD;
@@ -40,7 +40,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 	private JTable table;
 	private JScrollPane pane;
 
-	public TaiKhoanGUI() {
+	public QLPM_TaiKhoan() {
 		khoiTao();
 		setLayout();
 		ganGiaTri();
@@ -362,7 +362,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == btnMatKhauMoi) {
 			String maGV = txtMSGV.getText();
-			new CapLaiMatKhauGUI(maGV);
+			new QLPM_CapLaiMatKhau(maGV);
 		}
 
 	}

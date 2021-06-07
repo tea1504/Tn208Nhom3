@@ -29,7 +29,7 @@ import DAO.DangKyDAOImpl;
  * @author Trần Văn Hòa
  */
 @SuppressWarnings("serial")
-public class HuyDangKyGUI extends JFrame implements ActionListener {
+public class QLPM_HuyDangKy extends JFrame implements ActionListener {
 	private JPanel pTitle, pTable, pButton;
 	private JLabel title;
 	private JTable table;
@@ -40,7 +40,7 @@ public class HuyDangKyGUI extends JFrame implements ActionListener {
 	 * 
 	 * @author Trần Văn Hòa
 	 */
-	public HuyDangKyGUI() {
+	public QLPM_HuyDangKy() {
 		khoiTaoFrame();
 	}
 

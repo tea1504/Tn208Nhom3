@@ -18,11 +18,11 @@ import DAO.GiangVienDAOImpl;
 import bean.GiangVien;
 import bean.TaiKhoan;
 import helpers.SharedData;
-import view.lop.LopGUI;
-import view.phong.PhongGUI;
+import view.lop.QLPM_Lop;
+import view.phong.QLPM_PhongMay;
 import view.taikhoangiangvien.GiangVienGUI;
-import view.taikhoan.DoiMatKhauGUI;
-import view.taikhoan.TaiKhoanGUI;
+import view.taikhoan.QLPM_DoiMatKhau;
+import view.taikhoan.QLPM_TaiKhoan;
 
 @SuppressWarnings("serial")
 public class QLPM_Main extends JFrame implements ActionListener {
@@ -158,28 +158,28 @@ public class QLPM_Main extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == mnuPhong) {
-			new PhongGUI();
+			new QLPM_PhongMay();
 		}
 		else if(e.getSource() == mnuLop) {
-			new LopGUI();
+			new QLPM_Lop();
 		}
 		else if(e.getSource() == mnuGiangVien) {
 			new GiangVienGUI();
 		}
 		else if(e.getSource() == mnuTaiKhoan) {
-			new TaiKhoanGUI();
+			new QLPM_TaiKhoan();
 		}
 		else if(e.getSource() == mnuDangKy) {
-			new DangKyGUI();
+			new QLPM_DangKy();
 		}
 		else if(e.getSource() == mnuHuyDangKy) {
-			new HuyDangKyGUI();
+			new QLPM_HuyDangKy();
 		}
 		else if(e.getSource() == mnuXemLich) {
 			new QLPM_XemLich();
 		}
 		else if(e.getSource() == mnuDoiMatKhau) {
-			new DoiMatKhauGUI();
+			new QLPM_DoiMatKhau();
 		}
 		else if(e.getSource() == mnuDangXuat) {
 			SharedData.CurentAccount = null;
