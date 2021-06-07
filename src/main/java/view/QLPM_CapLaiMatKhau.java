@@ -1,4 +1,4 @@
-package view.taikhoan;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,7 +29,7 @@ import helpers.DataValidator;
 import helpers.PassWordHelper;
 import helpers.SharedData;
 
-public class CapLaiMatKhauGUI extends JFrame {
+public class QLPM_CapLaiMatKhau extends JFrame {
 	private JPanel panel;
 	private JPasswordField pwfMatKhau_new, pwfMatKhau_nhaplai;
 	private JButton btnLuu, btnThoat;
@@ -39,7 +39,7 @@ public class CapLaiMatKhauGUI extends JFrame {
 
 	private String maGiangVien;
 
-	public CapLaiMatKhauGUI(String maGV) {
+	public QLPM_CapLaiMatKhau(String maGV) {
 		// Khởi tạo các thuộc tính
 
 		super();
@@ -94,7 +94,7 @@ public class CapLaiMatKhauGUI extends JFrame {
 			// anonymous inner class
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CapLaiMatKhauGUI.this.dispose();
+				QLPM_CapLaiMatKhau.this.dispose();
 
 			}
 		});
@@ -175,7 +175,7 @@ public class CapLaiMatKhauGUI extends JFrame {
 				if (tkDAO.changePassWord(maGiangVien, mk_moi) > 0) {
 					JOptionPane.showMessageDialog(null, "Cấp lại mật khẩu thành công!", "Thành công",
 							JOptionPane.INFORMATION_MESSAGE);
-					CapLaiMatKhauGUI.this.dispose();
+					QLPM_CapLaiMatKhau.this.dispose();
 					return;
 				} else {
 					JOptionPane.showMessageDialog(null, "Cấp lại mật khẩu không thành công!", "Lỗi",

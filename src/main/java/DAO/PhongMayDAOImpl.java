@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bean.DBConnection;
+import bean.Lop;
 import bean.Phong;
 
-public class PhongDAO implements IPhongMayDAO{
+public class PhongMayDAOImpl implements IPhongMayDAO{
 	DBConnection conn = new DBConnection();
 	CallableStatement cs;
 	
@@ -50,7 +51,7 @@ public class PhongDAO implements IPhongMayDAO{
 //	Phương thức tìm phòng
 	public ArrayList<Phong> TimPhong(String searchText)
     {
-        ArrayList<Phong> phongList = new ArrayList<Phong>();
+        ArrayList<Phong> listPhong = new ArrayList<Phong>();
       
         ResultSet rs;
         
@@ -60,26 +61,44 @@ public class PhongDAO implements IPhongMayDAO{
             cs = conn.getConnection().prepareCall(query);
 			cs.setString(1, searchText);
 			rs = cs.executeQuery();
-           
-            Phong phong;
-          
             while(rs.next())
             {
-            	phong = new Phong(
+            	Phong phong = new Phong(
                                  rs.getString("maphong"),
                                  rs.getString("tenphong"),
                                  rs.getInt("somay")
                                 );
-            	phongList.add(phong);
+            	listPhong.add(phong);
             }
-            
+            cs.close();
+            conn.closeConnection();
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
         
 //      Trả về ArrayList danh sách phòng tìm được
-        return phongList;
+        return listPhong;
     }
+	public Phong getPhong(String maPhong) {
+		Phong phong = new Phong();
+		ResultSet res;
+        String query = "call getPhongTheoMa(?)";
+        try {
+			cs = conn.getConnection().prepareCall(query);
+			cs.setString(1, maPhong);
+			res = cs.executeQuery();
+			while(res.next())
+            {
+            	phong = new Phong(res.getString(1), res.getString(2), res.getInt(3));
+            }
+			cs.close();
+			conn.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return phong;
+	}
 
 //	Phương thức lấy tất cả các phòng
 	public ArrayList<Phong> ListPhong() {

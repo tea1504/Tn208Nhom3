@@ -61,7 +61,7 @@ public class DangKyDAOImpl implements IDangKyDAO {
 	public ArrayList<DangKy> ListDangKy() {
 		ArrayList<DangKy> res = new ArrayList<DangKy>();
 		ResultSet rs;
-		String sql = "select * from dangky";
+		String sql = "call listDangKy()";
 		try {
 			cstmt = conn.getConnection().prepareCall(sql);
 			rs = cstmt.executeQuery();
@@ -96,6 +96,10 @@ public class DangKyDAOImpl implements IDangKyDAO {
 				Calendar calendar = new GregorianCalendar();
 				calendar.setTime(date);
 				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), calendar, rs.getInt(5));
+				LopDAOImpl lopDAO = new LopDAOImpl();
+				PhongMayDAOImpl phongDAO = new PhongMayDAOImpl();
+				item.setLop(lopDAO.getLop(item.getMaLop()));
+				item.setPhong(phongDAO.getPhong(item.getMaPhong()));
 				res.add(item);
 			}
 			cstmt.close();

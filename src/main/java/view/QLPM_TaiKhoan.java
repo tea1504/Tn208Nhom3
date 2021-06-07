@@ -1,4 +1,4 @@
-package view.taikhoan;
+package view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -31,7 +31,7 @@ import bean.TaiKhoan;
 import helpers.DataValidator;
 
 @SuppressWarnings("serial")
-public class TaiKhoanGUI extends JFrame implements ActionListener {
+public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 	private JLabel lblMSGV, lblTenGV, lblQuyenSD, lblTitle, lblTimKiem;
 	private JTextField txtMSGV, txtTenGV, txtTimKiem;
 	private JComboBox<String> cbbQuyenSD;
@@ -40,7 +40,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 	private JTable table;
 	private JScrollPane pane;
 
-	public TaiKhoanGUI() {
+	public QLPM_TaiKhoan() {
 		khoiTao();
 		setLayout();
 		ganGiaTri();
@@ -84,7 +84,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 	}
 
 	protected void khoiTao() {
-		ImageIcon icon = new ImageIcon(this.getClass().getResource("a.png"));
+		ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
 		setIconImage(icon.getImage());
 		setTitle("Quản lý phòng học");
 		setSize(1200, 700);
@@ -150,7 +150,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 		btnSua.setFocusable(false);
 		btnSua.setForeground(Color.white);
 		btnSua.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("sua.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/sua.png"));
 		btnSua.setIcon(icon);
 
 		btnHuy.setFont(new Font("Arial", Font.BOLD, 24));
@@ -159,7 +159,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 		btnHuy.setFocusable(false);
 		btnHuy.setForeground(Color.white);
 		btnHuy.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("huy.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/huy2.png"));
 		btnHuy.setIcon(icon);
 
 		btnLuu.setFont(new Font("Arial", Font.BOLD, 24));
@@ -168,7 +168,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 		btnLuu.setFocusable(false);
 		btnLuu.setForeground(Color.white);
 		btnLuu.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("luu.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/luu.png"));
 		btnLuu.setIcon(icon);
 
 		btnTimKiem.setFont(new Font("Arial", Font.BOLD, 24));
@@ -177,7 +177,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 		btnTimKiem.setFocusable(false);
 		btnTimKiem.setForeground(Color.white);
 		btnTimKiem.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("search.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/timkiem.png"));
 		btnTimKiem.setIcon(icon);
 
 		btnMatKhauMoi.setFont(new Font("Arial", Font.BOLD, 24));
@@ -186,7 +186,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 		btnMatKhauMoi.setFocusable(false);
 		btnMatKhauMoi.setForeground(Color.white);
 		btnMatKhauMoi.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("password.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/password.png"));
 		btnMatKhauMoi.setIcon(icon);
 
 		btnTaiLai.setFont(new Font("Arial", Font.BOLD, 24));
@@ -195,7 +195,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 		btnTaiLai.setFocusable(false);
 		btnTaiLai.setForeground(Color.white);
 		btnTaiLai.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("Refresh.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/Refresh.png"));
 		btnTaiLai.setIcon(icon);
 
 		btnThoat.setFont(new Font("Arial", Font.BOLD, 24));
@@ -204,7 +204,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 		btnThoat.setFocusable(false);
 		btnThoat.setForeground(Color.white);
 		btnThoat.addActionListener(this);
-		icon = new ImageIcon(this.getClass().getResource("close.png"));
+		icon = new ImageIcon(this.getClass().getResource("icon/close.png"));
 		btnThoat.setIcon(icon);
 	}
 
@@ -362,7 +362,7 @@ public class TaiKhoanGUI extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == btnMatKhauMoi) {
 			String maGV = txtMSGV.getText();
-			new CapLaiMatKhauGUI(maGV);
+			new QLPM_CapLaiMatKhau(maGV);
 		}
 
 	}

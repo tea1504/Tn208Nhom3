@@ -37,8 +37,8 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import DAO.DangKyDAOImpl;
-import DAO.LopDAO;
-import DAO.PhongDAO;
+import DAO.LopDAOImpl;
+import DAO.PhongMayDAOImpl;
 import bean.DangKy;
 import bean.Lop;
 import bean.Phong;
@@ -46,7 +46,7 @@ import bean.TaiKhoan;
 import helpers.SharedData;
 
 @SuppressWarnings("serial")
-public class DangKyGUI extends JFrame implements ActionListener {
+public class QLPM_DangKy extends JFrame implements ActionListener {
 	private JPanel pTitle, pNhapLieu, pButton;
 	private JLabel title = new JLabel();
 	private JButton btnDangKy, btnNhapLai;
@@ -64,7 +64,7 @@ public class DangKyGUI extends JFrame implements ActionListener {
 	private int selectedSiSo = 0;
 	private TaiKhoan user = SharedData.CurentAccount;
 
-	public DangKyGUI() {
+	public QLPM_DangKy() {
 		khoiTaoFrame();
 	}
 
@@ -183,7 +183,7 @@ public class DangKyGUI extends JFrame implements ActionListener {
 		cboLop = new JComboBox<Lop>();
 		cboLop.setFont(new Font("Arial", Font.PLAIN, 30));
 		cboLop.addActionListener(this);
-		LopDAO lopDAO = new LopDAO();
+		LopDAOImpl lopDAO = new LopDAOImpl();
 		ArrayList<Lop> listLop = lopDAO.getLopTheoMaGiangVien(user.getMaGiangVien());
 		for (Lop lop : listLop) {
 			cboLop.addItem(lop);
@@ -223,7 +223,7 @@ public class DangKyGUI extends JFrame implements ActionListener {
 	private void setupComboboxPhong() {
 		int index = cboPhong.getSelectedIndex();
 		cboPhong.removeAllItems();
-		PhongDAO phongDAO = new PhongDAO();
+		PhongMayDAOImpl phongDAO = new PhongMayDAOImpl();
 		ArrayList<Phong> listPhong = phongDAO.getPhongChuaDangKy(now, selectedBuoi, selectedSiSo);
 		for (Phong phong : listPhong) {
 			cboPhong.addItem(phong);

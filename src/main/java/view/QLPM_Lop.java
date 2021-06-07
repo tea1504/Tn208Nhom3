@@ -1,4 +1,4 @@
-package view.lop;
+package view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -27,14 +27,14 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.GiangVienDAO;
-import DAO.LopDAO;
+import DAO.GiangVienDAOImpl;
+import DAO.LopDAOImpl;
 import bean.GiangVien;
 import bean.Lop;
 import helpers.SharedData;
 
 @SuppressWarnings("serial")
-public class LopGUI extends JFrame {
+public class QLPM_Lop extends JFrame {
 	private ThongTin thongtin;
 	private Table table;
 	private dieukhien dk;
@@ -48,7 +48,7 @@ public class LopGUI extends JFrame {
 	
 // lop giao dien
 	
-	public LopGUI() {
+	public QLPM_Lop() {
 		thongtin = new ThongTin();
 		table = new Table(thongtin);
 		dk = new dieukhien(thongtin, table, this);
@@ -83,7 +83,7 @@ public class LopGUI extends JFrame {
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.gridheight = 3;
 		getContentPane().add(table, gbc);
-		ImageIcon icon = new ImageIcon(this.getClass().getResource("a.png"));
+		ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
 		setIconImage(icon.getImage());
 		setTitle("Quản lý lớp học");
 		setVisible(true);
@@ -147,7 +147,7 @@ public class LopGUI extends JFrame {
 						tt.txtMaLop.setText(table.getValueAt(r, 0).toString());
 						tt.txtTenLop.setText(table.getValueAt(r, 2).toString());
 						String ma = table.getValueAt(r, 1).toString();
-						GiangVienDAO gvdao = new GiangVienDAO();
+						GiangVienDAOImpl gvdao = new GiangVienDAOImpl();
 						ArrayList<GiangVien> list = gvdao.getGiangVien();
 						int index = -1;
 						for (int i = 0; i < list.size(); i++) {
@@ -217,10 +217,10 @@ public class LopGUI extends JFrame {
 		private JButton btnTimKiem = new JButton("Tìm kiếm");
 		private final ThongTin tt;
 		private final Table tb;
-		private final LopGUI lop;
+		private final QLPM_Lop lop;
 		private boolean them = false;
 
-		public dieukhien(ThongTin _tt, Table _tb, LopGUI l) {
+		public dieukhien(ThongTin _tt, Table _tb, QLPM_Lop l) {
 			tt = _tt;
 			tb = _tb;
 			lop = l;
@@ -256,7 +256,7 @@ public class LopGUI extends JFrame {
 			btnThem.setFocusable(false);
 			btnThem.setForeground(Color.white);
 			btnThem.addActionListener(this);
-			Icon icon = new ImageIcon(this.getClass().getResource("add.png"));
+			Icon icon = new ImageIcon(this.getClass().getResource("icon/add.png"));
 			btnThem.setIcon(icon);
 
 			btnHuy.setFont(new Font("Arial", Font.BOLD, 24));
@@ -265,7 +265,7 @@ public class LopGUI extends JFrame {
 			btnHuy.setFocusable(false);
 			btnHuy.setForeground(Color.white);
 			btnHuy.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("huy.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/huy2.png"));
 			btnHuy.setIcon(icon);
 
 			btnSua.setFont(new Font("Arial", Font.BOLD, 24));
@@ -274,7 +274,7 @@ public class LopGUI extends JFrame {
 			btnSua.setFocusable(false);
 			btnSua.setForeground(Color.white);
 			btnSua.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("sua.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/sua.png"));
 			btnSua.setIcon(icon);
 
 			btnXoa.setFont(new Font("Arial", Font.BOLD, 24));
@@ -283,7 +283,7 @@ public class LopGUI extends JFrame {
 			btnXoa.setFocusable(false);
 			btnXoa.setForeground(Color.white);
 			btnXoa.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("xoa.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/xoa.png"));
 			btnXoa.setIcon(icon);
 
 			btnLuu.setFont(new Font("Arial", Font.BOLD, 24));
@@ -292,7 +292,7 @@ public class LopGUI extends JFrame {
 			btnLuu.setFocusable(false);
 			btnLuu.setForeground(Color.white);
 			btnLuu.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("luu.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/luu.png"));
 			btnLuu.setIcon(icon);
 
 			btnThoat.setFont(new Font("Arial", Font.BOLD, 24));
@@ -301,7 +301,7 @@ public class LopGUI extends JFrame {
 			btnThoat.setFocusable(false);
 			btnThoat.setForeground(Color.white);
 			btnThoat.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("close.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/close.png"));
 			btnThoat.setIcon(icon);
 			
 			btnTimKiem.setFont(new Font("Arial", Font.BOLD, 24));
@@ -310,7 +310,7 @@ public class LopGUI extends JFrame {
 			btnTimKiem.setFocusable(false);
 			btnTimKiem.setForeground(Color.white);
 			btnTimKiem.addActionListener(this);
-			icon = new ImageIcon(this.getClass().getResource("close.png"));
+			icon = new ImageIcon(this.getClass().getResource("icon/timkiem.png"));
 			btnTimKiem.setIcon(icon);
 		}
 
@@ -366,7 +366,7 @@ public class LopGUI extends JFrame {
 			tt.txtMaLop.setText(tb.getTable().getValueAt(r, 0).toString());
 			tt.txtTenLop.setText(tb.getTable().getValueAt(r, 1).toString());
 			String ma = tb.getTable().getValueAt(r, 2).toString();
-			GiangVienDAO gvdao = new GiangVienDAO();
+			GiangVienDAOImpl gvdao = new GiangVienDAOImpl();
 			ArrayList<GiangVien> list = gvdao.getGiangVien();
 			int index = -1;
 			for (int i = 0; i < list.size(); i++) {
@@ -417,7 +417,7 @@ public class LopGUI extends JFrame {
 				if (them) {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
 					Lop l = new Lop(tt.txtMaLop.getText(), tt.txtTenLop.getText(), gv.getMaGiangVien(), Integer.parseInt(tt.txtSiSo.getText()));
-					LopDAO ctrl = new LopDAO();
+					LopDAOImpl ctrl = new LopDAOImpl();
 					boolean r = ctrl.ThemLop(l);
 					LopSetTableModel model = new LopSetTableModel();
 					tb.getTable().setModel(model);
@@ -430,7 +430,7 @@ public class LopGUI extends JFrame {
 				else {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
 					Lop l = new Lop(tt.txtMaLop.getText(),tt.txtTenLop.getText(),gv.getMaGiangVien(),Integer.parseInt(tt.txtSiSo.getText()));
-					LopDAO ctrl = new LopDAO();
+					LopDAOImpl ctrl = new LopDAOImpl();
 					boolean r = ctrl.SuaLop(l);
 					tb.getTable().setModel(new LopSetTableModel());
 					tb.getTable().changeSelection(row, 0, false, false);
@@ -450,7 +450,7 @@ public class LopGUI extends JFrame {
 			if (result == JOptionPane.YES_OPTION) {
 				GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
 				Lop l = new Lop(tt.txtMaLop.getText(),tt.txtTenLop.getText(), gv.getMaGiangVien(),Integer.parseInt(tt.txtSiSo.getText()));
-				LopDAO ctrl = new LopDAO();
+				LopDAOImpl ctrl = new LopDAOImpl();
 				boolean r = ctrl.XoaLop(l);
 				LopSetTableModel model = new LopSetTableModel();
 				tb.getTable().setModel(model);
@@ -474,8 +474,8 @@ public class LopGUI extends JFrame {
 		
 		public void timlop()
 	    {
-			LopDAO lopDAO = new LopDAO();
-	        ArrayList<Lop> lop = lopDAO.timloptheoma(tt.txttimkiem.getText());
+			LopDAOImpl lopDAO = new LopDAOImpl();
+	        ArrayList<Lop> lop = lopDAO.timLop(tt.txttimkiem.getText());
 	        DefaultTableModel model = new DefaultTableModel();
 	        model.setColumnIdentifiers(new Object[]{"Mã lớp","Tên lớp","Sỉ số lớp","Mã giảng viên"});
 	        Object[] row = new Object[4];
@@ -592,7 +592,7 @@ public class LopGUI extends JFrame {
 		}
 		// cai dat list giang vien
 		public void setCombobox() {
-			GiangVienDAO gv = new GiangVienDAO();
+			GiangVienDAOImpl gv = new GiangVienDAOImpl();
 			ArrayList<GiangVien> list = gv.getGiangVien();
 			for(GiangVien item: list) {
 				cboGiangVien.addItem(item);

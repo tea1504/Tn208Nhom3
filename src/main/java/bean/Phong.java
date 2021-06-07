@@ -12,6 +12,10 @@ public class Phong {
 		SoLuongMay = soMay;
 	}
 
+	public Phong() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private int SoLuongMay;
 
 //	Phương thức lấy mã phòng
@@ -33,7 +37,7 @@ public class Phong {
 	public void setTenPhong(String tenPhong) {
 		TenPhong = tenPhong;
 	}
-	
+
 //	Phương thức lấy số lượng máy
 	public int getSoLuongMay() {
 		return SoLuongMay;
@@ -43,7 +47,7 @@ public class Phong {
 	public void setSoMay(int soMay) {
 		SoLuongMay = soMay;
 	}
-	
+
 	public String toString() {
 		return getTenPhong();
 	}

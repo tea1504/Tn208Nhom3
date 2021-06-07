@@ -14,23 +14,18 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import DAO.GiangVienDAO;
+import DAO.GiangVienDAOImpl;
 import bean.GiangVien;
 import bean.TaiKhoan;
 import helpers.SharedData;
-import view.lop.LopGUI;
-import view.phong.PhongGUI;
-import view.taikhoangiangvien.GiangVienGUI;
-import view.taikhoan.DoiMatKhauGUI;
-import view.taikhoan.TaiKhoanGUI;
 
 @SuppressWarnings("serial")
-public class AppGUI extends JFrame implements ActionListener {
+public class QLPM_Main extends JFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JMenu mnuQuanLy, mnuChucNang, mnuTienIch;
 	private JMenuItem mnuLop, mnuGiangVien, mnuPhong, mnuTaiKhoan, mnuDangKy, mnuHuyDangKy, mnuDangXuat, mnuDoiMatKhau, mnuXemLich;
 	private TaiKhoan user = SharedData.CurentAccount;
-	public AppGUI() {
+	public QLPM_Main() {
 		khoiTaoFrame();
 		if(user.getQuyenSD() == 0) {
 			mnuTaiKhoan.setEnabled(false);
@@ -48,7 +43,7 @@ public class AppGUI extends JFrame implements ActionListener {
 		setBounds(300, 100, 1200, 800);
 		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
 		setIconImage(icon.getImage());
-		GiangVienDAO giangVienDAO = new GiangVienDAO();
+		GiangVienDAOImpl giangVienDAO = new GiangVienDAOImpl();
 		GiangVien giangVien = giangVienDAO.getGiangVien(user.getMaGiangVien());
 		JLabel lblTaiKhoan = new JLabel("Xin chào: "+ giangVien.getTenGiangVien());// thêm lable hiện tên giảng viên đang đăng nhập
 		lblTaiKhoan.setFont(new Font("Arial", Font.ITALIC, 20));
@@ -158,28 +153,28 @@ public class AppGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == mnuPhong) {
-			new PhongGUI();
+			new QLPM_PhongMay();
 		}
 		else if(e.getSource() == mnuLop) {
-			new LopGUI();
+			new QLPM_Lop();
 		}
 		else if(e.getSource() == mnuGiangVien) {
-			new GiangVienGUI();
+			new QLPM_GiangVien();
 		}
 		else if(e.getSource() == mnuTaiKhoan) {
-			new TaiKhoanGUI();
+			new QLPM_TaiKhoan();
 		}
 		else if(e.getSource() == mnuDangKy) {
-			new DangKyGUI();
+			new QLPM_DangKy();
 		}
 		else if(e.getSource() == mnuHuyDangKy) {
-			new HuyDangKyGUI();
+			new QLPM_HuyDangKy();
 		}
 		else if(e.getSource() == mnuXemLich) {
 			new QLPM_XemLich();
 		}
 		else if(e.getSource() == mnuDoiMatKhau) {
-			new DoiMatKhauGUI();
+			new QLPM_DoiMatKhau();
 		}
 		else if(e.getSource() == mnuDangXuat) {
 			SharedData.CurentAccount = null;

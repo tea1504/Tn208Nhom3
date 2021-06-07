@@ -1,35 +1,52 @@
-package view.taikhoangiangvien;
+package view;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import javax.swing.table.AbstractTableModel;
 
+import DAO.TaiKhoanDAOImpl;
 import bean.DBConnection;
 
+
 @SuppressWarnings("serial")
-public class GiangVienSetTableModel extends AbstractTableModel {
-	private DBConnection conn = new DBConnection();
+public class TaiKhoanSetTableModel  extends AbstractTableModel {
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
 	private final String title[] = {"Mã giảng viên", "Tên giảng viên", "Quyền sử dụng"};
 	
-	public GiangVienSetTableModel() {
-		try {
-			conn.getConnection();
-			String query = "SELECT gv.magiangvien, gv.tengiangvien , tk.quyensd FROM giangvien gv INNER JOIN taikhoan tk ON gv.magiangvien=tk.magiangvien";
-			rs = conn.excuted(query);
-			rsmd = rs.getMetaData();
-		} catch (SQLException e) {
+	public TaiKhoanSetTableModel() {
+		TaiKhoanDAOImpl tkDAO = new TaiKhoanDAOImpl();
+		try
+		{
+			//Lấy dữ liệu để hiển thị lên bảng
+			rs = (ResultSet) tkDAO.taiKhoanGetTableModel();
+			rsmd = rs.getMetaData();	
+			
+		}
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 	}
-
-	public void disconnect() {
-		conn.closeConnection();
+	
+	public TaiKhoanSetTableModel(String maGiangVien) {
+		TaiKhoanDAOImpl tkDAO = new TaiKhoanDAOImpl();
+		try
+		{
+			//Lấy dữ liệu để hiển thị lên bảng
+			rs = (ResultSet) tkDAO.taiKhoanGetTableModel(maGiangVien);
+			rsmd = rs.getMetaData();	
+			
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
 	}
-
+	
 	@Override
 	public int getRowCount() {
 		try {
@@ -45,7 +62,9 @@ public class GiangVienSetTableModel extends AbstractTableModel {
 	public int getColumnCount() {
 		try {
 			return rsmd.getColumnCount();
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		return 0;
@@ -56,15 +75,22 @@ public class GiangVienSetTableModel extends AbstractTableModel {
 		try {
 			if (rs.absolute(rowIndex + 1))
 				return rs.getObject(columnIndex + 1);
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		return null;
 	}
-
+	
 	@Override
 	public String getColumnName(int column) {
 		return title[column];
+	}
+	
+	public void disconnect() throws SQLException {
+		if(rs != null)
+			rs.close();
 	}
 
 }

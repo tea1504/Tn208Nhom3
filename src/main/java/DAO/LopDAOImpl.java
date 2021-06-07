@@ -7,14 +7,9 @@ import java.util.ArrayList;
 import java.sql.CallableStatement;
 
 import bean.DBConnection;
-import bean.GiangVien;
 import bean.Lop;
-import bean.Phong;
 
-
-
-
-public class LopDAO implements ILopDAO {
+public class LopDAOImpl implements ILopDAO {
 	DBConnection conn = new DBConnection();
 	CallableStatement callableStatement;
 // lay danh sach lop su dung procedure
@@ -27,7 +22,7 @@ public class LopDAO implements ILopDAO {
 		try {
 			while (rs.next()) {
 				Lop temp = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
-				GiangVienDAO gv = new GiangVienDAO();
+				GiangVienDAOImpl gv = new GiangVienDAOImpl();
 				temp.setGiangVien(gv.getGiangVien(temp.getMaGiangVien()));
 				list.add(temp);
 			}
@@ -51,7 +46,7 @@ public class LopDAO implements ILopDAO {
 		rs = callableStatement.executeQuery();
 			while (rs.next()) {
 				Lop temp = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
-				GiangVienDAO gv = new GiangVienDAO();
+				GiangVienDAOImpl gv = new GiangVienDAOImpl();
 				temp.setGiangVien(gv.getGiangVien(temp.getMaGiangVien()));
 				list.add(temp);
 			}
@@ -95,10 +90,29 @@ public class LopDAO implements ILopDAO {
 		conn.closeConnection();
 		return r;
 	}
-	// tim kiem lớp sử dụng procedure
-	public ArrayList<Lop> timloptheoma(String searchMa)
+	public Lop getLop(String searchMa)
     {
-        ArrayList<Lop> list = new ArrayList<Lop>();
+        Lop lop = new Lop();
+        ResultSet rs;
+        String query = "call getLopTheoMa(?)";
+        try {
+			callableStatement = conn.getConnection().prepareCall(query);
+			callableStatement.setString(1, searchMa);
+			rs = callableStatement.executeQuery();
+			while(rs.next())
+            {
+            	lop = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+            }
+			callableStatement.close();
+			conn.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return lop;
+    }
+	public ArrayList<Lop> timLop(String search){
+		ArrayList<Lop> listLop = new ArrayList<Lop>();
       
         ResultSet rs;
         
@@ -106,18 +120,18 @@ public class LopDAO implements ILopDAO {
             conn.getConnection();
             String query = "{call timlop(?)}";
             callableStatement = conn.getConnection().prepareCall(query);
-			callableStatement.setString(1, searchMa);
+			callableStatement.setString(1, search);
 			rs = callableStatement.executeQuery();
             while(rs.next())
             {
             	Lop lop = new Lop(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
-            	list.add(lop);
+            	listLop.add(lop);
             }
             
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
         
-        return list;
-    }
+        return listLop;
+	}
 }

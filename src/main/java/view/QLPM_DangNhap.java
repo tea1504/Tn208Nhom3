@@ -48,6 +48,8 @@ public class QLPM_DangNhap extends JFrame{
 		setSize(520,255); 
 		setLocationRelativeTo(null); //center
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
+		setIconImage(icon.getImage());
 		setVisible(true);
 		
 		lblTitle = new JLabel("QUẢN LÝ PHÒNG MÁY");
@@ -170,7 +172,7 @@ public class QLPM_DangNhap extends JFrame{
 					{
 						//Đăng nhập thành công
 						SharedData.CurentAccount = tk; //Lưu thông tin tài khoản hiện tại
-						new AppGUI();
+						new QLPM_Main();
 						QLPM_DangNhap.this.dispose();
 					}
 				}
