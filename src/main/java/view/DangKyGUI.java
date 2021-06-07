@@ -36,8 +36,10 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import DAO.DangKyDAOImpl;
 import DAO.LopDAO;
 import DAO.PhongDAO;
+import bean.DangKy;
 import bean.Lop;
 import bean.Phong;
 import bean.TaiKhoan;
@@ -156,8 +158,10 @@ public class DangKyGUI extends JFrame implements ActionListener {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				if (datePicker.getModel().getValue() != null) {
-					now = datePicker.getModel().getYear() + "-" + (datePicker.getModel().getMonth()+1) + "-"
+					now = datePicker.getModel().getYear() + "-" + (datePicker.getModel().getMonth() + 1) + "-"
 							+ datePicker.getModel().getDay();
+					selectedDate.set(datePicker.getModel().getYear(), datePicker.getModel().getMonth(),
+							datePicker.getModel().getDay());
 				}
 				setupComboboxPhong();
 			}
@@ -165,7 +169,7 @@ public class DangKyGUI extends JFrame implements ActionListener {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				if (datePicker.getModel().getValue() != null) {
-					now = datePicker.getModel().getYear() + "-" + (datePicker.getModel().getMonth()+1) + "-"
+					now = datePicker.getModel().getYear() + "-" + (datePicker.getModel().getMonth() + 1) + "-"
 							+ datePicker.getModel().getDay();
 				}
 				setupComboboxPhong();
@@ -217,15 +221,18 @@ public class DangKyGUI extends JFrame implements ActionListener {
 	}
 
 	private void setupComboboxPhong() {
+		int index = cboPhong.getSelectedIndex();
 		cboPhong.removeAllItems();
 		PhongDAO phongDAO = new PhongDAO();
 		ArrayList<Phong> listPhong = phongDAO.getPhongChuaDangKy(now, selectedBuoi, selectedSiSo);
 		for (Phong phong : listPhong) {
 			cboPhong.addItem(phong);
 		}
-		if(listPhong.isEmpty()) {
+		if (listPhong.isEmpty()) {
 			System.out.println("Không có phòng phù hợp");
 		}
+		if(index >= cboPhong.getItemCount()) index = 0;
+		cboPhong.setSelectedIndex(index);
 	}
 
 	private void setupButton() {
@@ -274,10 +281,33 @@ public class DangKyGUI extends JFrame implements ActionListener {
 			GregorianCalendar day2 = new GregorianCalendar(datePicker.getModel().getYear(),
 					datePicker.getModel().getMonth(), datePicker.getModel().getDay());
 			if (day2.compareTo(day) == -1) {
-				JOptionPane.showMessageDialog(null, "Bạn phải chọn ngày khác", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Bạn phải đăng ký trước 1 ngày", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			} else if (cboPhong.getSelectedIndex() == -1) {
+				JOptionPane.showMessageDialog(null, "Bạn chưa chọn phòng học", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			} else if (cboBuoi.getSelectedIndex() == -1) {
+				JOptionPane.showMessageDialog(null, "Bạn chưa chọn buổi", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			} else if (cboLop.getSelectedIndex() == -1) {
+				JOptionPane.showMessageDialog(null, "Bạn chưa chọn lớp", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			} else {
+				DangKy dangKy = new DangKy(0, ((Phong) cboPhong.getSelectedItem()).getMaPhong(),
+						((Lop) cboLop.getSelectedItem()).getMaLop(), selectedDate, selectedBuoi);
+				DangKyDAOImpl dangKyDAOImpl = new DangKyDAOImpl();
+				int res = dangKyDAOImpl.CreateDangKy(dangKy);
+				if (res != 0) {
+					JOptionPane.showMessageDialog(null,
+							"Đã đăng ký " + ((Phong) cboPhong.getSelectedItem()).getTenPhong() + "\nCho lớp: "
+									+ ((Lop) cboLop.getSelectedItem()).getMaLop() + " | "
+									+ ((Lop) cboLop.getSelectedItem()).getTenLop() + "\n vào buổi "
+									+ (selectedBuoi == 0 ? "sáng" : (selectedBuoi == 1 ? "chiều" : "tối")) + " ngày "
+									+ now,
+							"Đăng ký thành công", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		} else if (e.getSource() == btnNhapLai) {
 			datePicker.getModel().setValue(null);
+			cboBuoi.setSelectedIndex(0);
+			cboLop.setSelectedIndex(0);
+			cboPhong.setSelectedIndex(0);
 		} else if (e.getSource() == cboBuoi) {
 			selectedBuoi = cboBuoi.getSelectedIndex();
 			setupComboboxPhong();

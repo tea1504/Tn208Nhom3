@@ -20,7 +20,23 @@ public class DangKyDAOImpl implements IDangKyDAO {
 	CallableStatement cstmt;
 	@Override
 	public int CreateDangKy(DangKy dangKy) {
-		// TODO Auto-generated method stub
+		String sql = "{call dangKyPhongMay(?, ?, ?, ?)}";
+		try {
+			cstmt = conn.getConnection().prepareCall(sql);
+			cstmt.setString(1, dangKy.getMaPhong());
+			cstmt.setString(2, dangKy.getMaLop());
+			String now = dangKy.getNgayDangKy().get(Calendar.YEAR) + "-" + (dangKy.getNgayDangKy().get(Calendar.MONTH) + 1) + "-"
+					+ dangKy.getNgayDangKy().get(Calendar.DATE);
+			cstmt.setString(3, now);
+			cstmt.setInt(4, dangKy.getBuoiDangKy());
+			int res = cstmt.executeUpdate();
+			cstmt.close();
+			conn.closeConnection();
+			return res;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
