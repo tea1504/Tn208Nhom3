@@ -10,7 +10,7 @@ public class Lop {
 	{
 		
 	}
-	public Lop(String maLop, String tenLop,  String maGiangVien, int siSoLop) {
+	public Lop(String maLop, String maGiangVien, String tenLop,  int siSoLop) {
 		super();
 		this.maLop = maLop;
 		this.tenLop = tenLop;

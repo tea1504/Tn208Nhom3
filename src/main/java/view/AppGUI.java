@@ -14,6 +14,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import DAO.GiangVienDAO;
+import bean.GiangVien;
+import bean.TaiKhoan;
 import helpers.SharedData;
 import view.lop.LopGUI;
 import view.phong.PhongGUI;
@@ -26,8 +29,12 @@ public class AppGUI extends JFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JMenu mnuQuanLy, mnuChucNang, mnuTienIch;
 	private JMenuItem mnuLop, mnuGiangVien, mnuPhong, mnuTaiKhoan, mnuDangKy, mnuHuyDangKy, mnuDangXuat, mnuDoiMatKhau, mnuXemLich;
+	private TaiKhoan user = SharedData.CurentAccount;
 	public AppGUI() {
 		khoiTaoFrame();
+		if(user.getQuyenSD() == 0) {
+			mnuTaiKhoan.setEnabled(false);
+		}
 	}
 
 	private void khoiTaoFrame() {
@@ -41,7 +48,9 @@ public class AppGUI extends JFrame implements ActionListener {
 		setBounds(300, 100, 1200, 800);
 		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
 		setIconImage(icon.getImage());
-		JLabel lblTaiKhoan = new JLabel("Mã giảng viên: "+ SharedData.CurentAccount.getMaGiangVien());// thêm lable hiện mã giảng viên đang đăng nhập
+		GiangVienDAO giangVienDAO = new GiangVienDAO();
+		GiangVien giangVien = giangVienDAO.getGiangVien(user.getMaGiangVien());
+		JLabel lblTaiKhoan = new JLabel("Xin chào: "+ giangVien.getTenGiangVien());// thêm lable hiện tên giảng viên đang đăng nhập
 		lblTaiKhoan.setFont(new Font("Arial", Font.ITALIC, 20));
 		add(lblTaiKhoan, BorderLayout.SOUTH);
 		setTitle("Chương trình quản lí phòng máy thực hành");
