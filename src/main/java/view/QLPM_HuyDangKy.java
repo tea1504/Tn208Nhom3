@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,7 +34,7 @@ public class QLPM_HuyDangKy extends JFrame implements ActionListener {
 	private JPanel pTitle, pTable, pButton;
 	private JLabel title;
 	private JTable table;
-	private JButton btnHuy;
+	private JButton btnHuy, btnThoat;
 
 	/**
 	 * Khởi tạo giao diện cho chức năng <strong>hủy đăng ký</strong>
@@ -53,7 +54,8 @@ public class QLPM_HuyDangKy extends JFrame implements ActionListener {
 		setupTitle();
 		setupTable();
 		setupButton();
-		setBounds(300, 100, 1200, 800);
+		setSize(1200, 800);
+		setLocationRelativeTo(null);
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
@@ -70,6 +72,9 @@ public class QLPM_HuyDangKy extends JFrame implements ActionListener {
 		gbc.weighty = 0.1;
 		gbc.gridy++;
 		getContentPane().add(pButton, gbc); // Thêm panel Button
+		setTitle("Hủy đăng ký phòng máy");
+		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
+		setIconImage(icon.getImage());
 		setVisible(true);
 	}
 
@@ -138,12 +143,28 @@ public class QLPM_HuyDangKy extends JFrame implements ActionListener {
 		btnHuy.setBorderPainted(false);
 		btnHuy.setFocusable(false);
 		btnHuy.addActionListener(this);
+		ImageIcon icon = new ImageIcon(getClass().getResource("icon/huy2.png"));
+		btnHuy.setIcon(icon);
+
+		btnThoat = new JButton("Đóng");
+		btnThoat.setFont(new Font("Arial", Font.BOLD, 30));
+		btnThoat.setBackground(new Color(9, 132, 227));
+		btnThoat.setForeground(Color.WHITE);
+		btnThoat.setBorderPainted(false);
+		btnThoat.setFocusable(false);
+		btnThoat.addActionListener(this);
+		icon = new ImageIcon(getClass().getResource("icon/close.png"));
+		btnThoat.setIcon(icon);
+
 		pButton = new JPanel();
 		pButton.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(0, 5, 0, 5);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		pButton.add(btnHuy, gbc);
+		gbc.gridx++;
+		pButton.add(btnThoat, gbc);
 	}
 
 	@Override
@@ -167,6 +188,9 @@ public class QLPM_HuyDangKy extends JFrame implements ActionListener {
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
+		}
+		else if(e.getSource() == btnThoat) {
+			QLPM_HuyDangKy.this.dispose();
 		}
 	}
 }

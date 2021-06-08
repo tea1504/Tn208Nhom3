@@ -44,6 +44,8 @@ public class QLPM_DoiMatKhau extends JFrame{
 		super();
 		setSize(550,255); 
 		setLocationRelativeTo(null); //center
+		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
+		setIconImage(icon.getImage());
 		setVisible(true);
 		setTitle("Đổi mật khẩu");
 		

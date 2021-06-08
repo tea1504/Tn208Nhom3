@@ -129,7 +129,7 @@ public class GiangVienDAOImpl implements IGiangVienDAO {
 			GiangVien gv;
 
 			while (rs.next()) {
-				gv = new GiangVien(rs.getString("magiangvien"), rs.getString("tengiangvien"));
+				gv = new GiangVien(rs.getString("magiangvien"), rs.getString("tengiangvien"), rs.getInt("quyensd"));
 				gvList.add(gv);
 			}
 

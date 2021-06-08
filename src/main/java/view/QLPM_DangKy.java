@@ -49,7 +49,7 @@ import helpers.SharedData;
 public class QLPM_DangKy extends JFrame implements ActionListener {
 	private JPanel pTitle, pNhapLieu, pButton;
 	private JLabel title = new JLabel();
-	private JButton btnDangKy, btnNhapLai;
+	private JButton btnDangKy, btnNhapLai, btnDong;
 	private JLabel lblPhong, lblLop, lblNgay, lblBuoi;
 	private JComboBox<String> cboBuoi;
 	private JComboBox<Phong> cboPhong;
@@ -72,7 +72,10 @@ public class QLPM_DangKy extends JFrame implements ActionListener {
 		setupTitle();
 		setupNhapLieu();
 		setupButton();
-		setBounds(300, 100, 1200, 800);
+		setSize(1200, 800);
+		setLocationRelativeTo(null);
+		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
+		setIconImage(icon.getImage());
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
@@ -255,6 +258,15 @@ public class QLPM_DangKy extends JFrame implements ActionListener {
 		btnNhapLai.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/reset.png"));
 		btnNhapLai.setIcon(icon);
+		btnDong = new JButton("Đóng");
+		btnDong.setFont(new Font("Arial", Font.BOLD, 30));
+		btnDong.setBackground(new Color(9, 132, 227));
+		btnDong.setForeground(Color.WHITE);
+		btnDong.setBorderPainted(false);
+		btnDong.setFocusable(false);
+		btnDong.addActionListener(this);
+		icon = new ImageIcon(getClass().getResource("icon/close.png"));
+		btnDong.setIcon(icon);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.gridx = 0;
@@ -262,6 +274,8 @@ public class QLPM_DangKy extends JFrame implements ActionListener {
 		pButton.add(btnDangKy, gbc);
 		gbc.gridx++;
 		pButton.add(btnNhapLai, gbc);
+		gbc.gridx++;
+		pButton.add(btnDong, gbc);
 	}
 
 	private void setupTitle() {
@@ -308,6 +322,8 @@ public class QLPM_DangKy extends JFrame implements ActionListener {
 			cboBuoi.setSelectedIndex(0);
 			cboLop.setSelectedIndex(0);
 			cboPhong.setSelectedIndex(0);
+		} else if (e.getSource() == btnDong) {
+			QLPM_DangKy.this.dispose();
 		} else if (e.getSource() == cboBuoi) {
 			selectedBuoi = cboBuoi.getSelectedIndex();
 			setupComboboxPhong();

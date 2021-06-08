@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import DAO.TaiKhoanDAOImpl;
 import bean.TaiKhoan;
@@ -87,7 +88,8 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
 		setIconImage(icon.getImage());
 		setTitle("Quản lý phòng học");
-		setSize(1200, 700);
+		setSize(1200, 800);
+		setLocationRelativeTo(null);
 		setVisible(true);
 
 		// Khởi tạo cho các thuộc tính
@@ -115,6 +117,9 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 
 		model = new TaiKhoanSetTableModel();
 		table = new JTable(model);
+		TableColumnModel tcm = table.getColumnModel();
+		TableColumn tc = tcm.getColumn(2);
+		tc.setCellRenderer(new QuyenRenderer());
 
 //		// Ẩn cột quyền sử dụng hiện
 //		table.getColumnModel().getColumn(2).setMinWidth(0);
@@ -212,11 +217,18 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 		setLayout(new GridBagLayout());
 		// cho tiêu đề
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 12;
-		gbc.insets = new Insets(20, 0, 20, 0);
-		getContentPane().add(lblTitle, gbc);
+//		gbc.insets = new Insets(20, 0, 20, 0);
+		JPanel pTitle = new JPanel(new GridBagLayout());
+		pTitle.add(lblTitle, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
+				GridBagConstraints.BOTH, new Insets(20, 0, 20, 0), 0, 0));
+		pTitle.setBackground(new Color(9, 132, 227));
+		lblTitle.setForeground(Color.white);
+		lblTitle.setHorizontalAlignment(JLabel.HORIZONTAL);
+		getContentPane().add(pTitle, gbc);
 
 		// cho các label
 		gbc = new GridBagConstraints();
@@ -351,6 +363,9 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 		} else if (e.getSource() == btnTaiLai) {
 			model = new TaiKhoanSetTableModel();
 			table.setModel(model);
+			TableColumnModel tcm = table.getColumnModel();
+			TableColumn tc = tcm.getColumn(2);
+			tc.setCellRenderer(new QuyenRenderer());
 			table.changeSelection(0, 0, false, false);
 			ganGiaTri();
 		} else if (e.getSource() == btnThoat) {
@@ -359,8 +374,7 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 			Luu();
 		} else if (e.getSource() == btnTimKiem) {
 			TimKiem();
-		}
-		else if(e.getSource() == btnMatKhauMoi) {
+		} else if (e.getSource() == btnMatKhauMoi) {
 			String maGV = txtMSGV.getText();
 			new QLPM_CapLaiMatKhau(maGV);
 		}
@@ -386,10 +400,13 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Lưu thay đổi không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
+
 		int r = table.getSelectedRow();
 		model = new TaiKhoanSetTableModel();
 		table.setModel(model);
+		TableColumnModel tcm = table.getColumnModel();
+		TableColumn tc = tcm.getColumn(2);
+		tc.setCellRenderer(new QuyenRenderer());
 		table.changeSelection(r, 0, false, false);
 		TrangThaiKhiXem();
 		ganGiaTri();
@@ -412,6 +429,9 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 		model = new TaiKhoanSetTableModel(txtTimKiem.getText());
 		if (model.getRowCount() > 0) {
 			table.setModel(model);
+			TableColumnModel tcm = table.getColumnModel();
+			TableColumn tc = tcm.getColumn(2);
+			tc.setCellRenderer(new QuyenRenderer());
 			table.changeSelection(0, 0, false, false);
 			ganGiaTri();
 		} else

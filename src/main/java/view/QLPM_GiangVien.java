@@ -19,10 +19,13 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import DAO.GiangVienDAOImpl;
 import DAO.PhongMayDAOImpl;
@@ -31,23 +34,22 @@ import bean.Phong;
 import helpers.SharedData;
 
 @SuppressWarnings("serial")
-public class QLPM_GiangVien extends JFrame implements ActionListener{
-	
+public class QLPM_GiangVien extends JFrame implements ActionListener {
+
 	private JLabel title = new JLabel("QUẢN LÝ GIẢNG VIÊN");
-	
+
 	JLabel lblMaGiangVien = new JLabel("Mã giảng viên:");
 	JLabel lblTenGiangVien = new JLabel("Tên giảng viên:");
 	JLabel lblQuyenSD = new JLabel("Quyền sử dụng:");
 	JLabel lblTKMGV = new JLabel("Tìm kiếm theo giảng viên:");
-	
+
 	JTextField txtMaGiangVien = new JTextField(10);
-	JTextField txtTenGiangVien = new JTextField(10);	
-	JTextField txtTKMGV = new JTextField(10);	
-	
-	String quyensd[] = {"Admin","User"};
+	JTextField txtTenGiangVien = new JTextField(10);
+	JTextField txtTKMGV = new JTextField(10);
+
+	String quyensd[] = { "Admin", "User" };
 	JComboBox cboQuyenSD = new JComboBox(quyensd);
-	
-	
+
 	private JButton btnTimKiem = new JButton("Tìm kiếm");
 	private JButton btnThem = new JButton("Thêm");
 	private JButton btnSua = new JButton("Sửa");
@@ -56,7 +58,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 	private JButton btnHuy = new JButton("Hủy");
 	private JButton btnThoat = new JButton("Thoát");
 	private boolean them = false;
-	
+
 	private GiangVienSetTableModel model = new GiangVienSetTableModel();
 	private JTable table = new JTable();
 	private JScrollPane pane;
@@ -65,20 +67,27 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 	public QLPM_GiangVien() {
 		setup();
 		phanQuyen();
-		
+
 		title.setFont(new Font("Arial", Font.BOLD, 50));
-		setSize(1000, 700);
+		title.setHorizontalAlignment(JLabel.HORIZONTAL);
+		title.setForeground(Color.white);
+		JPanel pTitle = new JPanel(new GridBagLayout());
+		pTitle.add(title, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
+				GridBagConstraints.BOTH, new Insets(20, 0, 20, 0), 0, 0));
+		pTitle.setBackground(new Color(9, 132, 227));
+		setSize(1200, 800);
 		getContentPane().setLayout(new GridBagLayout());
-		
+
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 12;
 		gbc.insets = new Insets(20, 0, 20, 0);
-		getContentPane().add(title, gbc);
-	
+		getContentPane().add(pTitle, gbc);
+
 		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 30, 0, 30 );
+		gbc.insets = new Insets(0, 30, 0, 30);
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -90,8 +99,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 		add(lblQuyenSD, gbc);
 		gbc.gridy = 4;
 		add(lblTKMGV, gbc);
-		
-		
+
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.weightx = 1.0;
@@ -106,21 +114,24 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 		gbc.gridy++;
 		gbc.gridwidth = 4;
 		add(txtTKMGV, gbc);
-	
+
 		gbc.gridx = 5;
 		gbc.gridwidth = 1;
 		add(btnTimKiem, gbc);
 		DKKBT();
-		
+
 		table = new JTable(model);
 		table.changeSelection(0, 0, false, false);
+		TableColumnModel tcm = table.getColumnModel();
+		TableColumn tc = tcm.getColumn(2);
+		tc.setCellRenderer(new QuyenRenderer());
 		table.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 18));
 		table.setRowHeight(30);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		pane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-				
+
 		gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
@@ -130,7 +141,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 		gbc.weighty = 1.0;
 		gbc.insets = new Insets(10, 20, 20, 20);
 		add(pane, gbc);
-		
+
 		GanDL();
 
 		table.addMouseListener(new MouseListener() {
@@ -173,41 +184,42 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 						if (list.get(i).getMaGiangVien().compareTo(ma) == 0)
 							index = i;
 					}
-					if(Integer.parseInt(table.getValueAt(r,2).toString())==0) {
+					if (Integer.parseInt(table.getValueAt(r, 2).toString()) == 0) {
 						cboQuyenSD.setSelectedIndex(1);
-					}else {
+					} else {
 						cboQuyenSD.setSelectedIndex(0);
-					}					
+					}
 				}
 			}
 
-			
 		});
-		
-			gbc = new GridBagConstraints();
-			gbc.fill = GridBagConstraints.HORIZONTAL;
-			gbc.insets = new Insets(0, 20, 10, 20);
-			gbc.gridx = 0;
-			gbc.gridy = 7;
-			gbc.weightx = 1;
-			add(btnThem, gbc);
-			gbc.gridx = GridBagConstraints.RELATIVE;
-			add(btnSua, gbc);
-			gbc.gridx = GridBagConstraints.RELATIVE;
-			add(btnXoa, gbc);
-			gbc.gridx = GridBagConstraints.RELATIVE;
-			add(btnLuu, gbc);
-			gbc.gridx = GridBagConstraints.RELATIVE;
-			add(btnHuy, gbc);
-			gbc.gridx = GridBagConstraints.RELATIVE;
-			add(btnThoat, gbc);
-	
-			ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
-			setIconImage(icon.getImage());
-			setTitle("Quản lý phòng học");
-			setExtendedState(JFrame.MAXIMIZED_BOTH);
-			setVisible(true);
-		}
+
+		gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(0, 20, 10, 20);
+		gbc.gridx = 0;
+		gbc.gridy = 7;
+		gbc.weightx = 1;
+		add(btnThem, gbc);
+		gbc.gridx = GridBagConstraints.RELATIVE;
+		add(btnSua, gbc);
+		gbc.gridx = GridBagConstraints.RELATIVE;
+		add(btnXoa, gbc);
+		gbc.gridx = GridBagConstraints.RELATIVE;
+		add(btnLuu, gbc);
+		gbc.gridx = GridBagConstraints.RELATIVE;
+		add(btnHuy, gbc);
+		gbc.gridx = GridBagConstraints.RELATIVE;
+		add(btnThoat, gbc);
+
+		ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
+		setIconImage(icon.getImage());
+		setTitle("Quản lý phòng học");
+//			setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+
 	public GiangVienSetTableModel getModel() {
 		return model;
 	}
@@ -231,21 +243,21 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 	public void setOk(boolean ok) {
 		this.ok = ok;
 	}
-	
+
 	public void setTxtMGiangVien(String text) {
 		txtMaGiangVien.setText(text);
 	}
-	
+
 	private void setup() {
 		lblMaGiangVien.setFont(new Font("Arial", Font.BOLD, 18));
 		lblTenGiangVien.setFont(new Font("Arial", Font.BOLD, 18));
 		lblQuyenSD.setFont(new Font("Arial", Font.BOLD, 18));
 		lblTKMGV.setFont(new Font("Arial", Font.BOLD, 18));
-		txtMaGiangVien.setFont(new Font("Arial",0, 18));
-		txtTenGiangVien.setFont(new Font("Arial",0, 18));		
+		txtMaGiangVien.setFont(new Font("Arial", 0, 18));
+		txtTenGiangVien.setFont(new Font("Arial", 0, 18));
 		cboQuyenSD.setFont(new Font("Arial", 0, 18));
-		txtTKMGV.setFont(new Font("Arial",0, 18));		
-				
+		txtTKMGV.setFont(new Font("Arial", 0, 18));
+
 		btnTimKiem.setFont(new Font("Arial", Font.BOLD, 24));
 		btnTimKiem.setBackground(new Color(9, 132, 227));
 		btnTimKiem.setBorderPainted(false);
@@ -254,7 +266,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 		btnTimKiem.addActionListener(this);
 		Icon icon = new ImageIcon(this.getClass().getResource("icon/timkiem.png"));
 		btnTimKiem.setIcon(icon);
-		
+
 		btnThem.setFont(new Font("Arial", Font.BOLD, 24));
 		btnThem.setBackground(new Color(9, 132, 227));
 		btnThem.setBorderPainted(false);
@@ -322,7 +334,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 				GanDL();
 				them = false;
 				break;
-			case "Thêm":				
+			case "Thêm":
 				DKKT();
 				them = true;
 				break;
@@ -350,7 +362,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 				this.dispose();
 				break;
 			case "Tìm kiếm":
-				TimPhong();
+				TimGiangVien();
 				break;
 			default:
 				break;
@@ -359,7 +371,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 	}
 
 	private void GanDL() {
-		int r = table.getSelectedRow();		
+		int r = table.getSelectedRow();
 		txtMaGiangVien.setText(table.getValueAt(r, 0).toString());
 		txtTenGiangVien.setText(table.getValueAt(r, 1).toString());
 		String ma = table.getValueAt(r, 0).toString();
@@ -370,9 +382,9 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 			if (list.get(i).getMaGiangVien().compareTo(ma) == 0)
 				index = i;
 		}
-		if(Integer.parseInt(table.getValueAt(r,2).toString())==0) {
+		if (Integer.parseInt(table.getValueAt(r, 2).toString()) == 0) {
 			cboQuyenSD.setSelectedIndex(1);
-		}else {
+		} else {
 			cboQuyenSD.setSelectedIndex(0);
 		}
 	}
@@ -398,18 +410,18 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 	private void DKKT() {
 		cboQuyenSD.setEnabled(false);
 		cboQuyenSD.setSelectedIndex(1);
-		
+
 		txtMaGiangVien.setEditable(true);
 		txtMaGiangVien.requestFocus();
 		txtMaGiangVien.setText("");
-		
-		txtTenGiangVien.setEditable(true);		
+
+		txtTenGiangVien.setEditable(true);
 		txtTenGiangVien.setText("");
-		
+
 		txtTKMGV.setEditable(false);
-		table.setEnabled(false);		
+		table.setEnabled(false);
 		ok = false;
-		
+
 		btnLuu.setEnabled(true);
 		btnHuy.setEnabled(true);
 		btnThem.setEnabled(false);
@@ -434,14 +446,13 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 		btnTimKiem.setEnabled(false);
 		table.setEnabled(false);
 	}
-	
+
 	private void phanQuyen() {
 		if (SharedData.CurentAccount.getQuyenSD() == 1) {
 			btnThem.setEnabled(true);
 			btnSua.setEnabled(true);
 			btnXoa.setEnabled(true);
-		} 
-		else {
+		} else {
 			btnThem.setEnabled(false);
 			btnSua.setEnabled(false);
 			btnXoa.setEnabled(false);
@@ -457,22 +468,34 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 				boolean r = ctrl.ThemGiangVien(gv);
 				GiangVienSetTableModel model = new GiangVienSetTableModel();
 				table.setModel(model);
+				TableColumnModel tcm = table.getColumnModel();
+				TableColumn tc = tcm.getColumn(2);
+				tc.setCellRenderer(new QuyenRenderer());
 				table.changeSelection(row, 0, false, false);
 				if (r)
 					JOptionPane.showMessageDialog(null, "Không lưu được", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				else
-					JOptionPane.showMessageDialog(null, "Đã lưu \n Mã giảng viên: "+ txtMaGiangVien.getText()+" \nTên giảng viên: " + txtTenGiangVien.getText() +"\n Mật khẩu: 12345 "+"\n Quyền sử dụng: User" , "OK", JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
+					JOptionPane.showMessageDialog(null,
+							"Đã lưu \n Mã giảng viên: " + txtMaGiangVien.getText() + " \nTên giảng viên: "
+									+ txtTenGiangVien.getText() + "\n Mật khẩu: 12345 " + "\n Quyền sử dụng: User",
+							"OK", JOptionPane.INFORMATION_MESSAGE);
+			} else {
 				GiangVien gv = new GiangVien(txtMaGiangVien.getText(), txtTenGiangVien.getText());
 				GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
 				boolean r = ctrl.SuaGiangVien(gv);
 				table.setModel(new GiangVienSetTableModel());
+				TableColumnModel tcm = table.getColumnModel();
+				TableColumn tc = tcm.getColumn(2);
+				tc.setCellRenderer(new QuyenRenderer());
 				table.changeSelection(row, 0, false, false);
 				if (r)
 					JOptionPane.showMessageDialog(null, "Không lưu được", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				else
-					JOptionPane.showMessageDialog(null, "Đã lưu \n Mã giảng viên: "+ txtMaGiangVien.getText()+" \nTên giảng viên: " + txtTenGiangVien.getText()+"\n Lưu ý: Chỉ có thể sửa quyền sử dụng ở bảng Tài Khoản", "OK", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Đã lưu \n Mã giảng viên: " + txtMaGiangVien.getText() + " \nTên giảng viên: "
+									+ txtTenGiangVien.getText()
+									+ "\n Lưu ý: Chỉ có thể sửa quyền sử dụng ở bảng Tài Khoản",
+							"OK", JOptionPane.INFORMATION_MESSAGE);
 			}
 			DKKBT();
 			GanDL();
@@ -488,15 +511,18 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 			boolean r = ctrl.XoaGiangVien(gv);
 			GiangVienSetTableModel model = new GiangVienSetTableModel();
 			table.setModel(model);
+			TableColumnModel tcm = table.getColumnModel();
+			TableColumn tc = tcm.getColumn(2);
+			tc.setCellRenderer(new QuyenRenderer());
 			table.changeSelection(0, 0, false, false);
 			if (r)
 				JOptionPane.showMessageDialog(null, "Không xóa được !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			else
-				JOptionPane.showMessageDialog(null, "Đã xóa: "+ txtTenGiangVien.getText(), "OK", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Đã xóa: " + txtTenGiangVien.getText(), "OK",
+						JOptionPane.INFORMATION_MESSAGE);
 
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "Không xóa" , "Nhắc nhở", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Không xóa", "Nhắc nhở", JOptionPane.INFORMATION_MESSAGE);
 		}
 		DKKBT();
 		GanDL();
@@ -509,37 +535,38 @@ public class QLPM_GiangVien extends JFrame implements ActionListener{
 		} else if (txtTenGiangVien.getText().trim().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Chưa nhập tên giảng viên !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			return false;
-		} 
+		}
 		return true;
 	}
-	public void TimPhong()
-    {
-		GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
-        ArrayList<GiangVien> gv = ctrl.TimGiangVien(txtTKMGV.getText());
-        DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new Object[]{"Mã giảng viên","Tên giảng viên","Quyền sử dụng"});
-        Object[] row = new Object[3];
-        
-        for(int i = 0; i < gv.size(); i++)
-        {
-            row[0] = gv.get(i).getMaGiangVien();
-            row[1] = gv.get(i).getTenGiangVien();
-            row[2] = gv.get(i).getQuyenSD();
-            model.addRow(row);
-        }
-       table.setModel(model);
-       table.setRowSelectionInterval(0, 0);
-       GanDL();
-    }
-	
-	public static boolean isNumeric(String str) { 
-		  try {  
-		    Double.parseDouble(str);  
-		    return true;
-		  } catch(NumberFormatException e){  
-		    return false;  
-		  }  
-		}
-	
-}
 
+	public void TimGiangVien() {
+		GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
+		ArrayList<GiangVien> gv = ctrl.TimGiangVien(txtTKMGV.getText());
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnIdentifiers(new Object[] { "Mã giảng viên", "Tên giảng viên", "Quyền sử dụng" });
+		Object[] row = new Object[3];
+
+		for (int i = 0; i < gv.size(); i++) {
+			row[0] = gv.get(i).getMaGiangVien();
+			row[1] = gv.get(i).getTenGiangVien();
+			row[2] = gv.get(i).getQuyenSD();
+			model.addRow(row);
+		}
+		table.setModel(model);
+		TableColumnModel tcm = table.getColumnModel();
+		TableColumn tc = tcm.getColumn(2);
+		tc.setCellRenderer(new QuyenRenderer());
+		table.setRowSelectionInterval(0, 0);
+		GanDL();
+	}
+
+	public static boolean isNumeric(String str) {
+		try {
+			Double.parseDouble(str);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+}

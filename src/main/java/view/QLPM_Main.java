@@ -40,7 +40,8 @@ public class QLPM_Main extends JFrame implements ActionListener {
 		ImageIcon bgicon = new ImageIcon(getClass().getResource("icon/bg.png"));
 		JLabel bg = new JLabel(bgicon);
 		add(bg, BorderLayout.CENTER);
-		setBounds(300, 100, 1200, 800);
+		setSize(1200, 800);
+		setLocationRelativeTo(null);
 		ImageIcon icon = new ImageIcon(getClass().getResource("icon/icon.png"));
 		setIconImage(icon.getImage());
 		GiangVienDAOImpl giangVienDAO = new GiangVienDAOImpl();
@@ -49,7 +50,6 @@ public class QLPM_Main extends JFrame implements ActionListener {
 		lblTaiKhoan.setFont(new Font("Arial", Font.ITALIC, 20));
 		add(lblTaiKhoan, BorderLayout.SOUTH);
 		setTitle("Chương trình quản lí phòng máy thực hành");
-//		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
