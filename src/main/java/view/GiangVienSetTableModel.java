@@ -8,13 +8,25 @@ import javax.swing.table.AbstractTableModel;
 
 import bean.DBConnection;
 
+/**
+ * Tạo model cho table giảng viên <br/>
+ * Model gồm 4 colunms
+ * <ul>
+ * <li>Mã giảng viên</li>
+ * <li>Tên giảng viên</li>
+ * <li>Quyền sử dụng</li>
+ * </ul>
+ * 
+ * @author Trịnh Thanh Thảo
+ *
+ */
 @SuppressWarnings("serial")
 public class GiangVienSetTableModel extends AbstractTableModel {
 	private DBConnection conn = new DBConnection();
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
-	private final String title[] = {"Mã giảng viên", "Tên giảng viên", "Quyền sử dụng"};
-	
+	private final String title[] = { "Mã giảng viên", "Tên giảng viên", "Quyền sử dụng" };
+
 	public GiangVienSetTableModel() {
 		try {
 			conn.getConnection();
@@ -26,6 +38,9 @@ public class GiangVienSetTableModel extends AbstractTableModel {
 		}
 	}
 
+	/**
+	 * Hủy kết nối đến CSDL
+	 */
 	public void disconnect() {
 		conn.closeConnection();
 	}

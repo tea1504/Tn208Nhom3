@@ -8,19 +8,16 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 /**
- * Class dùng để render buổi từ 0, 1, 2 thành sáng, chiều, tối
+ * Class dùng để quyền sử dụng 0, 1 thành user, admin
  * 
  * @author Trần Văn Hòa
  *
  */
 @SuppressWarnings("serial")
-public class BuoiRenderer extends JComboBox<String> implements TableCellRenderer {
-
-	public BuoiRenderer() {
-		super();
-		addItem("Sáng");
-		addItem("Chiều");
-		addItem("Tối");
+public class QuyenRenderer extends JComboBox<String> implements TableCellRenderer {
+	public QuyenRenderer() {
+		addItem("User");
+		addItem("Admin");
 		setFont(new Font("Tahoma", Font.PLAIN, 18));
 	}
 
@@ -34,8 +31,8 @@ public class BuoiRenderer extends JComboBox<String> implements TableCellRenderer
 			setForeground(table.getForeground());
 			setBackground(table.getBackground());
 		}
-		int buoi = (int) value;
-		setSelectedIndex(buoi);
+		int quyen = (int) value;
+		setSelectedIndex(quyen);
 		return this;
 	}
 

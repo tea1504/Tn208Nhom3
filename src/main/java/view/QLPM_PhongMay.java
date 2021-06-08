@@ -12,11 +12,16 @@ import DAO.PhongMayDAOImpl;
 import bean.Phong;
 import helpers.SharedData;
 
-
+/**
+ * Class tạo giao diện cho chức năng quản lý phòng máy
+ * 
+ * @author Lê Ngọc Huỳnh
+ *
+ */
 @SuppressWarnings("serial")
-public class QLPM_PhongMay extends JFrame implements ActionListener{
+public class QLPM_PhongMay extends JFrame implements ActionListener {
 	private JLabel title = new JLabel("QUẢN LÝ PHÒNG HỌC");
-	
+
 //	Khai báo các JLabel và JTextField phần thông tin
 	JLabel lblMaPhong = new JLabel("Mã phòng:");
 	JLabel lblTenPhong = new JLabel("Tên phòng:");
@@ -26,7 +31,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 	JTextField txtTenPhong = new JTextField(10);
 	JTextField txtSoLuongMay = new JTextField(10);
 	JTextField txtTimKiem = new JTextField(10);
-	
+
 //	Khai báo các JButton điều khiển
 	private JButton btnTimKiem = new JButton("Tìm kiếm");
 	private JButton btnThem = new JButton("Thêm");
@@ -36,7 +41,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 	private JButton btnHuy = new JButton("Hủy");
 	private JButton btnThoat = new JButton("Thoát");
 	private boolean them = false;
-	
+
 //	Khai báo TableModel và JTable 
 	private PhongSetTableModel model = new PhongSetTableModel();
 	private JTable table = new JTable();
@@ -47,20 +52,28 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 		setup();
 		phanQuyen();
 		title.setFont(new Font("Arial", Font.BOLD, 50));
-		setSize(1000, 700);
+		setSize(1200, 800);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new GridBagLayout());
-		
+
 //		Cài đặt GUI phần tiêu đề
 		GridBagConstraints gbc = new GridBagConstraints();
+		JPanel pTitle = new JPanel(new GridBagLayout());
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 12;
-		gbc.insets = new Insets(20, 0, 20, 0);
-		getContentPane().add(title, gbc);
-		
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(0, 0, 20, 0);
+		title.setForeground(Color.white);
+		title.setHorizontalAlignment(JLabel.HORIZONTAL);
+		pTitle.setBackground(new Color(9, 132, 227));
+		pTitle.add(title, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
+				GridBagConstraints.BOTH, new Insets(20, 0, 20, 0), 0, 0));
+		getContentPane().add(pTitle, gbc);
+
 //		Cài đặt GUI phần thông tin
 		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 30, 0, 30 );
+		gbc.insets = new Insets(0, 30, 0, 30);
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -85,7 +98,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 		add(txtSoLuongMay, gbc);
 		gbc.gridy++;
 		add(txtTimKiem, gbc);
-		
+
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 20, 0, 20);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -93,7 +106,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 		gbc.gridy = 5;
 		add(btnTimKiem, gbc);
 		DKKBT();
-		
+
 //		Cài đặt GUI phần JTable
 		table = new JTable(model);
 		table.changeSelection(0, 0, false, false);
@@ -103,7 +116,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		pane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		
+
 		gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
@@ -139,7 +152,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 				}
 			}
 		});
-		
+
 //		Cài đặt GUI các JButton
 		gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -162,7 +175,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
 		setIconImage(icon.getImage());
 		setTitle("Quản lý phòng học");
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
 
@@ -170,7 +183,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 	public void setTxtMaPhong(String text) {
 		txtMaPhong.setText(text);
 	}
-	
+
 //	Phương thức lấy TableModel
 	public PhongSetTableModel getModel() {
 		return model;
@@ -185,7 +198,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 	public JScrollPane getPane() {
 		return pane;
 	}
-	
+
 //	Phương thức gán JScrollPane
 	public void setPane(JScrollPane pane) {
 		this.pane = pane;
@@ -198,18 +211,18 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 	public void setOk(boolean ok) {
 		this.ok = ok;
 	}
-	
+
 //	Phương thức định dạng các thành phần trong form
 	private void setup() {
 		lblMaPhong.setFont(new Font("Arial", Font.BOLD, 18));
 		lblTenPhong.setFont(new Font("Arial", Font.BOLD, 18));
 		lblSoLuongMay.setFont(new Font("Arial", Font.BOLD, 18));
 		lblTimKiem.setFont(new Font("Arial", Font.BOLD, 18));
-		txtMaPhong.setFont(new Font("Arial",0, 18));
-		txtTenPhong.setFont(new Font("Arial",0, 18));
-		txtSoLuongMay.setFont(new Font("Arial",0, 18));
-		txtTimKiem.setFont(new Font("Arial",0, 18));
-		
+		txtMaPhong.setFont(new Font("Arial", 0, 18));
+		txtTenPhong.setFont(new Font("Arial", 0, 18));
+		txtSoLuongMay.setFont(new Font("Arial", 0, 18));
+		txtTimKiem.setFont(new Font("Arial", 0, 18));
+
 		btnTimKiem.setFont(new Font("Arial", Font.BOLD, 24));
 		btnTimKiem.setBackground(new Color(9, 132, 227));
 		btnTimKiem.setBorderPainted(false);
@@ -218,7 +231,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 		btnTimKiem.addActionListener(this);
 		Icon icon = new ImageIcon(this.getClass().getResource("icon/timkiem.png"));
 		btnTimKiem.setIcon(icon);
-		
+
 		btnThem.setFont(new Font("Arial", Font.BOLD, 24));
 		btnThem.setBackground(new Color(9, 132, 227));
 		btnThem.setBorderPainted(false);
@@ -376,15 +389,14 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 		btnTimKiem.doClick();
 		btnTimKiem.setEnabled(false);
 	}
-	
+
 //	Phương thức phân quyền tài khoản
 	private void phanQuyen() {
 		if (SharedData.CurentAccount.getQuyenSD() == 1) {
 			btnThem.setEnabled(true);
 			btnSua.setEnabled(true);
 			btnXoa.setEnabled(true);
-		} 
-		else {
+		} else {
 			btnThem.setEnabled(false);
 			btnSua.setEnabled(false);
 			btnXoa.setEnabled(false);
@@ -396,7 +408,8 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 		if (check()) {
 			int row = table.getSelectedRow();
 			if (them) {
-				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(), Integer.parseInt(txtSoLuongMay.getText()));
+				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(),
+						Integer.parseInt(txtSoLuongMay.getText()));
 				PhongMayDAOImpl ctrl = new PhongMayDAOImpl();
 				boolean r = ctrl.ThemPhong(p);
 				PhongSetTableModel model = new PhongSetTableModel();
@@ -407,9 +420,9 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 				else
 					JOptionPane.showMessageDialog(null, "Lưu Thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 				table.setRowSelectionInterval(0, 0);
-			}
-			else {
-				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(), Integer.parseInt(txtSoLuongMay.getText()));
+			} else {
+				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(),
+						Integer.parseInt(txtSoLuongMay.getText()));
 				PhongMayDAOImpl ctrl = new PhongMayDAOImpl();
 				boolean r = ctrl.SuaPhong(p);
 				table.setModel(new PhongSetTableModel());
@@ -426,10 +439,10 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 
 //	Phương thức xóa
 	private void Xoa() throws SQLException {
-		int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa ?", "Thông báo", JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null);
+		int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa ?", "Thông báo",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 		if (result == JOptionPane.YES_OPTION) {
-			Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(),Integer.parseInt(txtSoLuongMay.getText()));
+			Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(), Integer.parseInt(txtSoLuongMay.getText()));
 			PhongMayDAOImpl ctrl = new PhongMayDAOImpl();
 			boolean r = ctrl.XoaPhong(p);
 			PhongSetTableModel model = new PhongSetTableModel();
@@ -446,35 +459,33 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 	}
 
 //	Phương thức tìm phòng
-	public void TimPhong()
-    {
+	public void TimPhong() {
 		PhongMayDAOImpl ctrl = new PhongMayDAOImpl();
-        ArrayList<Phong> phongs = ctrl.TimPhong(txtTimKiem.getText());
-        DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new Object[]{"Mã phòng","Tên phòng","Số lượng máy"});
-        Object[] row = new Object[3];
-        
-        for(int i = 0; i < phongs.size(); i++)
-        {
-            row[0] = phongs.get(i).getMaPhong();
-            row[1] = phongs.get(i).getTenPhong();
-            row[2] = phongs.get(i).getSoLuongMay();
-            model.addRow(row);
-        }
-       table.setModel(model);
-       table.setRowSelectionInterval(0, 0);
-       GanDL();
-    }
-	
-	public static boolean isNumeric(String str) { 
-		  try {  
-		    Double.parseDouble(str);  
-		    return true;
-		  } catch(NumberFormatException e){  
-		    return false;  
-		  }  
+		ArrayList<Phong> phongs = ctrl.TimPhong(txtTimKiem.getText());
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnIdentifiers(new Object[] { "Mã phòng", "Tên phòng", "Số lượng máy" });
+		Object[] row = new Object[3];
+
+		for (int i = 0; i < phongs.size(); i++) {
+			row[0] = phongs.get(i).getMaPhong();
+			row[1] = phongs.get(i).getTenPhong();
+			row[2] = phongs.get(i).getSoLuongMay();
+			model.addRow(row);
 		}
-	
+		table.setModel(model);
+		table.setRowSelectionInterval(0, 0);
+		GanDL();
+	}
+
+	public static boolean isNumeric(String str) {
+		try {
+			Double.parseDouble(str);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
 //	Phương thức kiểm tra các trường TextField cần nhập	
 	private boolean check() {
 		if (txtMaPhong.getText().trim().isEmpty()) {
@@ -486,14 +497,11 @@ public class QLPM_PhongMay extends JFrame implements ActionListener{
 		} else if (txtSoLuongMay.getText().trim().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng máy", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			return false;
-		} else if(!isNumeric(txtSoLuongMay.getText())) {
+		} else if (!isNumeric(txtSoLuongMay.getText())) {
 			JOptionPane.showMessageDialog(null, "Vui lòng nhập số", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
 	}
-	
-	
-	
 
 }

@@ -71,6 +71,7 @@ public class DBConnection {
 		}
 		return null;
 	}
+	
 	public int update(String query) {
 		PreparedStatement ps;
 		int r;

@@ -8,15 +8,29 @@ import javax.swing.table.AbstractTableModel;
 
 import bean.DBConnection;
 
+/**
+ * Class tạo model cho table phòng<br/>
+ * Model gồm 3 cột
+ * <ul>
+ * 	<li>Mã phòng</li>
+ * 	<li>Tên phòng</li>
+ * 	<li>Số lượng máy</li>
+ * </ul>
+ * 
+ * @author Lê Ngọc Huỳnh
+ *
+ */
 @SuppressWarnings("serial")
 public class PhongSetTableModel extends AbstractTableModel {
 	private DBConnection conn = new DBConnection();
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
-	private final String title[] = {"Mã phòng", "Tên phòng", "Số lượng máy"};
-	
-	
-//	Phương thức mô hình bảng 
+	private final String title[] = { "Mã phòng", "Tên phòng", "Số lượng máy" };
+
+/**
+ * Phương thức xây dựng kết nối với csdl<br/>
+ * Dữ liệu được lấy bằng stored procedure <strong>`listPhong`()</strong>
+ */
 	public PhongSetTableModel() {
 		try {
 			conn.getConnection();
@@ -27,7 +41,7 @@ public class PhongSetTableModel extends AbstractTableModel {
 			e.printStackTrace();
 		}
 	}
-	
+
 //	Phương thức ngắt kết nối
 	public void disconnect() {
 		conn.closeConnection();
