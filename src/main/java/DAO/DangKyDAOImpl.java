@@ -10,14 +10,22 @@ import java.util.GregorianCalendar;
 
 import bean.DBConnection;
 import bean.DangKy;
+
 /**
  * Lớp dùng để điều khiển đăng ký phòng máy
+ * 
  * @author Trần Văn Hòa
  *
  */
 public class DangKyDAOImpl implements IDangKyDAO {
 	DBConnection conn = new DBConnection();
 	CallableStatement cstmt;
+
+	/**
+	 * Đăng ký phòng máy bằng stored procedure <strong>`dangKyPhongMay`(IN
+	 * `_maPhong` VARCHAR(5), IN `_maLop` VARCHAR(7), IN `_ngayDangKy` DATE, IN
+	 * `_buoiDangKy` INT)</strong>
+	 */
 	@Override
 	public int CreateDangKy(DangKy dangKy) {
 		String sql = "{call dangKyPhongMay(?, ?, ?, ?)}";
@@ -25,7 +33,8 @@ public class DangKyDAOImpl implements IDangKyDAO {
 			cstmt = conn.getConnection().prepareCall(sql);
 			cstmt.setString(1, dangKy.getMaPhong());
 			cstmt.setString(2, dangKy.getMaLop());
-			String now = dangKy.getNgayDangKy().get(Calendar.YEAR) + "-" + (dangKy.getNgayDangKy().get(Calendar.MONTH) + 1) + "-"
+			String now = dangKy.getNgayDangKy().get(Calendar.YEAR) + "-"
+					+ (dangKy.getNgayDangKy().get(Calendar.MONTH) + 1) + "-"
 					+ dangKy.getNgayDangKy().get(Calendar.DATE);
 			cstmt.setString(3, now);
 			cstmt.setInt(4, dangKy.getBuoiDangKy());
@@ -40,6 +49,10 @@ public class DangKyDAOImpl implements IDangKyDAO {
 		return 0;
 	}
 
+	/**
+	 * Hủy đăng ký phòng máy bằng stored procedure <strong>`huyDangKy`(IN
+	 * `_madangky` INT)</strong>
+	 */
 	@Override
 	public int DeleteDangKy(int id) {
 		String sql = "{call huyDangKy(?)}";
@@ -57,6 +70,10 @@ public class DangKyDAOImpl implements IDangKyDAO {
 		return 0;
 	}
 
+	/**
+	 * Lấy toàn bộ danh sách đăng ký trong cơ sở dữ liệu bằng stored procedure
+	 * <strong>`listDangKy`()</strong>
+	 */
 	@Override
 	public ArrayList<DangKy> ListDangKy() {
 		ArrayList<DangKy> res = new ArrayList<DangKy>();
@@ -65,13 +82,12 @@ public class DangKyDAOImpl implements IDangKyDAO {
 		try {
 			cstmt = conn.getConnection().prepareCall(sql);
 			rs = cstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				Date date = rs.getDate(4);
 				Calendar calendar = new GregorianCalendar();
 				calendar.setTime(date);
 				DangKy item = new DangKy(rs.getInt(1), rs.getString(2), rs.getString(3), calendar, rs.getInt(5));
 				res.add(item);
-//				System.out.println(item);
 			}
 			cstmt.close();
 			conn.closeConnection();
@@ -82,6 +98,10 @@ public class DangKyDAOImpl implements IDangKyDAO {
 		return null;
 	}
 
+	/**
+	 * Lấy toàn bộ danh sách đăng ký theo mã giảng viên bằng stored procedure
+	 * <strong>`getDangKyTheoGV`(IN `_magiangvien` VARCHAR(5))</strong>
+	 */
 	@Override
 	public ArrayList<DangKy> ListDangKyTheoGV(String maGiangVien) {
 		ArrayList<DangKy> res = new ArrayList<DangKy>();
@@ -91,7 +111,7 @@ public class DangKyDAOImpl implements IDangKyDAO {
 			cstmt = conn.getConnection().prepareCall(sql);
 			cstmt.setString(1, maGiangVien);
 			rs = cstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				Date date = rs.getDate(4);
 				Calendar calendar = new GregorianCalendar();
 				calendar.setTime(date);

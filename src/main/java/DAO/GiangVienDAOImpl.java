@@ -6,19 +6,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bean.DBConnection;
-import bean.DangKy;
 import bean.GiangVien;
-import bean.Lop;
-import bean.Phong;
-import DAO.IGiangVienDAO;
 
+/**
+ * Class dùng để quản lý giảng viên
+ * 
+ * @author Trịnh Thanh Thảo
+ *
+ */
 public class GiangVienDAOImpl implements IGiangVienDAO {
 	DBConnection conn = new DBConnection();
 	CallableStatement cstmt;
 
 	/**
-	 * 
-	 * @return
+	 * Lấy toàn bộ danh sách giảng viên bằng stored procedure
+	 * <strong>`listGiangVien`()</strong>
 	 */
 	@Override
 	public ArrayList<GiangVien> getGiangVien() {
@@ -40,6 +42,10 @@ public class GiangVienDAOImpl implements IGiangVienDAO {
 		return list;
 	}
 
+	/**
+	 * Lấy thông tin giảng viên theo mã giảng viên bằng store procedure
+	 * <strong>`getGiangVienTheoMa`(IN `_magiangvien` VARCHAR(5))</strong>
+	 */
 	@Override
 	public GiangVien getGiangVien(String id) {
 		ResultSet rs;
@@ -54,13 +60,18 @@ public class GiangVienDAOImpl implements IGiangVienDAO {
 				gv.setTenGiangVien(rs.getString(2));
 			}
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		conn.closeConnection();
 		return gv;
 	}
 
+	/**
+	 * Thêm thông tin giảng viên bằng stored procedure <strong>`themGiangVien`(IN
+	 * `_magiangvien` VARCHAR(5), IN `_tengiangvien` VARCHAR(50))</strong> sau khi
+	 * thêm giảng viên mysql sẽ gọi trigger <strong>`addTaiKhoanTuDong`</strong> để
+	 * tự động thêm tài khoản cho giảng viên vừa tạo
+	 */
 	@Override
 	public boolean ThemGiangVien(GiangVien gv) {
 		String query = "{call themGiangVien(?,?)}";
@@ -73,12 +84,15 @@ public class GiangVienDAOImpl implements IGiangVienDAO {
 			cstmt.close();
 			conn.closeConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return r;
 	}
 
+	/**
+	 * Sửa thông tin giảng viên bằng store procedure <strong>`suaGiangVien`(IN
+	 * `_magiangvien` VARCHAR(5), IN `_tengiangvien` VARCHAR(50))</strong>
+	 */
 	@Override
 	public boolean SuaGiangVien(GiangVien gv) {
 		String query = "{call suaGiangVien(?,?)}";
@@ -91,12 +105,17 @@ public class GiangVienDAOImpl implements IGiangVienDAO {
 			cstmt.close();
 			conn.closeConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return r;
 	}
 
+	/**
+	 * Xóa thông tin giảng viên bằng stored procedure <strong>`xoaGiangVien`(IN
+	 * `_magiangvien` VARCHAR(5))</strong> và trước khi xóa giảng viên mysql sẽ gọi
+	 * trigger <strong>`xoaGiangVien`</strong> để xóa tất cacr các lớp do giảng viên
+	 * bị xóa dạy
+	 */
 	@Override
 	public boolean XoaGiangVien(GiangVien gv) {
 		String query = "{call xoaGiangVien(?)}";
@@ -108,12 +127,15 @@ public class GiangVienDAOImpl implements IGiangVienDAO {
 			cstmt.close();
 			conn.closeConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return r;
 	}
 
+	/**
+	 * Lấy danh sách giảng viên theo mã giảng viên hoặc theo tên giảng viên bằng
+	 * stored procedure <strong>`timGiangVien`(IN `searchText` VARCHAR(10))</strong>
+	 */
 	@Override
 	public ArrayList<GiangVien> TimGiangVien(String searchText) {
 		ArrayList<GiangVien> gvList = new ArrayList<GiangVien>();
