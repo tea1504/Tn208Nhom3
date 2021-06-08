@@ -414,7 +414,7 @@ public class QLPM_Lop extends JFrame {
 				int row = tb.getTable().getSelectedRow();
 				if (them) {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-					Lop l = new Lop(tt.txtMaLop.getText(), tt.txtTenLop.getText(), gv.getMaGiangVien(), Integer.parseInt(tt.txtSiSo.getText()));
+					Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
 					LopDAOImpl ctrl = new LopDAOImpl();
 					boolean r = ctrl.ThemLop(l);
 					LopSetTableModel model = new LopSetTableModel();
@@ -427,7 +427,7 @@ public class QLPM_Lop extends JFrame {
 				}
 				else {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-					Lop l = new Lop(tt.txtMaLop.getText(),tt.txtTenLop.getText(),gv.getMaGiangVien(),Integer.parseInt(tt.txtSiSo.getText()));
+					Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
 					LopDAOImpl ctrl = new LopDAOImpl();
 					boolean r = ctrl.SuaLop(l);
 					tb.getTable().setModel(new LopSetTableModel());
