@@ -19,15 +19,26 @@ import bean.GiangVien;
 import bean.TaiKhoan;
 import helpers.SharedData;
 
+/**
+ * Class tạo giao diện chính cho chương trình
+ * @author Trần Văn Hòa
+ * @author Lên Ngọc Huỳnh
+ * @author Trương Trung Trọng
+ * @author Nguyễn Ngọc Trâm
+ * @author Trịnh Thanh Thảo
+ *
+ */
 @SuppressWarnings("serial")
 public class QLPM_Main extends JFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JMenu mnuQuanLy, mnuChucNang, mnuTienIch;
-	private JMenuItem mnuLop, mnuGiangVien, mnuPhong, mnuTaiKhoan, mnuDangKy, mnuHuyDangKy, mnuDangXuat, mnuDoiMatKhau, mnuXemLich;
+	private JMenuItem mnuLop, mnuGiangVien, mnuPhong, mnuTaiKhoan, mnuDangKy, mnuHuyDangKy, mnuDangXuat, mnuDoiMatKhau,
+			mnuXemLich;
 	private TaiKhoan user = SharedData.CurentAccount;
+
 	public QLPM_Main() {
 		khoiTaoFrame();
-		if(user.getQuyenSD() == 0) {
+		if (user.getQuyenSD() == 0) {
 			mnuTaiKhoan.setEnabled(false);
 		}
 	}
@@ -46,7 +57,8 @@ public class QLPM_Main extends JFrame implements ActionListener {
 		setIconImage(icon.getImage());
 		GiangVienDAOImpl giangVienDAO = new GiangVienDAOImpl();
 		GiangVien giangVien = giangVienDAO.getGiangVien(user.getMaGiangVien());
-		JLabel lblTaiKhoan = new JLabel("Xin chào: "+ giangVien.getTenGiangVien());// thêm lable hiện tên giảng viên đang đăng nhập
+		JLabel lblTaiKhoan = new JLabel("Xin chào: " + giangVien.getTenGiangVien());// thêm lable hiện tên giảng viên
+																					// đang đăng nhập
 		lblTaiKhoan.setFont(new Font("Arial", Font.ITALIC, 20));
 		add(lblTaiKhoan, BorderLayout.SOUTH);
 		setTitle("Chương trình quản lí phòng máy thực hành");
@@ -61,67 +73,67 @@ public class QLPM_Main extends JFrame implements ActionListener {
 		mnuLop.setIcon(icon);
 		mnuLop.setFont(new Font("Arial", Font.ITALIC, 20));
 		mnuLop.setMnemonic(KeyEvent.VK_L);
-		
+
 		mnuGiangVien = new JMenuItem("Giảng viên");
 		mnuGiangVien.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/giangvien.png"));
 		mnuGiangVien.setIcon(icon);
 		mnuGiangVien.setFont(new Font("Arial", Font.ITALIC, 20));
 		mnuGiangVien.setMnemonic(KeyEvent.VK_G);
-		
+
 		mnuPhong = new JMenuItem("Phòng");
 		mnuPhong.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/phong.png"));
 		mnuPhong.setIcon(icon);
 		mnuPhong.setFont(new Font("Arial", Font.ITALIC, 20));
 		mnuPhong.setMnemonic(KeyEvent.VK_P);
-		
+
 		mnuDangKy = new JMenuItem("Đăng ký");
 		mnuDangKy.setMnemonic(KeyEvent.VK_N);
 		mnuDangKy.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/dangky.png"));
 		mnuDangKy.setIcon(icon);
 		mnuDangKy.setFont(new Font("Arial", Font.ITALIC, 20));
-		
+
 		mnuHuyDangKy = new JMenuItem("Hủy đăng ký");
 		mnuHuyDangKy.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/huy.png"));
 		mnuHuyDangKy.setIcon(icon);
 		mnuHuyDangKy.setFont(new Font("Arial", Font.ITALIC, 20));
 		mnuHuyDangKy.setMnemonic(KeyEvent.VK_H);
-		
+
 		mnuDangXuat = new JMenuItem("Đăng xuất");
 		mnuDangXuat.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/logout.png"));
 		mnuDangXuat.setIcon(icon);
 		mnuDangXuat.setFont(new Font("Arial", Font.ITALIC, 20));
 		mnuDangXuat.setMnemonic(KeyEvent.VK_X);
-		
+
 		mnuDoiMatKhau = new JMenuItem("Đổi mật khẩu");
 		mnuDoiMatKhau.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/pass.png"));
 		mnuDoiMatKhau.setIcon(icon);
 		mnuDoiMatKhau.setFont(new Font("Arial", Font.ITALIC, 20));
 		mnuDoiMatKhau.setMnemonic(KeyEvent.VK_M);
-		
+
 		mnuTaiKhoan = new JMenuItem("Tài khoản");
 		mnuTaiKhoan.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/taikhoan.png"));
 		mnuTaiKhoan.setIcon(icon);
 		mnuTaiKhoan.setFont(new Font("Arial", Font.ITALIC, 20));
 		mnuTaiKhoan.setMnemonic(KeyEvent.VK_T);
-		
+
 		mnuXemLich = new JMenuItem("Xem lịch");
 		mnuXemLich.addActionListener(this);
 		icon = new ImageIcon(getClass().getResource("icon/xem.png"));
 		mnuXemLich.setIcon(icon);
 		mnuXemLich.setFont(new Font("Arial", Font.ITALIC, 20));
 		mnuXemLich.setMnemonic(KeyEvent.VK_X);
-		
+
 		mnuQuanLy = new JMenu("Quản lý");
 		mnuChucNang = new JMenu("Chức năng");
 		mnuTienIch = new JMenu("Tài khoản");
-		
+
 		mnuQuanLy.add(mnuPhong);
 		mnuQuanLy.add(mnuLop);
 		mnuQuanLy.add(mnuGiangVien);
@@ -129,59 +141,52 @@ public class QLPM_Main extends JFrame implements ActionListener {
 		mnuQuanLy.setFont(new Font("Arial", Font.BOLD, 30));
 		mnuQuanLy.setForeground(Color.WHITE);
 		mnuQuanLy.setMnemonic(KeyEvent.VK_Q);
-		
+
 		mnuChucNang.add(mnuDangKy);
 		mnuChucNang.add(mnuHuyDangKy);
 		mnuChucNang.add(mnuXemLich);
 		mnuChucNang.setFont(new Font("Arial", Font.BOLD, 30));
 		mnuChucNang.setForeground(Color.WHITE);
 		mnuChucNang.setMnemonic(KeyEvent.VK_C);
-		
+
 		mnuTienIch.add(mnuDangXuat);
 		mnuTienIch.add(mnuDoiMatKhau);
 		mnuTienIch.setFont(new Font("Arial", Font.BOLD, 30));
 		mnuTienIch.setForeground(Color.WHITE);
 		mnuTienIch.setMnemonic(KeyEvent.VK_T);
-		
+
 		menuBar = new JMenuBar();
 		menuBar.setBackground(new Color(30, 55, 153));
-		
+
 		menuBar.add(mnuQuanLy);
 		menuBar.add(mnuChucNang);
 		menuBar.add(mnuTienIch);
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == mnuPhong) {
+		if (e.getSource() == mnuPhong) {
 			new QLPM_PhongMay();
-		}
-		else if(e.getSource() == mnuLop) {
+		} else if (e.getSource() == mnuLop) {
 			new QLPM_Lop();
-		}
-		else if(e.getSource() == mnuGiangVien) {
+		} else if (e.getSource() == mnuGiangVien) {
 			new QLPM_GiangVien();
-		}
-		else if(e.getSource() == mnuTaiKhoan) {
+		} else if (e.getSource() == mnuTaiKhoan) {
 			new QLPM_TaiKhoan();
-		}
-		else if(e.getSource() == mnuDangKy) {
+		} else if (e.getSource() == mnuDangKy) {
 			new QLPM_DangKy();
-		}
-		else if(e.getSource() == mnuHuyDangKy) {
+		} else if (e.getSource() == mnuHuyDangKy) {
 			new QLPM_HuyDangKy();
-		}
-		else if(e.getSource() == mnuXemLich) {
+		} else if (e.getSource() == mnuXemLich) {
 			new QLPM_XemLich();
-		}
-		else if(e.getSource() == mnuDoiMatKhau) {
+		} else if (e.getSource() == mnuDoiMatKhau) {
 			new QLPM_DoiMatKhau();
-		}
-		else if(e.getSource() == mnuDangXuat) {
+		} else if (e.getSource() == mnuDangXuat) {
 			SharedData.CurentAccount = null;
 			this.dispose();
 			new QLPM_DangNhap("Đăng nhập");
 		}
-		
+
 	}
 
 }

@@ -7,6 +7,12 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+/**
+ * Class dùng để render buổi từ 0, 1, 2 thành sáng, chiều, tối
+ * 
+ * @author Trần Văn Hòa
+ *
+ */
 @SuppressWarnings("serial")
 public class BuoiRenderer extends JComboBox<String> implements TableCellRenderer {
 

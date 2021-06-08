@@ -1,6 +1,5 @@
 package view;
 
-import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -8,45 +7,53 @@ import java.sql.SQLException;
 import javax.swing.table.AbstractTableModel;
 
 import DAO.TaiKhoanDAOImpl;
-import bean.DBConnection;
 
-
+/**
+ * Lớp khởi tạo model cho table giảng viên Model gồm 3 cột:
+ * <ul>
+ * <li>Mã giảng viên</li>
+ * <li>Tên giảng viên</li>
+ * <li>Quyền sử dụng</li>
+ * </ul>
+ * 
+ * @author Nguyễn Ngọc Trâm
+ *
+ */
 @SuppressWarnings("serial")
-public class TaiKhoanSetTableModel  extends AbstractTableModel {
+public class TaiKhoanSetTableModel extends AbstractTableModel {
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
-	private final String title[] = {"Mã giảng viên", "Tên giảng viên", "Quyền sử dụng"};
-	
+	private final String title[] = { "Mã giảng viên", "Tên giảng viên", "Quyền sử dụng" };
+	/**
+	 * Hàm xây dựng không đối số lấy toàn bộ dữ liệu
+	 */
 	public TaiKhoanSetTableModel() {
 		TaiKhoanDAOImpl tkDAO = new TaiKhoanDAOImpl();
-		try
-		{
-			//Lấy dữ liệu để hiển thị lên bảng
+		try {
+			// Lấy dữ liệu để hiển thị lên bảng
 			rs = (ResultSet) tkDAO.taiKhoanGetTableModel();
-			rsmd = rs.getMetaData();	
-			
-		}
-		catch (SQLException e) 
-		{
+			rsmd = rs.getMetaData();
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Hàm xây dựng lấy thông tin tài khoản theo mã giảng viên
+	 * @param maGiangVien {@link String}
+	 */
 	public TaiKhoanSetTableModel(String maGiangVien) {
 		TaiKhoanDAOImpl tkDAO = new TaiKhoanDAOImpl();
-		try
-		{
-			//Lấy dữ liệu để hiển thị lên bảng
+		try {
+			// Lấy dữ liệu để hiển thị lên bảng
 			rs = (ResultSet) tkDAO.taiKhoanGetTableModel(maGiangVien);
-			rsmd = rs.getMetaData();	
-			
-		}
-		catch (SQLException e) 
-		{
+			rsmd = rs.getMetaData();
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public int getRowCount() {
 		try {
@@ -62,9 +69,7 @@ public class TaiKhoanSetTableModel  extends AbstractTableModel {
 	public int getColumnCount() {
 		try {
 			return rsmd.getColumnCount();
-		} 
-		catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
@@ -75,21 +80,19 @@ public class TaiKhoanSetTableModel  extends AbstractTableModel {
 		try {
 			if (rs.absolute(rowIndex + 1))
 				return rs.getObject(columnIndex + 1);
-		} 
-		catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	@Override
 	public String getColumnName(int column) {
 		return title[column];
 	}
-	
+
 	public void disconnect() throws SQLException {
-		if(rs != null)
+		if (rs != null)
 			rs.close();
 	}
 

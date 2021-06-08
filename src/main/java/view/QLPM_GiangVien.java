@@ -33,6 +33,12 @@ import bean.GiangVien;
 import bean.Phong;
 import helpers.SharedData;
 
+/**
+ * Class tạo giao diện quản lý giảng viên
+ * 
+ * @author Trịnh Thanh Thảo
+ *
+ */
 @SuppressWarnings("serial")
 public class QLPM_GiangVien extends JFrame implements ActionListener {
 

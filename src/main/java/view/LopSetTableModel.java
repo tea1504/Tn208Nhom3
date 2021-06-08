@@ -8,15 +8,31 @@ import javax.swing.table.AbstractTableModel;
 
 import bean.DBConnection;
 
-
+/**
+ * Lớp tạo model cho table Lớp
+ * 
+ * @author Trương Trung Trọng
+ *
+ */
 
 @SuppressWarnings("serial")
 public class LopSetTableModel extends AbstractTableModel {
 	private DBConnection conn = new DBConnection();
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
-	private final String title[] = {"Mã lớp", "Giảng viên", "Tên lớp", "Sỉ số lớp"};
-	
+	private final String title[] = { "Mã lớp", "Giảng viên", "Tên lớp", "Sỉ số lớp" };
+
+	/**
+	 * Hàm xây dựng kết nối với CSDL<br/>
+	 * Dữ liệu hiển thị bao gồm:
+	 * <ul>
+	 * 	<li>Mã lớp</li>
+	 * 	<li>Giảng viên</li>
+	 * 	<li>Tên lớp</li>
+	 * 	<li>Sỉ số lớp</li>
+	 * </ul>
+	 * Dữ liệu được lấy bằng stored procedure <strong>`listLop()`</strong>
+	 */
 	public LopSetTableModel() {
 		// TODO Auto-generated constructor stub
 		try {
@@ -29,7 +45,9 @@ public class LopSetTableModel extends AbstractTableModel {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Đóng kết nối tới CSDL
+	 */
 	public void disconnect() {
 		conn.closeConnection();
 	}

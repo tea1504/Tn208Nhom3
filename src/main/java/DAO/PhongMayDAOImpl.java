@@ -1,13 +1,11 @@
 package DAO;
 
 import java.sql.CallableStatement;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bean.DBConnection;
-import bean.Lop;
 import bean.Phong;
 
 public class PhongMayDAOImpl implements IPhongMayDAO {

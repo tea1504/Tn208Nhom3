@@ -7,6 +7,12 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+/**
+ * Class dùng để quyền sử dụng 0, 1 thành user, admin
+ * 
+ * @author Trần Văn Hòa
+ *
+ */
 @SuppressWarnings("serial")
 public class QuyenRenderer extends JComboBox<String> implements TableCellRenderer {
 	public QuyenRenderer() {
@@ -14,6 +20,7 @@ public class QuyenRenderer extends JComboBox<String> implements TableCellRendere
 		addItem("Admin");
 		setFont(new Font("Tahoma", Font.PLAIN, 18));
 	}
+
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {

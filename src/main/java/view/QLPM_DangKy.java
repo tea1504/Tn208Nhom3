@@ -44,7 +44,11 @@ import bean.Lop;
 import bean.Phong;
 import bean.TaiKhoan;
 import helpers.SharedData;
-
+/**
+ * Class tạo giao diện đăng ký phòng máy
+ * @author Trần Văn Hòa
+ *
+ */
 @SuppressWarnings("serial")
 public class QLPM_DangKy extends JFrame implements ActionListener {
 	private JPanel pTitle, pNhapLieu, pButton;

@@ -15,6 +15,7 @@ import helpers.SharedData;
 
 /**
  * Lớp khởi tạo model cho table hủy đăng ký
+ * 
  * @author Trần Văn Hòa
  *
  */
@@ -25,16 +26,20 @@ public class DangKySetTableModel extends AbstractTableModel {
 	CallableStatement cstmt;
 	private ResultSetMetaData rsmd;
 	private final String title[] = { "Mã đăng ký", "Tên lớp", "Tên phòng", "Ngày đăng ký", "Buổi đăng ký" };
+
 	/**
 	 * Hàm khởi tạo kết nối với CSDL để lấy dữ liệu <br/>
 	 * Dữ liệu được hiển thị bao gồm :
 	 * <ul>
-	 * 	<li>Mã đăng ký</li>
-	 * 	<li>Tên lớp</li>
-	 * 	<li>Tên phòng</li>
-	 * 	<li>Ngày đăng ký</li>
-	 * 	<li>Buổi đăng ký</li>
+	 * <li>Mã đăng ký</li>
+	 * <li>Tên lớp</li>
+	 * <li>Tên phòng</li>
+	 * <li>Ngày đăng ký</li>
+	 * <li>Buổi đăng ký</li>
 	 * </ul>
+	 * Dữ liệu được lấy bằng stored procedure <strong>`getModelDangKy`(IN
+	 * `_magiangvien` VARCHAR(5), IN `_ngay` DATE)</strong>
+	 * 
 	 * @author Trần Văn Hòa
 	 */
 	public DangKySetTableModel() {
@@ -52,8 +57,10 @@ public class DangKySetTableModel extends AbstractTableModel {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Hủy kết nối đến csdl
+	 * 
 	 * @author Trần Văn Hòa
 	 */
 	public void disconnect() {
@@ -104,13 +111,6 @@ public class DangKySetTableModel extends AbstractTableModel {
 
 	@Override
 	public String getColumnName(int column) {
-//		try {
-//			return rsmd.getColumnName(column + 1);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return null;
 		return title[column];
 	}
 

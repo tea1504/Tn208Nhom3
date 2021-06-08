@@ -34,6 +34,12 @@ import bean.GiangVien;
 import bean.Lop;
 import helpers.SharedData;
 
+/**
+ * Class tạo giao diện quản lý lớp học
+ * 
+ * @author Trương Trung Trọng
+ *
+ */
 @SuppressWarnings("serial")
 public class QLPM_Lop extends JFrame {
 	private ThongTin thongtin;
@@ -41,9 +47,9 @@ public class QLPM_Lop extends JFrame {
 	private dieukhien dk;
 	private JLabel title = new JLabel("QUẢN LÝ LỚP HỌC");
 	private JPanel pTitle = new JPanel();
-	
+
 // lop giao dien
-	
+
 	public QLPM_Lop() {
 		thongtin = new ThongTin();
 		table = new Table(thongtin);
@@ -64,18 +70,18 @@ public class QLPM_Lop extends JFrame {
 		gbc.weighty = 1.0;
 //		gbc.insets = new Insets(10, 0, 20, 0);
 		getContentPane().add(pTitle, gbc);
-		
+
 		gbc.insets = new Insets(0, 20, 5, 20);
 		gbc.anchor = GridBagConstraints.PAGE_START;
 		gbc.gridy++;
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		getContentPane().add(thongtin, gbc);
-		
+
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridy++;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		getContentPane().add(table, gbc);
-		
+
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridy++;
 		getContentPane().add(dk, gbc);
@@ -85,7 +91,8 @@ public class QLPM_Lop extends JFrame {
 		setTitle("Quản lý lớp học");
 		setVisible(true);
 	}
-	///////set table//////////
+
+	/////// set table//////////
 	private class Table extends JPanel {
 		private LopSetTableModel model = new LopSetTableModel();
 		private JTable table;
@@ -189,21 +196,21 @@ public class QLPM_Lop extends JFrame {
 		public void setOk(boolean ok) {
 			this.ok = ok;
 		}
+
 		public void DKKT() {
 			table.setEnabled(false);
 			ok = false;
 		}
+
 		public void DKKBT() {
 			table.setEnabled(true);
 			ok = true;
 		}
 
-
 	}
-	
-	
-	////////////////nut chuc nang//////////
-	
+
+	//////////////// nut chuc nang//////////
+
 	public class dieukhien extends JPanel implements ActionListener {
 		private JButton btnThem = new JButton("Thêm");
 		private JButton btnSua = new JButton("Sửa");
@@ -246,7 +253,8 @@ public class QLPM_Lop extends JFrame {
 			add(btnTimKiem, gbc);
 			DKKBT();
 		}
-           //cai dat cac nut chuc nang///////
+
+		// cai dat cac nut chuc nang///////
 		private void setup() {
 			btnThem.setFont(new Font("Arial", Font.BOLD, 24));
 			btnThem.setBackground(new Color(9, 132, 227));
@@ -301,7 +309,7 @@ public class QLPM_Lop extends JFrame {
 			btnThoat.addActionListener(this);
 			icon = new ImageIcon(this.getClass().getResource("icon/close.png"));
 			btnThoat.setIcon(icon);
-			
+
 			btnTimKiem.setFont(new Font("Arial", Font.BOLD, 24));
 			btnTimKiem.setBackground(new Color(9, 132, 227));
 			btnTimKiem.setBorderPainted(false);
@@ -351,13 +359,15 @@ public class QLPM_Lop extends JFrame {
 					lop.dispose();
 					break;
 				case "Tìm kiếm":
-					timlop();;
+					timlop();
+					;
 					break;
 				default:
 					break;
 				}
 			}
 		}
+
 //gan du lieu
 		private void GanDL() {
 			int r = tb.getTable().getSelectedRow();
@@ -374,6 +384,7 @@ public class QLPM_Lop extends JFrame {
 			tt.cboGiangVien.setSelectedIndex(index);
 			tt.txtSiSo.setText(tb.getTable().getValueAt(r, 3).toString());
 		}
+
 //dieu khien khi binh thuong
 		private void DKKBT() {
 			tt.DKKBT();
@@ -388,6 +399,7 @@ public class QLPM_Lop extends JFrame {
 			tt.txttimkiem.setEnabled(true);
 			phanquyentrenLop();
 		}
+
 //dieu khien khi them
 		private void DKKT() {
 			DKKS();
@@ -395,6 +407,7 @@ public class QLPM_Lop extends JFrame {
 			btnTimKiem.setEnabled(false);
 			tt.txttimkiem.setEnabled(false);
 		}
+
 // dieu khien khi chinh sua
 		private void DKKS() {
 			tb.DKKT();
@@ -408,13 +421,15 @@ public class QLPM_Lop extends JFrame {
 			btnTimKiem.setEnabled(false);
 			tt.txttimkiem.setEnabled(false);
 		}
+
 // chuc nang luu
 		private void Luu() throws SQLException {
 			if (check()) {
 				int row = tb.getTable().getSelectedRow();
 				if (them) {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-					Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
+					Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(),
+							Integer.parseInt(tt.txtSiSo.getText()));
 					LopDAOImpl ctrl = new LopDAOImpl();
 					boolean r = ctrl.ThemLop(l);
 					LopSetTableModel model = new LopSetTableModel();
@@ -424,10 +439,10 @@ public class QLPM_Lop extends JFrame {
 						JOptionPane.showMessageDialog(null, "không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
 					else
 						JOptionPane.showMessageDialog(null, "thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else {
+				} else {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-					Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(), Integer.parseInt(tt.txtSiSo.getText()));
+					Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(),
+							Integer.parseInt(tt.txtSiSo.getText()));
 					LopDAOImpl ctrl = new LopDAOImpl();
 					boolean r = ctrl.SuaLop(l);
 					tb.getTable().setModel(new LopSetTableModel());
@@ -441,13 +456,15 @@ public class QLPM_Lop extends JFrame {
 				GanDL();
 			}
 		};
+
 // chuc nang xoa
 		private void Xoa() throws SQLException {
 			int result = JOptionPane.showConfirmDialog(null, "Xác nhận", "thông báo", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null);
 			if (result == JOptionPane.YES_OPTION) {
 				GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
-				Lop l = new Lop(tt.txtMaLop.getText(),tt.txtTenLop.getText(), gv.getMaGiangVien(),Integer.parseInt(tt.txtSiSo.getText()));
+				Lop l = new Lop(tt.txtMaLop.getText(), tt.txtTenLop.getText(), gv.getMaGiangVien(),
+						Integer.parseInt(tt.txtSiSo.getText()));
 				LopDAOImpl ctrl = new LopDAOImpl();
 				boolean r = ctrl.XoaLop(l);
 				LopSetTableModel model = new LopSetTableModel();
@@ -458,46 +475,42 @@ public class QLPM_Lop extends JFrame {
 				else
 					JOptionPane.showMessageDialog(null, "thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
 
-			}
-			else {
+			} else {
 				JOptionPane.showMessageDialog(null, "Cảnh báo", "thông báo", JOptionPane.INFORMATION_MESSAGE);
 			}
 			DKKBT();
 			GanDL();
 		}
-		
-		
 
-		//ham tim kiem lop
-		
-		public void timlop()
-	    {
+		// ham tim kiem lop
+
+		public void timlop() {
 			LopDAOImpl lopDAO = new LopDAOImpl();
-	        ArrayList<Lop> lop = lopDAO.timLop(tt.txttimkiem.getText());
-	        DefaultTableModel model = new DefaultTableModel();
-	        model.setColumnIdentifiers(new Object[]{"Mã lớp","Tên lớp","Sỉ số lớp","Mã giảng viên"});
-	        Object[] row = new Object[4];
-	        
-	        for(int i = 0; i < lop.size(); i++)
-	        {
-	            row[0] = lop.get(i).getMaLop();
-	            row[1] = lop.get(i).getMaGiangVien();
-	            row[2] = lop.get(i).getSiSoLop();
-	            row[3] = lop.get(i).getTenLop();
-	            model.addRow(row);
-	        }
-	       tb.getTable().setModel(model);
-	       
-	    }
-		
-		private boolean isNumeric(String str) { 
-			  try {  
-			    Double.parseDouble(str);  
-			    return true;
-			  } catch(NumberFormatException e){  
-			    return false;  
-			  }  
+			ArrayList<Lop> lop = lopDAO.timLop(tt.txttimkiem.getText());
+			DefaultTableModel model = new DefaultTableModel();
+			model.setColumnIdentifiers(new Object[] { "Mã lớp", "Tên lớp", "Sỉ số lớp", "Mã giảng viên" });
+			Object[] row = new Object[4];
+
+			for (int i = 0; i < lop.size(); i++) {
+				row[0] = lop.get(i).getMaLop();
+				row[1] = lop.get(i).getMaGiangVien();
+				row[2] = lop.get(i).getSiSoLop();
+				row[3] = lop.get(i).getTenLop();
+				model.addRow(row);
 			}
+			tb.getTable().setModel(model);
+
+		}
+
+		private boolean isNumeric(String str) {
+			try {
+				Double.parseDouble(str);
+				return true;
+			} catch (NumberFormatException e) {
+				return false;
+			}
+		}
+
 		private boolean check() {
 			if (tt.txtMaLop.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Nhập mã số", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -508,33 +521,32 @@ public class QLPM_Lop extends JFrame {
 			} else if (tt.txtSiSo.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Nhập số", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				return false;
-			} else if(!isNumeric(tt.txtSiSo.getText())) {
+			} else if (!isNumeric(tt.txtSiSo.getText())) {
 				JOptionPane.showMessageDialog(null, "Nhập số", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 			return true;
 		}
-		
-		//phan quyen tren lop
-		
+
+		// phan quyen tren lop
+
 		private void phanquyentrenLop() {
 			if (SharedData.CurentAccount.getQuyenSD() == 1) {
 				btnXoa.setEnabled(true);
 				btnThem.setEnabled(true);
 				btnSua.setEnabled(true);
-				
-			} 
-			else {
+
+			} else {
 				btnThem.setEnabled(false);
 				btnSua.setEnabled(false);
 				btnXoa.setEnabled(false);
-				
+
 			}
 		}
 	}
-	
+
 	/////// cai view cho khung hien thi ////////////
-	
+
 	private class ThongTin extends JPanel implements ActionListener {
 		JLabel lblMaLop = new JLabel("Mã lớp:");
 		JLabel lblTenLop = new JLabel("Tên lớp:");
@@ -546,6 +558,7 @@ public class QLPM_Lop extends JFrame {
 		JTextField txtSiSo = new JTextField(10);
 		JTextField txttimkiem = new JTextField(10);
 		JComboBox<GiangVien> cboGiangVien = new JComboBox<GiangVien>();
+
 // set bang lop
 		public ThongTin() {
 			cboGiangVien.addActionListener(this);
@@ -560,19 +573,19 @@ public class QLPM_Lop extends JFrame {
 			gbc.insets = new Insets(0, 0, 10, 0);
 			add(lblMaLop, gbc);
 			gbc.gridy++;
-			
+
 			add(lblTenLop, gbc);
 			gbc.gridy++;
-			
+
 			add(lblGiaoVien, gbc);
 			gbc.gridy++;
-			
+
 			add(lblSiSo, gbc);
 			gbc.gridy++;
-			
+
 			add(lbltimkiem, gbc);
 			gbc.gridx++;
-			
+
 			gbc.gridy = 0;
 			gbc.weightx = 1.0;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -588,14 +601,16 @@ public class QLPM_Lop extends JFrame {
 			add(txttimkiem, gbc);
 			DKKBT();
 		}
+
 		// cai dat list giang vien
 		public void setCombobox() {
 			GiangVienDAOImpl gv = new GiangVienDAOImpl();
 			ArrayList<GiangVien> list = gv.getGiangVien();
-			for(GiangVien item: list) {
+			for (GiangVien item : list) {
 				cboGiangVien.addItem(item);
 			}
 		}
+
 		public void setTxtMaLop(String text) {
 			txtMaLop.setText(text);
 		}
@@ -603,10 +618,11 @@ public class QLPM_Lop extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if(e.getSource() == cboGiangVien) {
+			if (e.getSource() == cboGiangVien) {
 			}
 		}
-		//dieu khien khi binh thuong
+
+		// dieu khien khi binh thuong
 		public void DKKBT() {
 			cboGiangVien.setEnabled(false);
 			cboGiangVien.setEditable(false);
@@ -614,6 +630,7 @@ public class QLPM_Lop extends JFrame {
 			txtTenLop.setEditable(false);
 			txtSiSo.setEditable(false);
 		}
+
 		// dieu khien khi them
 		public void DKKT() {
 			DKKS();
@@ -623,24 +640,26 @@ public class QLPM_Lop extends JFrame {
 			txtSiSo.setText("");
 			cboGiangVien.setSelectedIndex(0);
 		}
+
 		// dieu khien khi chinh sua
 		public void DKKS() {
 			txtTenLop.setEditable(true);
 			txtSiSo.setEditable(true);
 			cboGiangVien.setEnabled(true);
 		}
+
 		// set các nút chức năng
 		public void setup() {
-			 lblMaLop.setFont(new Font("Arial", Font.BOLD, 18));
-			 lblGiaoVien.setFont(new Font("Arial", Font.BOLD, 18));
-			 lblTenLop.setFont(new Font("Arial", Font.BOLD, 18));
-			 lblSiSo.setFont(new Font("Arial", Font.BOLD, 18));
-			 lbltimkiem.setFont(new Font("Arial", Font.BOLD, 18));
-			 txtMaLop.setFont(new Font("Arial",0, 18));
-			 txtSiSo.setFont(new Font("Arial",0, 18));
-			 txtTenLop.setFont(new Font("Arial",0, 18));
-			 cboGiangVien.setFont(new Font("Arial", 0, 18));
-			 txttimkiem.setFont(new Font("Arial",0, 18));
+			lblMaLop.setFont(new Font("Arial", Font.BOLD, 18));
+			lblGiaoVien.setFont(new Font("Arial", Font.BOLD, 18));
+			lblTenLop.setFont(new Font("Arial", Font.BOLD, 18));
+			lblSiSo.setFont(new Font("Arial", Font.BOLD, 18));
+			lbltimkiem.setFont(new Font("Arial", Font.BOLD, 18));
+			txtMaLop.setFont(new Font("Arial", 0, 18));
+			txtSiSo.setFont(new Font("Arial", 0, 18));
+			txtTenLop.setFont(new Font("Arial", 0, 18));
+			cboGiangVien.setFont(new Font("Arial", 0, 18));
+			txttimkiem.setFont(new Font("Arial", 0, 18));
 		}
 	}
 }

@@ -12,6 +12,12 @@ import DAO.PhongMayDAOImpl;
 import bean.Phong;
 import helpers.SharedData;
 
+/**
+ * Class tạo giao diện cho chức năng quản lý phòng máy
+ * 
+ * @author Lê Ngọc Huỳnh
+ *
+ */
 @SuppressWarnings("serial")
 public class QLPM_PhongMay extends JFrame implements ActionListener {
 	private JLabel title = new JLabel("QUẢN LÝ PHÒNG HỌC");
@@ -61,7 +67,8 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		title.setForeground(Color.white);
 		title.setHorizontalAlignment(JLabel.HORIZONTAL);
 		pTitle.setBackground(new Color(9, 132, 227));
-		pTitle.add(title, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 0, 20, 0), 0, 0));
+		pTitle.add(title, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
+				GridBagConstraints.BOTH, new Insets(20, 0, 20, 0), 0, 0));
 		getContentPane().add(pTitle, gbc);
 
 //		Cài đặt GUI phần thông tin

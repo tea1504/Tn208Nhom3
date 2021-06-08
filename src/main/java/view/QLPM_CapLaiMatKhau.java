@@ -29,6 +29,13 @@ import helpers.DataValidator;
 import helpers.PassWordHelper;
 import helpers.SharedData;
 
+/**
+ * Class tạo giao diện cấp lại mật khẩu
+ * 
+ * @author Nguyễn Ngọc Trâm
+ *
+ */
+@SuppressWarnings("serial")
 public class QLPM_CapLaiMatKhau extends JFrame {
 	private JPanel panel;
 	private JPasswordField pwfMatKhau_new, pwfMatKhau_nhaplai;
@@ -46,7 +53,7 @@ public class QLPM_CapLaiMatKhau extends JFrame {
 		setSize(550, 255);
 		setLocationRelativeTo(null); // center
 		setVisible(true);
-		setTitle("Cấp lại mật khẩu cho giảng viên "+ maGV);
+		setTitle("Cấp lại mật khẩu cho giảng viên " + maGV);
 
 		lblTitle = new JLabel("Cấp lại mật khẩu mật khẩu");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);

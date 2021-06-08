@@ -10,10 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
 
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,9 +26,14 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import DAO.TaiKhoanDAOImpl;
-import bean.TaiKhoan;
 import helpers.DataValidator;
 
+/**
+ * Class tạo giao diện cho chức năng quản lý tài khoản
+ * 
+ * @author Nguyễn Ngọc Trâm
+ *
+ */
 @SuppressWarnings("serial")
 public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 	private JLabel lblMSGV, lblTenGV, lblQuyenSD, lblTitle, lblTimKiem;
