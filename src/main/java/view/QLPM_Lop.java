@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -39,12 +40,7 @@ public class QLPM_Lop extends JFrame {
 	private Table table;
 	private dieukhien dk;
 	private JLabel title = new JLabel("QUẢN LÝ LỚP HỌC");
-	
-	private LopSetTableModel model = new LopSetTableModel();
-	private JTable Jtable;
-	
-	private JScrollPane pane;
-	private boolean ok = true;
+	private JPanel pTitle = new JPanel();
 	
 // lop giao dien
 	
@@ -53,37 +49,38 @@ public class QLPM_Lop extends JFrame {
 		table = new Table(thongtin);
 		dk = new dieukhien(thongtin, table, this);
 		title.setFont(new Font("Arial", Font.BOLD, 50));
-		setSize(1200, 500);
+		title.setHorizontalAlignment(JLabel.HORIZONTAL);
+		title.setForeground(Color.white);
+		pTitle.setLayout(new BorderLayout());
+		pTitle.add(title, BorderLayout.CENTER);
+		pTitle.setBackground(new Color(9, 132, 227));
+		setSize(1200, 800);
 		getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = 2;
-		gbc.insets = new Insets(10, 0, 20, 0);
-		getContentPane().add(title, gbc);
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+//		gbc.insets = new Insets(10, 0, 20, 0);
+		getContentPane().add(pTitle, gbc);
 		
-		gbc.insets = new Insets(0, 0, 0, 0);
-		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(0, 20, 5, 20);
 		gbc.anchor = GridBagConstraints.PAGE_START;
 		gbc.gridy++;
-		gbc.weightx = 0.2;
-		gbc.weighty = 0.33;
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		getContentPane().add(thongtin, gbc);
 		
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridy++;
-		getContentPane().add(dk, gbc);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		getContentPane().add(table, gbc);
 		
 		gbc.fill = GridBagConstraints.BOTH;
-		gbc.gridx++;
-		gbc.gridy = 1;
-		gbc.weightx = 0.8;
-		gbc.weighty = 1;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.gridheight = 3;
-		getContentPane().add(table, gbc);
+		gbc.gridy++;
+		getContentPane().add(dk, gbc);
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
+		setLocationRelativeTo(null);
 		setIconImage(icon.getImage());
 		setTitle("Quản lý lớp học");
 		setVisible(true);
@@ -229,7 +226,8 @@ public class QLPM_Lop extends JFrame {
 			GanDL();
 			setLayout(new GridBagLayout());
 			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.fill = GridBagConstraints.BOTH;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.weighty = 1.0;
 			gbc.gridx = 0;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 5, 0, 5);
@@ -554,7 +552,7 @@ public class QLPM_Lop extends JFrame {
 			setCombobox();
 			setup();
 			setLayout(new GridBagLayout());
-			setBorder(new TitledBorder(BorderFactory.createTitledBorder("Nhập liệu")));
+//			setBorder(new TitledBorder(BorderFactory.createTitledBorder("Nhập liệu")));
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.gridx = 0;
 			gbc.gridy = 0;
