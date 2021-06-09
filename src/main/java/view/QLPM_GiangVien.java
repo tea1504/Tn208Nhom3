@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -16,6 +20,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,6 +31,13 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import DAO.GiangVienDAOImpl;
 import DAO.PhongMayDAOImpl;
@@ -54,7 +66,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 	JTextField txtTKMGV = new JTextField(10);
 
 	String quyensd[] = { "Admin", "User" };
-	JComboBox cboQuyenSD = new JComboBox(quyensd);
+	JComboBox<String> cboQuyenSD = new JComboBox<String>(quyensd);
 
 	private JButton btnTimKiem = new JButton("Tìm kiếm");
 	private JButton btnThem = new JButton("Thêm");
@@ -63,11 +75,13 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 	private JButton btnLuu = new JButton("Lưu");
 	private JButton btnHuy = new JButton("Hủy");
 	private JButton btnThoat = new JButton("Thoát");
+	private JButton btnExcel = new JButton("Xuất excel");
 	private boolean them = false;
 
 	private GiangVienSetTableModel model = new GiangVienSetTableModel();
 	private JTable table = new JTable();
 	private JScrollPane pane;
+	private JFileChooser fileChooser = new JFileChooser();
 	private boolean ok = true;
 
 	public QLPM_GiangVien() {
@@ -81,7 +95,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		pTitle.add(title, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
 				GridBagConstraints.BOTH, new Insets(20, 0, 20, 0), 0, 0));
 		pTitle.setBackground(new Color(9, 132, 227));
-		setSize(1200, 800);
+		setSize(1400, 800);
 		getContentPane().setLayout(new GridBagLayout());
 
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -111,7 +125,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		gbc.weightx = 1.0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(0, 10, 10, 20);
-		gbc.gridwidth = 5;
+		gbc.gridwidth = 6;
 		add(txtMaGiangVien, gbc);
 		gbc.gridy++;
 		add(txtTenGiangVien, gbc);
@@ -122,7 +136,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		add(txtTKMGV, gbc);
 
 		gbc.gridx = 5;
-		gbc.gridwidth = 1;
+		gbc.gridwidth = 2;
 		add(btnTimKiem, gbc);
 		DKKBT();
 
@@ -142,7 +156,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 6;
-		gbc.gridwidth = 6;
+		gbc.gridwidth = 7;
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		gbc.insets = new Insets(10, 20, 20, 20);
@@ -215,6 +229,8 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		add(btnLuu, gbc);
 		gbc.gridx = GridBagConstraints.RELATIVE;
 		add(btnHuy, gbc);
+		gbc.gridx = GridBagConstraints.RELATIVE;
+		add(btnExcel, gbc);
 		gbc.gridx = GridBagConstraints.RELATIVE;
 		add(btnThoat, gbc);
 
@@ -326,6 +342,15 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		btnThoat.addActionListener(this);
 		icon = new ImageIcon(this.getClass().getResource("icon/close.png"));
 		btnThoat.setIcon(icon);
+
+		btnExcel.setFont(new Font("Arial", Font.BOLD, 24));
+		btnExcel.setBackground(new Color(9, 132, 227));
+		btnExcel.setBorderPainted(false);
+		btnExcel.setFocusable(false);
+		btnExcel.setForeground(Color.white);
+		btnExcel.addActionListener(this);
+		icon = new ImageIcon(this.getClass().getResource("icon/excel.png"));
+		btnExcel.setIcon(icon);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -370,8 +395,63 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 			case "Tìm kiếm":
 				TimGiangVien();
 				break;
+			case "Xuất excel":
+				XuatExcel();
+				break;
 			default:
 				break;
+			}
+		}
+	}
+
+	private void XuatExcel() {
+		fileChooser.setSelectedFile(new File("GiangVien.xlsx"));
+		int res = fileChooser.showSaveDialog(null);
+		if (res == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			Workbook workbook = new XSSFWorkbook();
+			Sheet sheet = workbook.createSheet("GiangVien");
+			GiangVienDAOImpl giangVienDAO = new GiangVienDAOImpl();
+			ArrayList<GiangVien> list = giangVienDAO.TimGiangVien("");
+
+			org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+			headerFont.setBold(true);
+			headerFont.setFontHeightInPoints((short) 17);
+
+			CellStyle headerStyle = workbook.createCellStyle();
+			headerStyle.setFont(headerFont);
+
+			Row headerRow = sheet.createRow(0);
+			String columns[] = { "Mã giảng viên", "Tên giảng viên", "Quyền sử dụng" };
+			for (int i = 0; i < columns.length; i++) {
+				Cell cell = headerRow.createCell(i);
+				cell.setCellValue(columns[i]);
+				cell.setCellStyle(headerStyle);
+			}
+
+			int rowIndex = 1;
+
+			for (GiangVien giangVien : list) {
+				Row row = sheet.createRow(rowIndex++);
+				row.createCell(0).setCellValue(giangVien.getMaGiangVien());
+				row.createCell(1).setCellValue(giangVien.getTenGiangVien());
+				if (giangVien.getQuyenSD() == 0)
+					row.createCell(2).setCellValue("User");
+				else
+					row.createCell(2).setCellValue("Admin");
+			}
+			for (int i = 0; i < columns.length; i++) {
+				sheet.autoSizeColumn(i);
+			}
+			try {
+				FileOutputStream fileOutputStream = new FileOutputStream(file);
+				workbook.write(fileOutputStream);
+				fileOutputStream.close();
+				workbook.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}

@@ -2,13 +2,26 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import DAO.GiangVienDAOImpl;
 import DAO.PhongMayDAOImpl;
+import bean.GiangVien;
 import bean.Phong;
 import helpers.SharedData;
 
@@ -20,7 +33,7 @@ import helpers.SharedData;
  */
 @SuppressWarnings("serial")
 public class QLPM_PhongMay extends JFrame implements ActionListener {
-	private JLabel title = new JLabel("QUẢN LÝ PHÒNG HỌC");
+	private JLabel title = new JLabel("QUẢN LÝ PHÒNG MÁY");
 
 //	Khai báo các JLabel và JTextField phần thông tin
 	JLabel lblMaPhong = new JLabel("Mã phòng:");
@@ -40,19 +53,21 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 	private JButton btnLuu = new JButton("Lưu");
 	private JButton btnHuy = new JButton("Hủy");
 	private JButton btnThoat = new JButton("Thoát");
+	private JButton btnExcel = new JButton("Xuất excel");
 	private boolean them = false;
 
 //	Khai báo TableModel và JTable 
 	private PhongSetTableModel model = new PhongSetTableModel();
 	private JTable table = new JTable();
 	private JScrollPane pane;
+	private JFileChooser fileChooser = new JFileChooser();
 	private boolean ok = true;
 
 	public QLPM_PhongMay() {
 		setup();
 		phanQuyen();
 		title.setFont(new Font("Arial", Font.BOLD, 50));
-		setSize(1200, 800);
+		setSize(1400, 800);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new GridBagLayout());
 
@@ -90,7 +105,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		gbc.weightx = 1.0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(0, 10, 10, 20);
-		gbc.gridwidth = 5;
+		gbc.gridwidth = 6;
 		add(txtMaPhong, gbc);
 		gbc.gridy++;
 		add(txtTenPhong, gbc);
@@ -104,6 +119,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 5;
 		gbc.gridy = 5;
+		gbc.gridwidth = 2;
 		add(btnTimKiem, gbc);
 		DKKBT();
 
@@ -121,7 +137,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 6;
-		gbc.gridwidth = 6;
+		gbc.gridwidth = 7;
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		gbc.insets = new Insets(10, 20, 20, 20);
@@ -169,6 +185,8 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		add(btnLuu, gbc);
 		gbc.gridx = GridBagConstraints.RELATIVE;
 		add(btnHuy, gbc);
+		gbc.gridx = GridBagConstraints.RELATIVE;
+		add(btnExcel, gbc);
 		gbc.gridx = GridBagConstraints.RELATIVE;
 		add(btnThoat, gbc);
 
@@ -285,6 +303,15 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		btnThoat.addActionListener(this);
 		icon = new ImageIcon(this.getClass().getResource("icon/close.png"));
 		btnThoat.setIcon(icon);
+		
+		btnExcel.setFont(new Font("Arial", Font.BOLD, 24));
+		btnExcel.setBackground(new Color(9, 132, 227));
+		btnExcel.setBorderPainted(false);
+		btnExcel.setFocusable(false);
+		btnExcel.setForeground(Color.white);
+		btnExcel.addActionListener(this);
+		icon = new ImageIcon(this.getClass().getResource("icon/excel.png"));
+		btnExcel.setIcon(icon);
 	}
 
 //	Phương thức thực thi hành động của JButton
@@ -328,8 +355,60 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 			case "Tìm kiếm":
 				TimPhong();
 				break;
+			case "Xuất excel":
+				XuatExcel();
+				break;
 			default:
 				break;
+			}
+		}
+	}
+
+	private void XuatExcel() {
+		fileChooser.setSelectedFile(new File("PhongMay.xlsx"));
+		int res = fileChooser.showSaveDialog(null);
+		if (res == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			Workbook workbook = new XSSFWorkbook();
+			Sheet sheet = workbook.createSheet("PhongMay");
+			PhongMayDAOImpl phongMayDAO = new PhongMayDAOImpl();
+			ArrayList<Phong> list = phongMayDAO.ListPhong();
+
+			org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+			headerFont.setBold(true);
+			headerFont.setFontHeightInPoints((short) 17);
+
+			CellStyle headerStyle = workbook.createCellStyle();
+			headerStyle.setFont(headerFont);
+
+			Row headerRow = sheet.createRow(0);
+			String columns[] = { "Mã phòng", "Tên phòng", "Số lượng máy" };
+			for (int i = 0; i < columns.length; i++) {
+				Cell cell = headerRow.createCell(i);
+				cell.setCellValue(columns[i]);
+				cell.setCellStyle(headerStyle);
+			}
+
+			int rowIndex = 1;
+
+			for (Phong item : list) {
+				Row row = sheet.createRow(rowIndex++);
+				row.createCell(0).setCellValue(item.getMaPhong());
+				row.createCell(1).setCellValue(item.getTenPhong());
+				row.createCell(2).setCellValue(item.getSoLuongMay());
+			}
+			for (int i = 0; i < columns.length; i++) {
+				sheet.autoSizeColumn(i);
+			}
+			try {
+				FileOutputStream fileOutputStream = new FileOutputStream(file);
+				workbook.write(fileOutputStream);
+				fileOutputStream.close();
+				workbook.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
