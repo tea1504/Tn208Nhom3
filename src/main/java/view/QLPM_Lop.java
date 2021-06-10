@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -18,6 +22,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +32,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import DAO.GiangVienDAOImpl;
 import DAO.LopDAOImpl;
@@ -60,7 +72,7 @@ public class QLPM_Lop extends JFrame {
 		pTitle.setLayout(new BorderLayout());
 		pTitle.add(title, BorderLayout.CENTER);
 		pTitle.setBackground(new Color(9, 132, 227));
-		setSize(1200, 800);
+		setSize(1400, 800);
 		getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
@@ -219,6 +231,8 @@ public class QLPM_Lop extends JFrame {
 		private JButton btnHuy = new JButton("Hủy");
 		private JButton btnThoat = new JButton("Thoát");
 		private JButton btnTimKiem = new JButton("Tìm kiếm");
+		private JButton btnExcel = new JButton("Xuất excel");
+		private JFileChooser fileChooser = new JFileChooser();
 		private final ThongTin tt;
 		private final Table tb;
 		private final QLPM_Lop lop;
@@ -247,6 +261,8 @@ public class QLPM_Lop extends JFrame {
 			add(btnLuu, gbc);
 			gbc.gridx++;
 			add(btnHuy, gbc);
+			gbc.gridx++;
+			add(btnExcel, gbc);
 			gbc.gridx++;
 			add(btnThoat, gbc);
 			gbc.gridx++;
@@ -318,6 +334,15 @@ public class QLPM_Lop extends JFrame {
 			btnTimKiem.addActionListener(this);
 			icon = new ImageIcon(this.getClass().getResource("icon/timkiem.png"));
 			btnTimKiem.setIcon(icon);
+
+			btnExcel.setFont(new Font("Arial", Font.BOLD, 24));
+			btnExcel.setBackground(new Color(9, 132, 227));
+			btnExcel.setBorderPainted(false);
+			btnExcel.setFocusable(false);
+			btnExcel.setForeground(Color.white);
+			btnExcel.addActionListener(this);
+			icon = new ImageIcon(this.getClass().getResource("icon/excel.png"));
+			btnExcel.setIcon(icon);
 		}
 
 		@Override
@@ -362,8 +387,62 @@ public class QLPM_Lop extends JFrame {
 					timlop();
 					;
 					break;
+				case "Xuất excel":
+					XuatExcel();
+					break;
 				default:
 					break;
+				}
+			}
+		}
+
+		private void XuatExcel() {
+			fileChooser.setSelectedFile(new File("Lop.xlsx"));
+			int res = fileChooser.showSaveDialog(null);
+			if (res == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				Workbook workbook = new XSSFWorkbook();
+				Sheet sheet = workbook.createSheet("Lop");
+				GiangVienDAOImpl giangVienDAO = new GiangVienDAOImpl();
+				LopDAOImpl LopDAO = new LopDAOImpl();
+				ArrayList<Lop> list = LopDAO.getLop();
+
+				org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+				headerFont.setBold(true);
+				headerFont.setFontHeightInPoints((short) 17);
+
+				CellStyle headerStyle = workbook.createCellStyle();
+				headerStyle.setFont(headerFont);
+
+				Row headerRow = sheet.createRow(0);
+				String columns[] = { "Mã lớp", "Giảng viên", "Tên lớp", "Sỉ số lớp" };
+				for (int i = 0; i < columns.length; i++) {
+					Cell cell = headerRow.createCell(i);
+					cell.setCellValue(columns[i]);
+					cell.setCellStyle(headerStyle);
+				}
+
+				int rowIndex = 1;
+
+				for (Lop item : list) {
+					Row row = sheet.createRow(rowIndex++);
+					row.createCell(0).setCellValue(item.getMaLop());
+					row.createCell(1).setCellValue(giangVienDAO.getGiangVien(item.getMaGiangVien()).getTenGiangVien());
+					row.createCell(2).setCellValue(item.getTenLop());
+					row.createCell(3).setCellValue(item.getSiSoLop());
+				}
+				for (int i = 0; i < columns.length; i++) {
+					sheet.autoSizeColumn(i);
+				}
+				try {
+					FileOutputStream fileOutputStream = new FileOutputStream(file);
+					workbook.write(fileOutputStream);
+					fileOutputStream.close();
+					workbook.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 		}
