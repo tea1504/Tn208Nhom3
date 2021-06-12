@@ -515,9 +515,9 @@ public class QLPM_Lop extends JFrame {
 					tb.getTable().setModel(model);
 					tb.getTable().changeSelection(row, 0, false, false);
 					if (r)
-						JOptionPane.showMessageDialog(null, "không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Thêm dữ liệu không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
 					else
-						JOptionPane.showMessageDialog(null, "thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Thêm dữ liệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
 					Lop l = new Lop(tt.txtMaLop.getText(), gv.getMaGiangVien(), tt.txtTenLop.getText(),
@@ -527,9 +527,9 @@ public class QLPM_Lop extends JFrame {
 					tb.getTable().setModel(new LopSetTableModel());
 					tb.getTable().changeSelection(row, 0, false, false);
 					if (r)
-						JOptionPane.showMessageDialog(null, "không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Sửa dữ liệu không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
 					else
-						JOptionPane.showMessageDialog(null, "thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Sửa dữ liệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 				}
 				DKKBT();
 				GanDL();
@@ -538,7 +538,7 @@ public class QLPM_Lop extends JFrame {
 
 // chuc nang xoa
 		private void Xoa() throws SQLException {
-			int result = JOptionPane.showConfirmDialog(null, "Xác nhận", "thông báo", JOptionPane.YES_NO_OPTION,
+			int result = JOptionPane.showConfirmDialog(null, "Xác nhận xóa dữ liệu", "thông báo", JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null);
 			if (result == JOptionPane.YES_OPTION) {
 				GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
@@ -550,12 +550,12 @@ public class QLPM_Lop extends JFrame {
 				tb.getTable().setModel(model);
 				tb.getTable().changeSelection(0, 0, false, false);
 				if (r)
-					JOptionPane.showMessageDialog(null, "không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Xóa dữ liệu không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				else
-					JOptionPane.showMessageDialog(null, "thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Xóa dữ liệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
 			} else {
-				JOptionPane.showMessageDialog(null, "Cảnh báo", "thông báo", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Đã hủy thao tác xóa dữ liệu", "thông báo", JOptionPane.INFORMATION_MESSAGE);
 			}
 			DKKBT();
 			GanDL();
@@ -567,18 +567,21 @@ public class QLPM_Lop extends JFrame {
 			LopDAOImpl lopDAO = new LopDAOImpl();
 			ArrayList<Lop> lop = lopDAO.timLop(tt.txttimkiem.getText());
 			DefaultTableModel model = new DefaultTableModel();
-			model.setColumnIdentifiers(new Object[] { "Mã lớp", "Tên lớp", "Sỉ số lớp", "Mã giảng viên" });
+			model.setColumnIdentifiers(new Object[] { "Mã lớp", "Giảng viên", "Sỉ số lớp", "Tên lớp" });
 			Object[] row = new Object[4];
-
-			for (int i = 0; i < lop.size(); i++) {
-				row[0] = lop.get(i).getMaLop();
-				row[1] = lop.get(i).getMaGiangVien();
-				row[2] = lop.get(i).getSiSoLop();
-				row[3] = lop.get(i).getTenLop();
-				model.addRow(row);
+			if (lop.size() > 0) {
+				for (int i = 0; i < lop.size(); i++) {
+					row[0] = lop.get(i).getMaLop();
+					row[1] = lop.get(i).getMaGiangVien();
+					row[2] = lop.get(i).getSiSoLop();
+					row[3] = lop.get(i).getTenLop();
+					model.addRow(row);
+				}
+				tb.getTable().setModel(model);
+			} else {
+				JOptionPane.showMessageDialog(null, "Không tìm thấy dữ liệu phù hợp", "Thông báo",
+						JOptionPane.ERROR_MESSAGE);
 			}
-			tb.getTable().setModel(model);
-
 		}
 
 		private boolean isNumeric(String str) {
@@ -592,16 +595,16 @@ public class QLPM_Lop extends JFrame {
 
 		private boolean check() {
 			if (tt.txtMaLop.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Nhập mã số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập mã lớp", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				return false;
 			} else if (tt.txtTenLop.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Nhập tên lớp", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập tên lớp", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				return false;
 			} else if (tt.txtSiSo.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Nhập số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập sỉ số lớp", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				return false;
 			} else if (!isNumeric(tt.txtSiSo.getText())) {
-				JOptionPane.showMessageDialog(null, "Nhập số", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập số vào trường sỉ số lớp", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 			return true;

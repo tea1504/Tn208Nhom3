@@ -419,8 +419,8 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 		StringBuilder str = new StringBuilder();
 
 		// Kiểm tra dữ liệu đã nhập hợp lệ chưa
-		DataValidator.validateEmptyTextField(txtTimKiem, str, "Vui lòng nhập vào ô tìm kiếm!");
-		DataValidator.validateTextFieldLength(txtTimKiem, 5, str, "Mã giảng viên phải <= 5 ký tự!");
+		DataValidator.validateEmptyTextField(txtTimKiem, str, "Thầy/cô phải nhập vào ô tìm kiếm!");
+		DataValidator.validateTextFieldLength(txtTimKiem, 5, str, "Thầy/cô chú ý mã giảng viên phải ít hơn hoặc bằng 5 ký tự!");
 
 		// Nếu nhập chưa đủ thì hiện thông báo lỗi và return
 		if (str.length() > 0) {

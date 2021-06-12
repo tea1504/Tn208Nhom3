@@ -559,7 +559,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 				tc.setCellRenderer(new QuyenRenderer());
 				table.changeSelection(row, 0, false, false);
 				if (r)
-					JOptionPane.showMessageDialog(null, "Không lưu được", "Lỗi", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Không lưu được dữ liệu", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(null,
 							"Đã lưu \n Mã giảng viên: " + txtMaGiangVien.getText() + " \nTên giảng viên: "
@@ -575,7 +575,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 				tc.setCellRenderer(new QuyenRenderer());
 				table.changeSelection(row, 0, false, false);
 				if (r)
-					JOptionPane.showMessageDialog(null, "Không lưu được", "Lỗi", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Không lưu được dữ liệu", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(null,
 							"Đã lưu \n Mã giảng viên: " + txtMaGiangVien.getText() + " \nTên giảng viên: "
@@ -589,7 +589,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 	};
 
 	private void Xoa() throws SQLException {
-		int result = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn xóa ?", "Thông báo", JOptionPane.YES_NO_OPTION,
+		int result = JOptionPane.showConfirmDialog(null, "Thầy/cô chắc chắn muốn xóa dữ liệu ?", "Thông báo", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null);
 		if (result == JOptionPane.YES_OPTION) {
 			GiangVien gv = new GiangVien(txtMaGiangVien.getText(), txtTenGiangVien.getText());
@@ -602,13 +602,13 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 			tc.setCellRenderer(new QuyenRenderer());
 			table.changeSelection(0, 0, false, false);
 			if (r)
-				JOptionPane.showMessageDialog(null, "Không xóa được !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Không xóa được dữ liệu !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			else
-				JOptionPane.showMessageDialog(null, "Đã xóa: " + txtTenGiangVien.getText(), "OK",
+				JOptionPane.showMessageDialog(null, "Đã xóa dữ liệu của giảng viên " + txtTenGiangVien.getText(), "Thông báo",
 						JOptionPane.INFORMATION_MESSAGE);
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Không xóa", "Nhắc nhở", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Đã hủy thao tác xóa", "Nhắc nhở", JOptionPane.INFORMATION_MESSAGE);
 		}
 		DKKBT();
 		GanDL();
@@ -616,10 +616,10 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 
 	private boolean check() {
 		if (txtMaGiangVien.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Chưa nhập mã giảng viên !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập mã giảng viên !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (txtTenGiangVien.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Chưa nhập tên giảng viên !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập tên giảng viên !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
@@ -631,19 +631,23 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(new Object[] { "Mã giảng viên", "Tên giảng viên", "Quyền sử dụng" });
 		Object[] row = new Object[3];
-
-		for (int i = 0; i < gv.size(); i++) {
-			row[0] = gv.get(i).getMaGiangVien();
-			row[1] = gv.get(i).getTenGiangVien();
-			row[2] = gv.get(i).getQuyenSD();
-			model.addRow(row);
+		if (gv.size() > 0) {
+			for (int i = 0; i < gv.size(); i++) {
+				row[0] = gv.get(i).getMaGiangVien();
+				row[1] = gv.get(i).getTenGiangVien();
+				row[2] = gv.get(i).getQuyenSD();
+				model.addRow(row);
+			}
+			table.setModel(model);
+			TableColumnModel tcm = table.getColumnModel();
+			TableColumn tc = tcm.getColumn(2);
+			tc.setCellRenderer(new QuyenRenderer());
+			table.setRowSelectionInterval(0, 0);
+			GanDL();
+		} else {
+			JOptionPane.showMessageDialog(null, "Không tìm thấy dữ liệu phù hợp", "Thông báo",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		table.setModel(model);
-		TableColumnModel tcm = table.getColumnModel();
-		TableColumn tc = tcm.getColumn(2);
-		tc.setCellRenderer(new QuyenRenderer());
-		table.setRowSelectionInterval(0, 0);
-		GanDL();
 	}
 
 	public static boolean isNumeric(String str) {

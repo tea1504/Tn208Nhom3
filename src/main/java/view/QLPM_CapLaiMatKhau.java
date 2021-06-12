@@ -72,13 +72,13 @@ public class QLPM_CapLaiMatKhau extends JFrame {
 		pwfMatKhau_new = new JPasswordField();
 		pwfMatKhau_nhaplai = new JPasswordField();
 
-		ImageIcon img = new ImageIcon(getClass().getResource("../icon/save.png"));
+		ImageIcon img = new ImageIcon(getClass().getResource("icon/save.png"));
 		btnLuu = new JButton("Lưu thay đổi",
 				new ImageIcon(img.getImage().getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING)));
-		img = new ImageIcon(getClass().getResource("../icon/icon-exit.png"));
+		img = new ImageIcon(getClass().getResource("icon/icon-exit.png"));
 		btnThoat = new JButton("Thoát",
 				new ImageIcon(img.getImage().getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING)));
-		img = new ImageIcon(this.getClass().getResource("../icon/password-window.png"));
+		img = new ImageIcon(this.getClass().getResource("icon/password-window.png"));
 		lblImg = new JLabel(new ImageIcon(img.getImage().getScaledInstance(150, 150, Image.SCALE_AREA_AVERAGING)));
 
 		// Thêm các thành phần chính vào frame

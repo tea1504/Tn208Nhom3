@@ -303,7 +303,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		btnThoat.addActionListener(this);
 		icon = new ImageIcon(this.getClass().getResource("icon/close.png"));
 		btnThoat.setIcon(icon);
-		
+
 		btnExcel.setFont(new Font("Arial", Font.BOLD, 24));
 		btnExcel.setBackground(new Color(9, 132, 227));
 		btnExcel.setBorderPainted(false);
@@ -448,8 +448,6 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		txtMaPhong.setText("");
 		txtTenPhong.setText("");
 		txtSoLuongMay.setText("");
-		table.setEnabled(false);
-		ok = false;
 	}
 
 //	Phương thức quy định điều khiển khi chỉnh sửa
@@ -465,8 +463,10 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		btnSua.setEnabled(false);
 		btnXoa.setEnabled(false);
 		btnThoat.setEnabled(false);
-		btnTimKiem.doClick();
+//		btnTimKiem.doClick();
 		btnTimKiem.setEnabled(false);
+		table.setEnabled(false);
+		ok = false;
 	}
 
 //	Phương thức phân quyền tài khoản
@@ -544,16 +544,20 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(new Object[] { "Mã phòng", "Tên phòng", "Số lượng máy" });
 		Object[] row = new Object[3];
-
-		for (int i = 0; i < phongs.size(); i++) {
-			row[0] = phongs.get(i).getMaPhong();
-			row[1] = phongs.get(i).getTenPhong();
-			row[2] = phongs.get(i).getSoLuongMay();
-			model.addRow(row);
+		if (phongs.size() > 0) {
+			for (int i = 0; i < phongs.size(); i++) {
+				row[0] = phongs.get(i).getMaPhong();
+				row[1] = phongs.get(i).getTenPhong();
+				row[2] = phongs.get(i).getSoLuongMay();
+				model.addRow(row);
+			}
+			table.setModel(model);
+			table.setRowSelectionInterval(0, 0);
+			GanDL();
+		} else {
+			JOptionPane.showMessageDialog(null, "Không tìm thấy dữ liệu phù hợp", "Thông báo",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		table.setModel(model);
-		table.setRowSelectionInterval(0, 0);
-		GanDL();
 	}
 
 	public static boolean isNumeric(String str) {
@@ -568,16 +572,16 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 //	Phương thức kiểm tra các trường TextField cần nhập	
 	private boolean check() {
 		if (txtMaPhong.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Vui lòng nhập mã phòng", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập mã phòng", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (txtTenPhong.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Vui lòng nhập tên phòng", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập tên phòng", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (txtSoLuongMay.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng máy", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập số lượng máy", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (!isNumeric(txtSoLuongMay.getText())) {
-			JOptionPane.showMessageDialog(null, "Vui lòng nhập số", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập số vào trường số lượng máy", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
