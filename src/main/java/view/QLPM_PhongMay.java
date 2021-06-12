@@ -490,6 +490,11 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(),
 						Integer.parseInt(txtSoLuongMay.getText()));
 				PhongMayDAOImpl ctrl = new PhongMayDAOImpl();
+				if (ctrl.checkKhoaChinh(txtMaPhong.getText())) {
+					JOptionPane.showMessageDialog(null, "Mã phòng bị trùng không thể lưu", "Lỗi",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				boolean r = ctrl.ThemPhong(p);
 				PhongSetTableModel model = new PhongSetTableModel();
 				table.setModel(model);
@@ -578,10 +583,12 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập tên phòng", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (txtSoLuongMay.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập số lượng máy", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập số lượng máy", "Thông báo",
+					JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (!isNumeric(txtSoLuongMay.getText())) {
-			JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập số vào trường số lượng máy", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập số vào trường số lượng máy", "Thông báo",
+					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;

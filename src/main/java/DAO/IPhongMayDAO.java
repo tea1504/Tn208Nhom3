@@ -71,4 +71,12 @@ public interface IPhongMayDAO {
 	 * @return Phòng {@link Phong}
 	 */
 	Phong getPhong(String maPhong);
+
+	/**
+	 * Kiểm tra mã phong đã tồn tại chưa
+	 * 
+	 * @param id {@link String}
+	 * @return kết quả {@link Boolean}
+	 */
+	boolean checkKhoaChinh(String id);
 }

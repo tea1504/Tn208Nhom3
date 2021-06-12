@@ -551,6 +551,11 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 			if (them) {
 				GiangVien gv = new GiangVien(txtMaGiangVien.getText(), txtTenGiangVien.getText());
 				GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
+				if (ctrl.checkKhoaChinh(txtMaGiangVien.getText())) {
+					JOptionPane.showMessageDialog(null, "Mã giảng viên bị trùng không thể lưu", "Lỗi",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				boolean r = ctrl.ThemGiangVien(gv);
 				GiangVienSetTableModel model = new GiangVienSetTableModel();
 				table.setModel(model);
@@ -589,8 +594,8 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 	};
 
 	private void Xoa() throws SQLException {
-		int result = JOptionPane.showConfirmDialog(null, "Thầy/cô chắc chắn muốn xóa dữ liệu ?", "Thông báo", JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null);
+		int result = JOptionPane.showConfirmDialog(null, "Thầy/cô chắc chắn muốn xóa dữ liệu ?", "Thông báo",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 		if (result == JOptionPane.YES_OPTION) {
 			GiangVien gv = new GiangVien(txtMaGiangVien.getText(), txtTenGiangVien.getText());
 			GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
@@ -604,8 +609,8 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 			if (r)
 				JOptionPane.showMessageDialog(null, "Không xóa được dữ liệu !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			else
-				JOptionPane.showMessageDialog(null, "Đã xóa dữ liệu của giảng viên " + txtTenGiangVien.getText(), "Thông báo",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Đã xóa dữ liệu của giảng viên " + txtTenGiangVien.getText(),
+						"Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
 		} else {
 			JOptionPane.showMessageDialog(null, "Đã hủy thao tác xóa", "Nhắc nhở", JOptionPane.INFORMATION_MESSAGE);
@@ -616,10 +621,12 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 
 	private boolean check() {
 		if (txtMaGiangVien.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập mã giảng viên !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập mã giảng viên !!!", "Lỗi",
+					JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else if (txtTenGiangVien.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập tên giảng viên !!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập tên giảng viên !!!", "Lỗi",
+					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;

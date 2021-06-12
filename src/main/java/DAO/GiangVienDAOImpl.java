@@ -160,4 +160,23 @@ public class GiangVienDAOImpl implements IGiangVienDAO {
 		}
 		return gvList;
 	}
+
+	@Override
+	public boolean checkKhoaChinh(String id) {
+		ResultSet rs;
+		boolean flag = false;
+		String query = "call getGiangVienTheoMa(?)";
+		try {
+			cstmt = conn.getConnection().prepareCall(query);
+			cstmt.setString(1, id);
+			rs = cstmt.executeQuery();
+			while (rs.next()) {
+				flag = true;
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		conn.closeConnection();
+		return flag;
+	}
 }

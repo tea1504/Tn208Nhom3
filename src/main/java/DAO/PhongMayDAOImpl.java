@@ -165,4 +165,24 @@ public class PhongMayDAOImpl implements IPhongMayDAO {
 		return res;
 	}
 
+	@Override
+	public boolean checkKhoaChinh(String id) {
+		boolean flag = false;
+		ResultSet res;
+		String query = "call getPhongTheoMa(?)";
+		try {
+			cs = conn.getConnection().prepareCall(query);
+			cs.setString(1, id);
+			res = cs.executeQuery();
+			while (res.next()) {
+				flag = true;
+			}
+			cs.close();
+			conn.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

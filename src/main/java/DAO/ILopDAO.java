@@ -69,4 +69,12 @@ public interface ILopDAO {
 	 * @return Danh sách lớp {@link ArrayList}&lt;{@link Lop}&gt;
 	 */
 	ArrayList<Lop> getLopTheoMaGiangVien(String ma);
+
+	/**
+	 * Kiểm tra mã lớp đã tồn tại chưa
+	 * 
+	 * @param id {@link String}
+	 * @return kết quả {@link Boolean}
+	 */
+	boolean checkKhoaChinh(String id);
 }

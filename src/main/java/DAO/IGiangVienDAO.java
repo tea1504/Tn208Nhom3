@@ -58,4 +58,12 @@ public interface IGiangVienDAO {
 	 * @return danh sách giảng viên {@link ArrayList}&lt;{@link GiangVien}&gt;
 	 */
 	ArrayList<GiangVien> TimGiangVien(String searchText);
+
+	/**
+	 * Kiểm tra mã giảng viên đã tồn tại chưa
+	 * 
+	 * @param id {@link String}
+	 * @return kết quả {@link Boolean}
+	 */
+	boolean checkKhoaChinh(String id);
 }

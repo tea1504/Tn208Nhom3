@@ -162,4 +162,25 @@ public class LopDAOImpl implements ILopDAO {
 
 		return listLop;
 	}
+
+	@Override
+	public boolean checkKhoaChinh(String id) {
+		boolean flag = false;
+		ResultSet rs;
+		String query = "call getLopTheoMa(?)";
+		try {
+			callableStatement = conn.getConnection().prepareCall(query);
+			callableStatement.setString(1, id);
+			rs = callableStatement.executeQuery();
+			while (rs.next()) {
+				flag = true;
+			}
+			callableStatement.close();
+			conn.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }
