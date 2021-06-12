@@ -567,14 +567,14 @@ public class QLPM_Lop extends JFrame {
 			LopDAOImpl lopDAO = new LopDAOImpl();
 			ArrayList<Lop> lop = lopDAO.timLop(tt.txttimkiem.getText());
 			DefaultTableModel model = new DefaultTableModel();
-			model.setColumnIdentifiers(new Object[] { "Mã lớp", "Giảng viên", "Sỉ số lớp", "Tên lớp" });
+			model.setColumnIdentifiers(new Object[] { "Mã lớp", "Giảng viên", "Tên lớp", "Sỉ số lớp" });
 			Object[] row = new Object[4];
 			if (lop.size() > 0) {
 				for (int i = 0; i < lop.size(); i++) {
 					row[0] = lop.get(i).getMaLop();
 					row[1] = lop.get(i).getMaGiangVien();
-					row[2] = lop.get(i).getSiSoLop();
-					row[3] = lop.get(i).getTenLop();
+					row[2] = lop.get(i).getTenLop();
+					row[3] = lop.get(i).getSiSoLop();
 					model.addRow(row);
 				}
 				tb.getTable().setModel(model);
