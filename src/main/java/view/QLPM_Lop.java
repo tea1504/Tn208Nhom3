@@ -102,6 +102,7 @@ public class QLPM_Lop extends JFrame {
 		setIconImage(icon.getImage());
 		setTitle("Quản lý lớp học");
 		setVisible(true);
+		
 	}
 
 	/////// set table//////////
@@ -268,6 +269,7 @@ public class QLPM_Lop extends JFrame {
 			gbc.gridx++;
 			add(btnTimKiem, gbc);
 			DKKBT();
+			
 		}
 
 		// cai dat cac nut chuc nang///////
@@ -367,7 +369,7 @@ public class QLPM_Lop extends JFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					them = false;
+					
 					break;
 				case "Xóa":
 					try {
@@ -451,8 +453,8 @@ public class QLPM_Lop extends JFrame {
 		private void GanDL() {
 			int r = tb.getTable().getSelectedRow();
 			tt.txtMaLop.setText(tb.getTable().getValueAt(r, 0).toString());
-			tt.txtTenLop.setText(tb.getTable().getValueAt(r, 1).toString());
-			String ma = tb.getTable().getValueAt(r, 2).toString();
+			tt.txtTenLop.setText(tb.getTable().getValueAt(r, 2).toString());
+			String ma = tb.getTable().getValueAt(r, 1).toString();
 			GiangVienDAOImpl gvdao = new GiangVienDAOImpl();
 			ArrayList<GiangVien> list = gvdao.getGiangVien();
 			int index = -1;
@@ -475,6 +477,7 @@ public class QLPM_Lop extends JFrame {
 			btnXoa.setEnabled(true);
 			btnThoat.setEnabled(true);
 			btnTimKiem.setEnabled(true);
+			btnExcel.setEnabled(true);
 			tt.txttimkiem.setEnabled(true);
 			phanquyentrenLop();
 		}
@@ -499,6 +502,7 @@ public class QLPM_Lop extends JFrame {
 			btnThoat.setEnabled(false);
 			btnTimKiem.setEnabled(false);
 			tt.txttimkiem.setEnabled(false);
+			btnExcel.setEnabled(false);
 		}
 
 // chuc nang luu
@@ -513,6 +517,7 @@ public class QLPM_Lop extends JFrame {
 					if (ctrl.checkKhoaChinh(tt.txtMaLop.getText())) {
 						JOptionPane.showMessageDialog(null, "Mã lớp bị trùng không thể lưu", "Lỗi",
 								JOptionPane.ERROR_MESSAGE);
+						
 						return;
 					} else {
 						boolean r = ctrl.ThemLop(l);
@@ -525,6 +530,7 @@ public class QLPM_Lop extends JFrame {
 						else
 							JOptionPane.showMessageDialog(null, "Thêm dữ liệu thành công", "Thông báo",
 									JOptionPane.INFORMATION_MESSAGE);
+						them = false;
 					}
 				} else {
 					GiangVien gv = (GiangVien) tt.cboGiangVien.getSelectedItem();
@@ -619,6 +625,12 @@ public class QLPM_Lop extends JFrame {
 			} else if (!isNumeric(tt.txtSiSo.getText())) {
 				JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập số vào trường sỉ số lớp", "Lỗi",
 						JOptionPane.ERROR_MESSAGE);
+				return false;
+			} else if (tt.txtMaLop.getText().length() > 7) {
+				JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập mã lớp tối đa 7 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				return false;
+			} else if (tt.txtTenLop.getText().length() > 50) {
+				JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập tên lớp tối đa 50 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 			return true;
@@ -725,6 +737,8 @@ public class QLPM_Lop extends JFrame {
 			txtMaLop.setEditable(false);
 			txtTenLop.setEditable(false);
 			txtSiSo.setEditable(false);
+			txtMaLop.requestFocus(false);
+			txtTenLop.requestFocus(false);
 		}
 
 		// dieu khien khi them
@@ -735,6 +749,7 @@ public class QLPM_Lop extends JFrame {
 			txtTenLop.setText("");
 			txtSiSo.setText("");
 			cboGiangVien.setSelectedIndex(0);
+			txtMaLop.requestFocus();
 		}
 
 		// dieu khien khi chinh sua
@@ -742,6 +757,7 @@ public class QLPM_Lop extends JFrame {
 			txtTenLop.setEditable(true);
 			txtSiSo.setEditable(true);
 			cboGiangVien.setEnabled(true);
+			txtTenLop.requestFocus();
 		}
 
 		// set các nút chức năng
@@ -758,4 +774,5 @@ public class QLPM_Lop extends JFrame {
 			txttimkiem.setFont(new Font("Arial", 0, 18));
 		}
 	}
+	
 }

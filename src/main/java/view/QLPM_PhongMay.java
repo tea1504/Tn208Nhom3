@@ -336,7 +336,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				them = false;
+				
 				break;
 			case "Xóa":
 				try {
@@ -435,7 +435,10 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		btnXoa.setEnabled(true);
 		btnThoat.setEnabled(true);
 		btnTimKiem.setEnabled(true);
+		btnExcel.setEnabled(true);
 		table.setEnabled(true);
+		txtMaPhong.requestFocus(false);
+		txtTenPhong.requestFocus(false);
 		ok = true;
 		phanQuyen();
 	}
@@ -465,6 +468,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		btnThoat.setEnabled(false);
 //		btnTimKiem.doClick();
 		btnTimKiem.setEnabled(false);
+		btnExcel.setEnabled(false);
 		table.setEnabled(false);
 		ok = false;
 	}
@@ -493,6 +497,7 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 				if (ctrl.checkKhoaChinh(txtMaPhong.getText())) {
 					JOptionPane.showMessageDialog(null, "Mã phòng bị trùng không thể lưu", "Lỗi",
 							JOptionPane.ERROR_MESSAGE);
+					
 					return;
 				}
 				boolean r = ctrl.ThemPhong(p);
@@ -504,6 +509,8 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 				else
 					JOptionPane.showMessageDialog(null, "Lưu Thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 				table.setRowSelectionInterval(0, 0);
+				them = false;
+				
 			} else {
 				Phong p = new Phong(txtMaPhong.getText(), txtTenPhong.getText(),
 						Integer.parseInt(txtSoLuongMay.getText()));
@@ -589,6 +596,12 @@ public class QLPM_PhongMay extends JFrame implements ActionListener {
 		} else if (!isNumeric(txtSoLuongMay.getText())) {
 			JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập số vào trường số lượng máy", "Thông báo",
 					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}else if (txtMaPhong.getText().length() > 5) {
+			JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập mã phòng tối đa 5 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else if (txtTenPhong.getText().length() > 50) {
+			JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập tên phòng tối đa 50 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;

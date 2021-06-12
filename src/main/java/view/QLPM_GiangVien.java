@@ -236,7 +236,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
 		setIconImage(icon.getImage());
-		setTitle("Quản lý phòng học");
+		setTitle("Quản lý giảng viên");
 //			setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -376,7 +376,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				them = false;
+				
 				break;
 			case "Xóa":
 				try {
@@ -488,7 +488,10 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		btnXoa.setEnabled(true);
 		btnThoat.setEnabled(true);
 		btnTimKiem.setEnabled(true);
+		btnExcel.setEnabled(true);
 		table.setEnabled(true);
+		txtTenGiangVien.requestFocus(false);
+		txtMaGiangVien.requestFocus(false);
 		ok = true;
 		phanQuyen();
 	}
@@ -515,6 +518,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		btnXoa.setEnabled(false);
 		btnThoat.setEnabled(false);
 		btnTimKiem.setEnabled(false);
+		btnExcel.setEnabled(false);
 	}
 
 	private void DKKS() {
@@ -530,6 +534,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		btnXoa.setEnabled(false);
 		btnThoat.setEnabled(false);
 		btnTimKiem.setEnabled(false);
+		btnExcel.setEnabled(false);
 		table.setEnabled(false);
 	}
 
@@ -570,6 +575,7 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 							"Đã lưu \n Mã giảng viên: " + txtMaGiangVien.getText() + " \nTên giảng viên: "
 									+ txtTenGiangVien.getText() + "\n Mật khẩu: 12345 " + "\n Quyền sử dụng: User",
 							"OK", JOptionPane.INFORMATION_MESSAGE);
+				them = false;
 			} else {
 				GiangVien gv = new GiangVien(txtMaGiangVien.getText(), txtTenGiangVien.getText());
 				GiangVienDAOImpl ctrl = new GiangVienDAOImpl();
@@ -627,6 +633,12 @@ public class QLPM_GiangVien extends JFrame implements ActionListener {
 		} else if (txtTenGiangVien.getText().trim().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Thầy/cô chưa nhập tên giảng viên !!!", "Lỗi",
 					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}else if (txtMaGiangVien.getText().length() > 5) {
+			JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập mã giảng viên tối đa 5 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else if (txtTenGiangVien.getText().length() > 50) {
+			JOptionPane.showMessageDialog(null, "Thầy/cô phải nhập tên giảng viên tối đa 50 ký tự", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
