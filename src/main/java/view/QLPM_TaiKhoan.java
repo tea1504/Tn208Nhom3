@@ -90,13 +90,13 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 	protected void khoiTao() {
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("icon/a.png"));
 		setIconImage(icon.getImage());
-		setTitle("Quản lý phòng học");
+		setTitle("Quản lý tài khoản");
 		setSize(1200, 800);
 		setLocationRelativeTo(null);
 		setVisible(true);
 
 		// Khởi tạo cho các thuộc tính
-		lblTitle = new JLabel("Quản lý tài khoản");
+		lblTitle = new JLabel("QUẢN LÝ TÀI KHOẢN");
 		lblMSGV = new JLabel("Mã giảng viên");
 		lblTenGV = new JLabel("Tên giảng viên");
 		lblQuyenSD = new JLabel("Quyền sử dụng");
@@ -123,11 +123,6 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 		TableColumnModel tcm = table.getColumnModel();
 		TableColumn tc = tcm.getColumn(2);
 		tc.setCellRenderer(new QuyenRenderer());
-
-//		// Ẩn cột quyền sử dụng hiện
-//		table.getColumnModel().getColumn(2).setMinWidth(0);
-//		table.getColumnModel().getColumn(2).setMaxWidth(0);
-//		table.getColumnModel().getColumn(2).setWidth(0);
 
 		// Style cho các thành phần
 		lblTitle.setFont(new Font("Arial", Font.BOLD, 50));
@@ -224,7 +219,7 @@ public class QLPM_TaiKhoan extends JFrame implements ActionListener {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 12;
-//		gbc.insets = new Insets(20, 0, 20, 0);
+		gbc.insets = new Insets(20, 0, 20, 0);
 		JPanel pTitle = new JPanel(new GridBagLayout());
 		pTitle.add(lblTitle, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER,
 				GridBagConstraints.BOTH, new Insets(20, 0, 20, 0), 0, 0));
